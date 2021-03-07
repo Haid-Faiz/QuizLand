@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.CreateQuizFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/discard_quiz_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:padding="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/cross"
+            app:layout_constraintBottom_toBottomOf="@id/add_question_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/add_question_btn" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/work_sans_semibold"
+            android:text="Create quiz"
+            android:textColor="@color/my_purple"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@id/add_question_btn"
+            app:layout_constraintStart_toEndOf="@id/discard_quiz_btn"
+            app:layout_constraintTop_toTopOf="@id/add_question_btn" />
+
+        <android.widget.Button
+            android:id="@+id/add_question_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="16dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@drawable/primary_btn_bg"
+            android:fontFamily="@font/noto_sans"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Add questions"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/note_bg"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/note_msg"
+            android:textColor="@color/colorLightText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_question_btn"/>
+
+        <TextView
+            android:id="@+id/upload_image_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Upload quiz image (optional)"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/note" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_anim_image_placeholder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/add_quiz_image"
+            app:layout_constraintEnd_toEndOf="@id/add_quiz_image"
+            app:layout_constraintStart_toStartOf="@id/add_quiz_image"
+            app:layout_constraintTop_toTopOf="@id/add_quiz_image"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/image_bg_anim" />
+
+        <ImageButton
+            android:id="@+id/add_quiz_image"
+            android:layout_width="0dp"
+            android:layout_height="192dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/outline_light_btn_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upload_image_hint" />
+
+
+        <TextView
+            android:id="@+id/enter_quiz_name_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter quiz name"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_quiz_image" />
+
+        <EditText
+            android:id="@+id/enter_quiz_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter quiz name here"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quiz_name_hint" />
+
+        <TextView
+            android:id="@+id/enter_quiz_description_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter quiz description"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quiz_name" />
+
+        <EditText
+            android:id="@+id/enter_quiz_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter quiz description here"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quiz_description_hint" />
+
+        <TextView
+            android:id="@+id/enter_quest_num_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter total number of questions"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quiz_description" />
+
+        <EditText
+            android:id="@+id/enter_quest_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter total no. of questions here"
+            android:inputType="number"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quest_num_hint" />
+
+
+        <TextView
+            android:id="@+id/enter_correct_marks_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter marks for correct answer"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quest_num" />
+
+        <EditText
+            android:id="@+id/enter_correct_ans_marks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter correct answer marks"
+            android:inputType="number|numberDecimal"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_correct_marks_hint" />
+
+
+        <TextView
+            android:id="@+id/enter_wrong_marks_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter marks for wrong answer"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_correct_ans_marks" />
+
+        <EditText
+            android:id="@+id/enter_wrong_ans_marks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter wrong answer marks"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_wrong_marks_hint" />
+
+
+
+        <TextView
+            android:id="@+id/enter_created_by_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Quiz created by"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_wrong_ans_marks" />
+
+        <EditText
+            android:id="@+id/enter_quiz_created_by"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Quiz created by "
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_created_by_hint" />
+
+        <TextView
+            android:id="@+id/select_date_time_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Select quiz start time"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quiz_created_by" />
+
+        <android.widget.Button
+            android:id="@+id/quiz_start_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/outline_light_btn_bg"
+            android:fontFamily="@font/noto_sans"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="10:00 am, 15/12/2021"
+            android:textColor="@color/colorLightText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/select_date_time_hint" />
+
+        <TextView
+            android:id="@+id/select_duration_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Select quiz duration"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quiz_start_time" />
+
+        <TextView
+            android:id="@+id/select_hour_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="hour"
+            android:textColor="@color/my_purple"
+            android:fontFamily="@font/noto_sans"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/quiz_duration_hour_picker"
+            app:layout_constraintStart_toStartOf="@+id/quiz_duration_hour_picker"
+            app:layout_constraintTop_toBottomOf="@id/select_duration_hint" />
+
+        <NumberPicker
+            android:id="@+id/quiz_duration_hour_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:theme="@style/NumberPickerStyle"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@id/select_hour_hint" />
+
+        <TextView
+            android:id="@+id/select_min_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="minute"
+            android:textColor="@color/my_purple"
+            android:fontFamily="@font/noto_sans"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/select_hour_hint"
+            app:layout_constraintEnd_toEndOf="@+id/quiz_duration_min_picker"
+            app:layout_constraintStart_toStartOf="@+id/quiz_duration_min_picker"
+            app:layout_constraintTop_toTopOf="@+id/select_hour_hint" />
+
+        <NumberPicker
+            android:id="@+id/quiz_duration_min_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:theme="@style/NumberPickerStyle"
+            app:layout_constraintStart_toEndOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/select_min_hint" />
+
+        <TextView
+            android:id="@+id/select_difficulty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="start"
+            android:text="Difficulty level:"
+            android:textColor="@color/my_purple"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quiz_duration_hour_picker" />
+
+
+<!--        radioGroup ensures that you can only select one button at a time-->
+        <RadioGroup
+            android:id="@+id/radio_grp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/select_difficulty">
+
+            <RadioButton
+                android:id="@+id/radio_btn_beginner_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:paddingStart="16dp"
+                android:text="Beginner"
+                android:buttonTint="@color/input_bg_radio"
+                android:textColor="@color/input_bg_radio"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/intermediate_level_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:paddingStart="16dp"
+                android:text="Intermediate"
+                android:buttonTint="@color/input_bg_radio"
+                android:textColor="@color/input_bg_radio"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/advanced_level_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:paddingStart="16dp"
+                android:text="Advanced"
+                android:buttonTint="@color/input_bg_radio"
+                android:textColor="@color/input_bg_radio"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

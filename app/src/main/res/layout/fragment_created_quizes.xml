@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.CreatedQuizesFragment">
+
+
+    <ImageButton
+        android:id="@+id/created_quiz_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:padding="8dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/cross"
+        app:layout_constraintBottom_toBottomOf="@id/my_created_quiz"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/my_created_quiz" />
+
+    <TextView
+        android:id="@+id/my_created_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/work_sans_semibold"
+        android:text="My created quiz"
+        android:textColor="@color/my_purple"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/created_quiz_back_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/created_quiz_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        tools:visibility="invisible"
+        tools:listitem="@layout/created_quiz_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_created_quiz" />
+
+    <LinearLayout
+        android:id="@+id/empty_list_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="136dp"
+        android:layout_marginBottom="136dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_created_quiz">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/search_anim"
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:layout_marginTop="0dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/search_anim" />
+
+        <TextView
+            android:id="@+id/no_quiz_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/work_sans"
+            android:gravity="center"
+            android:text="You haven't created any quiz click + to create now."
+            android:textColor="@color/colorLightText" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/created_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/my_purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_created_quiz" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,60 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Quiz_App_MVVM" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/my_purple</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/red</item>    <!-- its like colorAccent -->
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/my_purple</item>
+        <!-- Status bar color. -->
+        <!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+        <!-- Customize your theme here. -->
+
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <!--        <item name="android:windowBackground">@color/black</item>-->
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+
+    </style>
+
+
+    <style name="NumberPickerStyle" parent="ThemeOverlay.MaterialComponents.Dark">
+        <!--         this attribute will change text color of number picker-->
+        <item name="android:textColorPrimary">@color/colorLightText</item>
+
+        <!--        this attribute will change divider color of number picker-->
+        <item name="colorControlNormal">@color/colorLightText</item>
+    </style>
+
+    <style name="DatePickerStyle" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorAccent">@color/grey</item>
+        <item name="colorOnPrimary">@color/grey</item>
+    </style>
+
+    <style name="DialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--        <item name="android:padding">-24dp</item>-->
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginEnd">3dp</item>
+
+        <item name="android:windowAnimationStyle">@style/windowAnim</item>
+    </style>
+
+    <style name="windowAnim" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:windowEnterAnimation">@anim/pop_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_out</item>
+    </style>
+
+    <!--     This will make transparent actionbar-->
+
+    <!--    <style name="TransTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">-->
+    <!--        <item name="android:windowContentOverlay">@null</item>-->
+    <!--        <item name="windowActionBarOverlay">true</item>-->
+    <!--        <item name="colorPrimary">@android:color/transparent</item>-->
+    <!--        <item name="android:windowTranslucentStatus">true</item>-->
+    <!--    </style>-->
+
+</resources>

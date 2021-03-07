@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".views.fragments.QuizFragment">
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/quiz_next_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Look at android:background="@android:color/transparent" -->
+            <ImageButton
+                android:id="@+id/quiz_close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:src="@drawable/cross"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/quiz_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/work_sans_semibold"
+                android:text="Loading Quiz..."
+                android:textColor="@color/my_purple"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@+id/normalCountDownView"
+                app:layout_constraintStart_toEndOf="@+id/quiz_close_btn"
+                app:layout_constraintTop_toTopOf="@+id/quiz_close_btn" />
+
+            <TextView
+                android:id="@+id/quiz_question_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Q. No. 1 out of 10"
+                android:textColor="@color/colorLightText"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/quiz_question"
+                app:layout_constraintEnd_toEndOf="@+id/quiz_question"
+                app:layout_constraintStart_toStartOf="@+id/quiz_question" />
+
+            <TextView
+                android:id="@+id/quiz_time_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="36dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="Quiz ends in"
+                android:textColor="@color/colorLightText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/quiz_title" />
+
+
+            <com.androchef.happytimer.countdowntimer.NormalCountDownView
+                android:id="@+id/normalCountDownView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:normal_timer_text_size="16sp"
+                app:normal_timer_label_text_size="14sp"
+                app:normal_timer_text_color="@color/my_purple"
+                app:normal_timer_text_label_color="@color/colorLightText"
+                app:normal_timer_text__label_isBold="false"
+                app:normal_timer_text_isBold="false"
+                app:show_labels="true"
+                app:show_hour="true"
+                app:show_minutes="true"
+                app:show_seconds="true"
+                app:layout_constraintTop_toBottomOf="@+id/quiz_time_left"
+                app:layout_constraintStart_toStartOf="@+id/quiz_time_left"
+                app:layout_constraintEnd_toEndOf="@+id/quiz_time_left"/>
+
+
+            <TextView
+                android:id="@+id/quiz_question"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="124dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="Fetching Question..."
+                tools:text="What is Android and when it was launched ?"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/quiz_title"/>
+
+            <android.widget.Button
+                android:id="@+id/quiz_option_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:padding="12dp"
+                android:text="Option Button"
+                android:textAllCaps="false"
+                android:textColor="@color/colorLightText"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/quiz_question"
+                app:shapeAppearance="@drawable/outline_light_btn_bg"
+                tools:visibility="visible" />
+
+            <android.widget.Button
+                android:id="@+id/quiz_option_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:padding="12dp"
+                android:text="Option Button"
+                android:textAllCaps="false"
+                android:textColor="@color/colorLightText"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/quiz_option_one"
+                app:shapeAppearance="@drawable/outline_light_btn_bg"
+                tools:visibility="visible" />
+
+            <android.widget.Button
+                android:id="@+id/quiz_option_three"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:padding="12dp"
+                android:text="Option Button"
+                android:textAllCaps="false"
+                android:textColor="@color/colorLightText"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/quiz_option_two"
+                app:shapeAppearance="@drawable/outline_light_btn_bg"
+                tools:visibility="visible" />
+
+            <android.widget.Button
+                android:id="@+id/quiz_option_four"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:padding="12dp"
+                android:text="Option Button"
+                android:textAllCaps="false"
+                android:textColor="@color/colorLightText"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/quiz_option_three"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:shapeAppearance="@drawable/outline_light_btn_bg"
+                tools:visibility="visible" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/quiz_next_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/primary_btn_bg"
+        android:fontFamily="@font/noto_sans"
+        android:text="Next Question"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearance="@drawable/primary_btn_bg"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

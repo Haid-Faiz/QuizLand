@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/acme</item>
+        <item>@font/crimson_text</item>
+        <item>@font/noto_sans</item>
+        <item>@font/noto_sans_bold</item>
+        <item>@font/work_sans</item>
+        <item>@font/work_sans_medium</item>
+        <item>@font/work_sans_semibold</item>
+    </array>
+</resources>

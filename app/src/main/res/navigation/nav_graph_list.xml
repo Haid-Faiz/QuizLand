@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_list"
+    app:startDestination="@id/listSecFragment">
+
+    <fragment
+        android:id="@+id/listSecFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.JoinedQuizzesFragment"
+        android:label="fragment_list_sec"
+        tools:layout="@layout/fragment_joined_quizzes" />
+    <dialog
+        android:id="@+id/addFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.AddFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_addFragment_to_createQuizFragment"
+            app:destination="@id/createQuizFragment" />
+        <action
+            android:id="@+id/action_addFragment_to_listSecFragment"
+            app:destination="@id/listSecFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_createdQuizesFragment"
+            app:destination="@id/createdQuizesFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_accountFragment_to_myResultsFragment"
+            app:destination="@id/myResultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createQuizFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.CreateQuizFragment"
+        android:label="fragment_create_quiz"
+        tools:layout="@layout/fragment_create_quiz" >
+        <action
+            android:id="@+id/action_createQuizFragment_to_addQuestFragment"
+            app:destination="@id/addQuestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addQuestFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.AddQuestFragment"
+        android:label="fragment_add_quest"
+        tools:layout="@layout/fragment_add_quest" >
+        <action
+            android:id="@+id/action_addQuestFragment_to_createdQuizesFragment"
+            app:destination="@id/createdQuizesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createdQuizesFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.CreatedQuizesFragment"
+        android:label="fragment_created_quizes"
+        tools:layout="@layout/fragment_created_quizes" >
+        <action
+            android:id="@+id/action_createdQuizesFragment_to_adminResultFragment"
+            app:destination="@id/adminResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminResultFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.AdminResultFragment"
+        android:label="fragment_admin_result"
+        tools:layout="@layout/fragment_admin_result" />
+    <fragment
+        android:id="@+id/myResultsFragment"
+        android:name="com.example.quiz_app_mvvm.views.fragments.MyResultsFragment"
+        android:label="fragment_my_results"
+        tools:layout="@layout/fragment_my_results" />
+</navigation>

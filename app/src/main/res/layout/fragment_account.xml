@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.example.quiz_app_mvvm.model.User" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.fragments.AccountFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/my_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/work_sans_semibold"
+                android:text="My Account"
+                android:textColor="@color/my_purple"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="36dp"
+                android:quizCircularImageUrl="@{user.userImageUrl}"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_account_circle_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/my_account" />
+
+            <TextView
+                android:id="@+id/username_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/noto_sans_bold"
+                android:text="@{user.displayName}"
+                android:textColor="@color/my_purple"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/user_image"
+                app:layout_constraintStart_toStartOf="@id/user_image"
+                app:layout_constraintTop_toBottomOf="@id/user_image"
+                tools:text="Faizan Haider" />
+
+            <android.widget.Button
+                android:id="@+id/my_created_quiz_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="56dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="start|center"
+                android:paddingStart="12dp"
+                android:text="Quizes created by me"
+                android:textAllCaps="false"
+                android:textColor="@color/my_purple"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/username_textview" />
+
+            <android.widget.Button
+                android:id="@+id/my_results_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="start|center"
+                android:paddingStart="12dp"
+                android:text="My Results"
+                android:textAllCaps="false"
+                android:textColor="@color/my_purple"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/my_created_quiz_button" />
+
+            <android.widget.Button
+                android:id="@+id/share_app_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="start|center"
+                android:paddingStart="12dp"
+                android:text="Share this app"
+                android:textAllCaps="false"
+                android:textColor="@color/my_purple"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/my_results_button" />
+
+            <android.widget.Button
+                android:id="@+id/developer_contact_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/outline_light_btn_bg"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="start|center"
+                android:paddingStart="12dp"
+                android:text="Developer Contact"
+                android:textAllCaps="false"
+                android:textColor="@color/my_purple"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/share_app_button" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="32dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/developer_contact_button"
+                app:layout_constraintEnd_toEndOf="@id/developer_contact_button"
+                app:layout_constraintTop_toTopOf="@id/developer_contact_button"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/linkedin_anim_grey" />
+
+            <Button
+                android:id="@+id/logout_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/noto_sans_bold"
+                android:gravity="center"
+                android:text="Log out"
+                android:textAllCaps="false"
+                android:textColor="@color/my_purple"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/developer_contact_button" />
+
+            <TextView
+                android:id="@+id/made_with"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="@string/developer_note"
+                android:textColor="@color/colorLightText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logout_button" />
+
+            <TextView
+                android:id="@+id/version_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16sp"
+                android:fontFamily="@font/noto_sans"
+                android:text="Version 1.0"
+                android:textColor="@color/colorLightText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/made_with" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

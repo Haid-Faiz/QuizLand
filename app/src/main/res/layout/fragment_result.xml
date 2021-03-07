@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".views.fragments.ResultFragment">
+
+
+    <TextView
+        android:id="@+id/result_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/work_sans_semibold"
+        android:text="Result"
+        android:textAllCaps="false"
+        android:textColor="@color/my_purple"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/result_progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="136dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="32dp"
+        android:indeterminateTint="@color/my_purple"
+        android:progress="75"
+        android:progressDrawable="@drawable/circular_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_title" />
+
+    <TextView
+        android:id="@+id/result_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/noto_sans"
+        tools:text="Yay! you scored 84%"
+        android:textAllCaps="false"
+        android:textColor="@color/my_purple"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/result_progress"
+        app:layout_constraintStart_toStartOf="@+id/result_progress"
+        app:layout_constraintTop_toBottomOf="@+id/result_progress" />
+
+    <TextView
+        android:id="@+id/result_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans"
+        android:text="100%"
+        android:textColor="@color/my_purple"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@+id/result_progress"
+        app:layout_constraintEnd_toEndOf="@+id/result_progress"
+        app:layout_constraintStart_toStartOf="@+id/result_progress"
+        app:layout_constraintTop_toTopOf="@+id/result_progress" />
+
+    <TextView
+        android:id="@+id/result_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="Correct answers"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightText"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_feedback" />
+
+    <TextView
+        android:id="@+id/result_wrong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="Wrong answers"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightText"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_correct" />
+
+    <TextView
+        android:id="@+id/result_missed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="Question missed"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightText"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_wrong" />
+
+    <TextView
+        android:id="@+id/result_correct_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="NA"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightText"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/result_correct" />
+
+    <TextView
+        android:id="@+id/result_wrong_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="NA"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightText"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/result_wrong" />
+
+    <TextView
+        android:id="@+id/result_missed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="NA"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightText"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/result_missed" />
+
+    <Button
+        android:id="@+id/result_home_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/primary_btn_bg"
+        android:fontFamily="@font/noto_sans"
+        android:text="Go to home"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearance="@drawable/primary_btn_bg" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/fireworks_animation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/cele_last"
+        app:layout_constraintBottom_toTopOf="@id/result_home_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="result"
+            type="com.example.quiz_app_mvvm.model.MyResult" />
+
+<!--        <variable-->
+<!--            name="participantResultListener"-->
+<!--            type="com.example.quiz_app_mvvm.adapter.PublicResultsAdapter.ParticipantResultListener" />-->
+
+        <variable
+            name="position"
+            type="Integer" />
+
+<!--        <variable-->
+<!--            name="f"-->
+<!--            type="com.example.quiz_app_mvvm.adapter.PublicResultsAdapter" />-->
+
+        <variable
+            name="kf"
+            type="kotlin.jvm.functions.Function1" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> kf.invoke(result)}">
+
+        <TextView
+            android:id="@+id/rank_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="@{String.valueOf(position + 1)}"
+            android:textColor="@color/my_purple"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/participant_image"
+            app:layout_constraintEnd_toStartOf="@id/rank_line_separator"
+            app:layout_constraintTop_toTopOf="@id/participant_image"
+            tools:text="1" />
+
+        <View
+            android:id="@+id/rank_line_separator"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="36dp"
+            android:background="@drawable/line_separator_bg"
+            app:layout_constraintBottom_toBottomOf="@id/participant_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/participant_image" />
+
+        <ImageView
+            android:id="@+id/participant_image"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:quizCircularImageUrl="@{result.user.userImageUrl}"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/rank_line_separator"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/participant_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="@{result.user.displayName}"
+            android:textColor="@color/my_purple"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/detail_result_progress"
+            app:layout_constraintStart_toEndOf="@id/participant_image"
+            app:layout_constraintTop_toTopOf="@id/participant_image"
+            tools:text="Faizan Haider" />
+
+        <TextView
+            android:id="@+id/participant_marks_scored_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="@{`Marks Scored: ` + String.valueOf(result.marksScored)}"
+            android:textColor="@color/colorLightText"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/participant_name"
+            app:layout_constraintTop_toBottomOf="@+id/participant_name"
+            tools:text="Marks Scored: 78" />
+
+
+        <ImageButton
+            android:id="@+id/participant_details_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+<!--        android:onClick="@{() -> participantResultListener.onParticipantResultClicked(result)}"-->
+
+
+        <!--        <android.widget.Button-->
+        <!--            android:id="@+id/get_participant_result_detail_btn"-->
+        <!--            android:layout_width="24dp"-->
+        <!--            android:layout_height="24dp"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:background="@drawable/dark_bg"-->
+        <!--            android:fontFamily="@font/work_sans"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text=">"-->
+        <!--            android:onClick="@{ () -> participantResultListener.onParticipantResultClicked(result)}"-->
+        <!--            android:textAllCaps="false"-->
+        <!--            android:textColor="@color/my_purple"-->
+        <!--            android:textSize="16sp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/detail_result_progress" />-->
+
+
+        <View
+            android:id="@+id/recycler_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/line_separator_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="myResult"
+            type="com.example.quiz_app_mvvm.model.MyResult" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="onMyResultClicked"
+            type="com.example.quiz_app_mvvm.adapter.MyResultsAdapter.OnMyResultClicked" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dark_bg">
+
+            <ProgressBar
+                android:id="@+id/result_quiz_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_margin="8dp"
+                tools:progress="70"
+                android:progress="@{Integer.parseInt(String.valueOf(myResult.scoredPercent))}"
+                android:progressDrawable="@drawable/circular_progress"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/result_quiz_progress_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                tools:text="9%"
+                android:text="@{String.valueOf(myResult.scoredPercent) + `%`}"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/result_quiz_progress"
+                app:layout_constraintEnd_toEndOf="@+id/result_quiz_progress"
+                app:layout_constraintStart_toStartOf="@+id/result_quiz_progress"
+                app:layout_constraintTop_toTopOf="@+id/result_quiz_progress" />
+
+            <TextView
+                android:id="@+id/result_quiz_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:text="@{myResult.quizName}"
+                android:fontFamily="@font/noto_sans_bold"
+                android:textColor="@color/my_purple"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/result_quiz_progress"
+                tools:text="Android Quiz" />
+
+            <android.widget.Button
+                android:id="@+id/result_details_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/hello"
+                android:fontFamily="@font/noto_sans"
+                android:onClick="@{() -> onMyResultClicked.onResultDetailClicked(position)}"
+                android:padding="12dp"
+                android:text="Details"
+                android:textAllCaps="false"
+                android:textColor="@color/my_purple"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/result_quiz_progress" />
+
+            <TextView
+                android:id="@+id/result_held_on_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="Held on:"
+                android:textColor="@color/colorLightText"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/result_quiz_held_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/result_details_button" />
+
+            <TextView
+                android:id="@+id/result_quiz_held_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:dateFormatter="@{myResult.heldOn}"
+                android:textColor="@color/colorLightText"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/result_details_button"
+                app:layout_constraintStart_toStartOf="@+id/result_held_on_hint"
+                app:layout_constraintTop_toBottomOf="@+id/result_held_on_hint"
+                tools:text="22 Jan, 10:00 AM" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

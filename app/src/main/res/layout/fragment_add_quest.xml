@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.AddQuestFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/discard_qestion_btn"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="14dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/cross"
+            app:layout_constraintBottom_toBottomOf="@id/next_question_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/next_question_btn" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/work_sans_semibold"
+            android:text="Add questions"
+            android:textColor="@color/my_purple"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/next_question_btn"
+            app:layout_constraintStart_toEndOf="@id/discard_qestion_btn"
+            app:layout_constraintTop_toTopOf="@id/next_question_btn" />
+
+        <android.widget.Button
+            android:id="@+id/next_question_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/primary_btn_bg"
+            android:fontFamily="@font/noto_sans"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Next question"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/quest_num_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Question No."
+            android:textColor="@color/my_purple"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/next_question_btn" />
+
+        <TextView
+            android:id="@+id/quest_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ring_shape"
+            android:fontFamily="@font/noto_sans"
+            android:text="1"
+            android:textColor="@color/my_purple"
+            android:textSize="26dp"
+            app:layout_constraintEnd_toEndOf="@id/quest_num_text"
+            app:layout_constraintStart_toStartOf="@id/quest_num_text"
+            app:layout_constraintTop_toBottomOf="@id/quest_num_text" />
+
+        <TextView
+            android:id="@+id/enter_quest_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter question"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quest_num" />
+
+        <EditText
+            android:id="@+id/enter_question"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter question here"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_quest_hint" />
+
+
+        <TextView
+            android:id="@+id/enter_first_option_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter option one"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_question" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/correct_option_one_anim"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/enter_first_option_hint"
+            app:layout_constraintStart_toEndOf="@id/enter_first_option_hint"
+            app:layout_constraintTop_toTopOf="@id/enter_first_option_hint"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/correct" />
+
+        <ImageView
+            android:id="@+id/check_mark_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:visibility="invisible"
+            android:src="@drawable/ic_check_mark"
+            app:layout_constraintBottom_toBottomOf="@id/enter_first_option_hint"
+            app:layout_constraintStart_toEndOf="@id/correct_option_one_anim"
+            app:layout_constraintTop_toTopOf="@id/enter_first_option_hint" />
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/colorLightText"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/enter_first_option_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/enter_first_option_hint"
+            app:thumbTint="@color/switch_thumb_color"
+            app:trackTint="@color/switch_track_color" />
+
+
+        <EditText
+            android:id="@+id/enter_option_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter option one here"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_first_option_hint" />
+
+        <TextView
+            android:id="@+id/enter_second_option_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter option two"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_option_one" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/correct_option_second_anim"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/enter_second_option_hint"
+            app:layout_constraintStart_toEndOf="@id/enter_second_option_hint"
+            app:layout_constraintTop_toTopOf="@id/enter_second_option_hint"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/correct" />
+
+        <EditText
+            android:id="@+id/enter_option_second"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter option two here"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_second_option_hint" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/colorLightText"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/enter_second_option_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/enter_second_option_hint"
+            app:thumbTint="@color/switch_thumb_color"
+            app:trackTint="@color/switch_track_color" />
+
+        <TextView
+            android:id="@+id/enter_third_option_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter option three"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_option_second" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/correct_option_three_anim"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/enter_third_option_hint"
+            app:layout_constraintStart_toEndOf="@id/enter_third_option_hint"
+            app:layout_constraintTop_toTopOf="@id/enter_third_option_hint"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/correct" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/colorLightText"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/enter_third_option_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/enter_third_option_hint"
+            app:thumbTint="@color/switch_thumb_color"
+            app:trackTint="@color/switch_track_color" />
+
+        <EditText
+            android:id="@+id/enter_option_three"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter option three here"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_third_option_hint" />
+
+        <TextView
+            android:id="@+id/enter_fourth_option_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Enter option fourth"
+            android:textColor="@color/my_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_option_three" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/correct_option_fourth_anim"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/enter_fourth_option_hint"
+            app:layout_constraintStart_toEndOf="@id/enter_fourth_option_hint"
+            app:layout_constraintTop_toTopOf="@id/enter_fourth_option_hint"
+            app:lottie_autoPlay="true"
+            app:lottie_rawRes="@raw/correct" />
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/colorLightText"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/enter_fourth_option_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/enter_fourth_option_hint"
+            app:thumbTint="@color/switch_thumb_color"
+            app:trackTint="@color/switch_track_color" />
+
+        <EditText
+            android:id="@+id/enter_option_fourth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/in_bg"
+            android:cursorVisible="true"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Enter option four here"
+            android:padding="16dp"
+            android:textColor="@color/my_purple"
+            android:textColorHint="@color/colorLightText"
+            android:textCursorDrawable="@color/my_purple"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_fourth_option_hint" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
