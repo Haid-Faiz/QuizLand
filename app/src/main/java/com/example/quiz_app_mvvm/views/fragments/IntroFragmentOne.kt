@@ -15,5 +15,4 @@ class IntroFragmentOne : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_intro_one, container, false)
     }
-
 }

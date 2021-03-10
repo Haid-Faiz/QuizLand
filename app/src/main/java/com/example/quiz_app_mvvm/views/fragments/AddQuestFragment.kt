@@ -1,6 +1,9 @@
 package com.example.quiz_app_mvvm.views.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +11,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -29,6 +33,7 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
     private var currentQuestNum: Int = 1
     private var questionsList = ArrayList<QuestionsModel>()
     private lateinit var popUpAnim: Animation
+    private lateinit var popDownAnim: Animation
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +49,7 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
         navController = Navigation.findNavController(view)
         fragmentAddQuestBinding.questNum.text = currentQuestNum.toString()
         popUpAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pop_in)
+        popDownAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pop_out)
 
         val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
         quizModel = quizListViewModel.getQuizData()
@@ -60,6 +66,26 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
         fragmentAddQuestBinding.discardQestionBtn.setOnClickListener {
             navController.popBackStack()
         }
+
+        fragmentAddQuestBinding.enterOptionOne.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                Log.d("oe1", "afterTextChanged: ${p0.toString()}  ....   ${fragmentAddQuestBinding.enterOptionOne.text}")
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+                Log.d("oe2", "afterTextChanged: ${p0.toString()}  ....   ${fragmentAddQuestBinding.enterOptionOne.text}")
+            }
+        })
+
+        fragmentAddQuestBinding.enterOptionOne.doAfterTextChanged {
+            Log.d("oe3", "afterTextChanged:  ${fragmentAddQuestBinding.enterOptionOne.text}")
+        }
+
 
         fragmentAddQuestBinding.nextQuestionBtn.setOnClickListener {
             val question = fragmentAddQuestBinding.enterQuestion.text.toString().trim()
@@ -209,6 +235,7 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
                     fragmentAddQuestBinding.switch3.visibility = View.VISIBLE
                     fragmentAddQuestBinding.switch4.visibility = View.VISIBLE
                     fragmentAddQuestBinding.correctOptionOneAnim.visibility = View.INVISIBLE
+                    fragmentAddQuestBinding.checkMarkOne.visibility = View.INVISIBLE
                 }
             }
 

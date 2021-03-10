@@ -28,7 +28,7 @@
             android:id="@+id/action_quizFragment_to_resultFragment"
             app:destination="@id/resultFragment"
             app:enterAnim="@anim/slide_up"
-            app:popUpTo="@id/quizFragment"
+            app:popUpTo="@id/detailsFragment"
             app:popUpToInclusive="true" />
         <argument
             android:name="position"
@@ -100,7 +100,9 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_listFragment_to_startFragment"
-            app:destination="@id/startFragment" />
+            app:destination="@id/startFragment"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

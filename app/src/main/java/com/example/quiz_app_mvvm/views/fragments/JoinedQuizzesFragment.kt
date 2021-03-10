@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.adapter.QuizListAdapter
 import com.example.quiz_app_mvvm.adapter.QuizListAdapter.OnQuizListItemClicked
+import com.example.quiz_app_mvvm.broadcast.QuizBroadcastReceiver
 import com.example.quiz_app_mvvm.daos.QuizDao
 import com.example.quiz_app_mvvm.databinding.FragmentJoinedQuizzesBinding
 import com.example.quiz_app_mvvm.model.QuizModel
+import com.example.quiz_app_mvvm.utilities.DialogsUtil
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.example.quiz_app_mvvm.views.fragments.ListFragment.Companion.helloCheck
 import com.firebase.ui.firestore.ObservableSnapshotArray
@@ -57,8 +59,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
             quizListAdapter = QuizListAdapter(it, this) { itemCount: Int ->
                 onListItemChanged(itemCount)
             }
-            quizListAdapter?.startListening()
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.adapter = quizListAdapter
+            quizListAdapter?.startListening()
             // Fade out the progress bar & show recyclerview
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.startAnimation(fadeInAnim)
             fragmentJoinedQuizzesBinding.joinedPageProgressBar.startAnimation(fadeOutAnim)
@@ -107,4 +109,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
             it.stopListening()
         }
     }
+
+//    override fun onConnectionReceive(isConnected: Boolean) {
+//        DialogsUtil.showConnectionErrorDialog(requireContext(), isConnected)
+//    }
 }

@@ -19,6 +19,7 @@ class DialogsUtil {
     companion object {
 
         private lateinit var loadingDialog: AlertDialog
+        private var connectionDialog: AlertDialog? = null
 
         fun showShareIDDialog(context: Context, docID: String, activity: FragmentActivity?) {
 
@@ -94,7 +95,7 @@ class DialogsUtil {
             loadingDialog.show()
         }
 
-        fun dismissDialog(){
+        fun dismissDialog() {
             loadingDialog.dismiss()
         }
 
@@ -140,6 +141,20 @@ class DialogsUtil {
                 function.invoke()
                 timesUpDialog.dismiss()
             }
+        }
+
+        fun showConnectionErrorDialog(context: Context, isConnected: Boolean) {
+            val connectionLostDialogBinding = ConnectionLostDialogBinding.inflate(LayoutInflater.from(context))
+
+            connectionDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                    .setCancelable(false)
+                    .setView(connectionLostDialogBinding.root)
+                    .create()
+            connectionDialog?.show()
+        }
+
+        fun dismissConnectionDialog() {
+            connectionDialog?.dismiss()
         }
     }
 }

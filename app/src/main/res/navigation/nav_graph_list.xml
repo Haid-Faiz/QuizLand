@@ -51,7 +51,9 @@
         tools:layout="@layout/fragment_add_quest" >
         <action
             android:id="@+id/action_addQuestFragment_to_createdQuizesFragment"
-            app:destination="@id/createdQuizesFragment" />
+            app:destination="@id/createdQuizesFragment"
+            app:popUpTo="@id/createQuizFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/createdQuizesFragment"

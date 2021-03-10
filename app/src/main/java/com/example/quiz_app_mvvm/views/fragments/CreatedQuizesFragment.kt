@@ -65,6 +65,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
     override fun onStart() {
         super.onStart()
+
         quizListViewModel.getMyCreatedQuizzes().observe(viewLifecycleOwner, {
 
             arr = it.snapshots
@@ -72,6 +73,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
                 onListItemChanged(itemCount)
             }
             createdListAdapter.startListening()
+
             fragmentCreatedQuizesBinding.createdQuizRecyclerview.adapter = createdListAdapter
 
             fragmentCreatedQuizesBinding.createdQuizRecyclerview.visibility = View.VISIBLE

@@ -14,8 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import com.example.quiz_app_mvvm.broadcast.QuizBroadcastReceiver
 import com.example.quiz_app_mvvm.databinding.FragmentDetailsBinding
 import com.example.quiz_app_mvvm.model.QuizModel
+import com.example.quiz_app_mvvm.utilities.DialogsUtil
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -47,7 +49,6 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         quizData = quizListViewModel.getQuizData()
         fragmentDetailsBinding.quiz = quizData
 
-        Log.d("batti", "onViewCreated: ${quizData.participated}")
 
 //        In Java --->
 //        position = DetailsFragmentArgs.fromBundle(getArguments()).position

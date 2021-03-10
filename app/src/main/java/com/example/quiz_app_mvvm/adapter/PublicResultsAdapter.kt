@@ -10,8 +10,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 class PublicResultsAdapter(
-        options: FirestoreRecyclerOptions<MyResult>,
-        private val clickListenerFunction: (MyResult) -> Unit
+        private val options: FirestoreRecyclerOptions<MyResult>,
+        private val clickListenerFunction: (MyResult) -> Unit,
+        private val onItemChanged: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<MyResult, PublicResultsAdapter.ViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,14 +24,15 @@ class PublicResultsAdapter(
         return ViewHolder(resultsListItemBinding)
     }
 
+    override fun onDataChanged() {
+        super.onDataChanged()
+        onItemChanged.invoke(itemCount)
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: MyResult) {
         holder.resultsListItemBinding.result = model
         holder.resultsListItemBinding.position = position
     }
 
     class ViewHolder(val resultsListItemBinding: ResultsListItemBinding): RecyclerView.ViewHolder(resultsListItemBinding.root)
-
-//    interface ParticipantResultListener{
-//        fun onParticipantResultClicked(result: MyResult)
-//    }
 }

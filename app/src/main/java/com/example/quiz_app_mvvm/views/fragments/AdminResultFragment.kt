@@ -61,11 +61,14 @@ class AdminResultFragment : Fragment() {
                 .observe(viewLifecycleOwner, {
 
                     arr = it.snapshots
-                    fragmentAdminResultBinding.adminResultTotalParticipants.text = arr.size.toString()
-
-                    publicResultsAdapter = PublicResultsAdapter(it) { myResult: MyResult ->
-                        DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
-                    }
+                    publicResultsAdapter = PublicResultsAdapter(options = it,
+                            clickListenerFunction = { myResult: MyResult ->
+                                DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
+                            },
+                            onItemChanged = { itemCount: Int ->
+                                fragmentAdminResultBinding.adminResultTotalParticipants.text = itemCount.toString()
+                                onListItemChanged(itemCount)
+                            })
                     publicResultsAdapter.startListening()
                     fragmentAdminResultBinding.participantsRankListRecyclerview.adapter = publicResultsAdapter
 
@@ -73,14 +76,18 @@ class AdminResultFragment : Fragment() {
                 })
     }
 
+    private fun onListItemChanged(itemCount: Int) {
+        if (itemCount == 0) {
+            fragmentAdminResultBinding.noOneParticipatedText.visibility = View.VISIBLE
+            fragmentAdminResultBinding.participantsRankListRecyclerview.visibility = View.INVISIBLE
+        } else {
+            fragmentAdminResultBinding.noOneParticipatedText.visibility = View.INVISIBLE
+            fragmentAdminResultBinding.participantsRankListRecyclerview.visibility = View.VISIBLE
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         publicResultsAdapter?.stopListening()
     }
-
-//    override fun onParticipantResultClicked(result: MyResult) {
-//        // also try here with position
-//
-//        DialogsUtil.showParticipantDetailResult(requireContext(), result)
-//    }
 }

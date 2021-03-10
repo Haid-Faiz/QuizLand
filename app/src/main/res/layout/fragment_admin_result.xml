@@ -93,8 +93,8 @@
 
             <TextView
                 android:id="@+id/admin_result_total_participants"
-                android:layout_width="9dp"
-                android:layout_height="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="NA"
@@ -295,11 +295,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/participants_rank_list" />
 
+            <TextView
+                android:id="@+id/no_one_participated_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:gravity="center"
+                android:text="Looks like... Currently \n no one has participated."
+                android:fontFamily="@font/noto_sans_bold"
+                android:textSize="16sp"
+                android:textColor="@color/colorLightText"
+                app:layout_constraintTop_toTopOf="@id/participants_rank_list_recyclerview"
+                app:layout_constraintStart_toStartOf="@id/participants_rank_list_recyclerview"
+                app:layout_constraintEnd_toEndOf="@id/participants_rank_list_recyclerview" />
+
+
             <ProgressBar
                 android:id="@+id/public_results_progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
+                tools:visibility="invisible"
                 android:indeterminateTint="@color/my_purple"
                 app:layout_constraintEnd_toEndOf="@id/participants_rank_list_recyclerview"
                 app:layout_constraintStart_toStartOf="@id/participants_rank_list_recyclerview"

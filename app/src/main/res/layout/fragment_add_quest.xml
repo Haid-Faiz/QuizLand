@@ -124,19 +124,20 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/correct_option_one_anim"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="4dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/enter_first_option_hint"
             app:layout_constraintStart_toEndOf="@id/enter_first_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_first_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/correct" />
+            app:lottie_rawRes="@raw/trying" />
 
         <ImageView
             android:id="@+id/check_mark_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="2dp"
             android:visibility="invisible"
             android:src="@drawable/ic_check_mark"
@@ -192,14 +193,15 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/correct_option_second_anim"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="4dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/enter_second_option_hint"
             app:layout_constraintStart_toEndOf="@id/enter_second_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_second_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/correct" />
+            app:lottie_rawRes="@raw/trying" />
 
         <EditText
             android:id="@+id/enter_option_second"
@@ -248,14 +250,15 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/correct_option_three_anim"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="4dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/enter_third_option_hint"
             app:layout_constraintStart_toEndOf="@id/enter_third_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_third_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/correct" />
+            app:lottie_rawRes="@raw/trying" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch3"
@@ -305,14 +308,15 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/correct_option_fourth_anim"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="4dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/enter_fourth_option_hint"
             app:layout_constraintStart_toEndOf="@id/enter_fourth_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_fourth_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/correct" />
+            app:lottie_rawRes="@raw/trying" />
 
 
         <com.google.android.material.switchmaterial.SwitchMaterial
