@@ -134,16 +134,16 @@
             app:lottie_autoPlay="true"
             app:lottie_rawRes="@raw/trying" />
 
-        <ImageView
-            android:id="@+id/check_mark_one"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="2dp"
-            android:visibility="invisible"
-            android:src="@drawable/ic_check_mark"
-            app:layout_constraintBottom_toBottomOf="@id/enter_first_option_hint"
-            app:layout_constraintStart_toEndOf="@id/correct_option_one_anim"
-            app:layout_constraintTop_toTopOf="@id/enter_first_option_hint" />
+<!--        <ImageView-->
+<!--            android:id="@+id/check_mark_one"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_marginStart="2dp"-->
+<!--            android:visibility="invisible"-->
+<!--            android:src="@drawable/ic_check_mark"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/enter_first_option_hint"-->
+<!--            app:layout_constraintStart_toEndOf="@id/correct_option_one_anim"-->
+<!--            app:layout_constraintTop_toTopOf="@id/enter_first_option_hint" />-->
 
 
         <com.google.android.material.switchmaterial.SwitchMaterial

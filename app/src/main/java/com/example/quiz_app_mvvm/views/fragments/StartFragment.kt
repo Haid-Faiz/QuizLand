@@ -89,7 +89,7 @@ class StartFragment : Fragment(), FirebaseAuth.AuthStateListener {
                     }
                 })
             }
-        }, 2400, 2400)
+        }, 3000, 3000)
     }
 
     private fun googleSignIn() {

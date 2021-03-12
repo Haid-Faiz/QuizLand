@@ -228,14 +228,14 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
                     // lottie
                     fragmentAddQuestBinding.correctOptionOneAnim.visibility = View.VISIBLE
                     fragmentAddQuestBinding.correctOptionOneAnim.playAnimation()
-                    fragmentAddQuestBinding.checkMarkOne.startAnimation(popUpAnim)
+//                    fragmentAddQuestBinding.checkMarkOne.startAnimation(popUpAnim)
                 } else {
                     fragmentAddQuestBinding.switch1.visibility = View.VISIBLE
                     fragmentAddQuestBinding.switch2.visibility = View.VISIBLE
                     fragmentAddQuestBinding.switch3.visibility = View.VISIBLE
                     fragmentAddQuestBinding.switch4.visibility = View.VISIBLE
                     fragmentAddQuestBinding.correctOptionOneAnim.visibility = View.INVISIBLE
-                    fragmentAddQuestBinding.checkMarkOne.visibility = View.INVISIBLE
+//                    fragmentAddQuestBinding.checkMarkOne.visibility = View.INVISIBLE
                 }
             }
 
