@@ -43,7 +43,6 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         fadeOutAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)

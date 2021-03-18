@@ -47,7 +47,6 @@ class StartFragment : Fragment(), FirebaseAuth.AuthStateListener {
         // Inflate the layout for this fragment
         fragmentStartBinding = FragmentStartBinding.inflate(inflater, container, false)
         return fragmentStartBinding.root
-//        return inflater.inflate(R.layout.fragment_start, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,6 +78,7 @@ class StartFragment : Fragment(), FirebaseAuth.AuthStateListener {
     private fun handleViewPagerAutoSlide() {
         timer = Timer()  // This will create a new Thread
         val handler = Handler()
+
         timer.schedule(object : TimerTask() {
             override fun run() {
 

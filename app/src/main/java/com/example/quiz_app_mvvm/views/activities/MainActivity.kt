@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), QuizBroadcastReceiver.ConnectivityList
     override fun onStop() {
         super.onStop()
         unregisterReceiver(broadcastReceiver)
-        DialogsUtil.dismissConnectionDialog()
+        DialogsUtil.dismissDialog()
     }
 
     override fun onConnectionReceive(isConnected: Boolean) {
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), QuizBroadcastReceiver.ConnectivityList
             if (!isConnected)
                 DialogsUtil.showConnectionErrorDialog(this@MainActivity, isConnected)
             else
-                DialogsUtil.dismissConnectionDialog()
+                DialogsUtil.dismissDialog()
         }
     }
 }

@@ -14,147 +14,152 @@ import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.*
 import com.example.quiz_app_mvvm.model.MyResult
 
-class DialogsUtil {
+object DialogsUtil {
 
-    companion object {
+    private var alertDialog: AlertDialog? = null
 
-        private lateinit var loadingDialog: AlertDialog
-        private var connectionDialog: AlertDialog? = null
+    fun showShareIDDialog(context: Context, docID: String, activity: FragmentActivity?) {
 
-        fun showShareIDDialog(context: Context, docID: String, activity: FragmentActivity?) {
+        val shareCustomDialogBinding = ShareCustomDialogBinding.inflate(LayoutInflater.from(context))
 
-            val shareCustomDialogBinding = ShareCustomDialogBinding.inflate(LayoutInflater.from(context))
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setView(shareCustomDialogBinding.root)
+                .setCancelable(true)
+                .create()
+        alertDialog?.show()
 
-            val alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setView(shareCustomDialogBinding.root)
-                    .setCancelable(true)
-                    .create()
-            alertDialog.show()
+        shareCustomDialogBinding.copyIdButton.setOnClickListener {
 
-            shareCustomDialogBinding.copyIdButton.setOnClickListener {
-
-                val clipboardManager: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clipData: ClipData = ClipData.newPlainText("UniqueQuizID", docID)
-                clipboardManager.setPrimaryClip(clipData)
-                alertDialog.dismiss()
-                Toast.makeText(context, "ID copied", Toast.LENGTH_SHORT).show()
-            }
-
-            shareCustomDialogBinding.shareIdButton.setOnClickListener {
-                alertDialog.dismiss()
-                val shareIntent = Intent(Intent.ACTION_SEND).setType("text/plain")
-                shareIntent.putExtra(Intent.EXTRA_TEXT, docID)
-                val chooser: Intent = Intent.createChooser(shareIntent, "Share unique ID with...")
-                context.startActivity(chooser)
-            }
+            val clipboardManager: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData: ClipData = ClipData.newPlainText("UniqueQuizID", docID)
+            clipboardManager.setPrimaryClip(clipData)
+            alertDialog?.dismiss()
+            Toast.makeText(context, "ID copied", Toast.LENGTH_SHORT).show()
         }
 
-        fun showDeleteDialog(context: Context, function: () -> Unit) {
-            val deleteDialogBinding = DeleteDialogBinding.inflate(LayoutInflater.from(context))
-            val deleteDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setView(deleteDialogBinding.root)
-                    .setCancelable(false)
-                    .create()
-            deleteDialog.show()
+        shareCustomDialogBinding.shareIdButton.setOnClickListener {
+            alertDialog?.dismiss()
+            val shareIntent = Intent(Intent.ACTION_SEND).setType("text/plain")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, docID)
+            val chooser: Intent = Intent.createChooser(shareIntent, "Share unique ID with...")
+            context.startActivity(chooser)
+        }
+    }
 
-            deleteDialogBinding.dontDeleteBtn.setOnClickListener {
-                deleteDialog.dismiss()
-            }
+    fun showDeleteDialog(context: Context, function: () -> Unit) {
+        val deleteDialogBinding = DeleteDialogBinding.inflate(LayoutInflater.from(context))
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setView(deleteDialogBinding.root)
+                .setCancelable(false)
+                .create()
+        alertDialog?.show()
 
-            deleteDialogBinding.deleteYesBtn.setOnClickListener {
-                function()
-                deleteDialog.dismiss()
-            }
-
+        deleteDialogBinding.dontDeleteBtn.setOnClickListener {
+            alertDialog?.dismiss()
         }
 
-        fun showExitQuizDialog(context: Context, navController: NavController, normalCountDownView: NormalCountDownView) {
-
-            val exitQuizDialogBinding = ExitQuizDialogBinding.inflate(LayoutInflater.from(context))
-            val alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setView(exitQuizDialogBinding.root)
-                    .setCancelable(false)
-                    .create()
-            alertDialog.show()
-            exitQuizDialogBinding.exitYesBtn.setOnClickListener {
-                normalCountDownView.stopTimer()
-                navController.navigateUp()
-                alertDialog.dismiss()
-            }
-            exitQuizDialogBinding.continueBtn.setOnClickListener { alertDialog.dismiss() }
-
+        deleteDialogBinding.deleteYesBtn.setOnClickListener {
+            function()
+            alertDialog?.dismiss()
         }
 
-        fun showLoadingDialog(context: Context) {
-            val loadingDialogBinding = LoadingDialogBinding.inflate(LayoutInflater.from(context))
-            loadingDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setCancelable(false)
-                    .setView(loadingDialogBinding.root)
-                    .create()
-            // start progress here
-            loadingDialog.show()
+    }
+
+    fun showExitQuizDialog(context: Context, navController: NavController, normalCountDownView: NormalCountDownView) {
+
+        val exitQuizDialogBinding = ExitQuizDialogBinding.inflate(LayoutInflater.from(context))
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setView(exitQuizDialogBinding.root)
+                .setCancelable(false)
+                .create()
+        alertDialog?.show()
+        exitQuizDialogBinding.exitYesBtn.setOnClickListener {
+            normalCountDownView.stopTimer()
+            navController.navigateUp()
+            alertDialog?.dismiss()
         }
+        exitQuizDialogBinding.continueBtn.setOnClickListener { alertDialog?.dismiss() }
 
-        fun dismissDialog() {
-            loadingDialog.dismiss()
+    }
+
+    fun showLoadingDialog(context: Context) {
+        val loadingDialogBinding = LoadingDialogBinding.inflate(LayoutInflater.from(context))
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setCancelable(false)
+                .setView(loadingDialogBinding.root)
+                .create()
+        // start progress here
+        alertDialog?.show()
+    }
+
+    fun showMyResultDetail(context: Context, myResult: MyResult) {
+        val myResultDetailsBinding = MyResultDetailsBinding.inflate(LayoutInflater.from(context))
+        // setting result data through Data Binding
+        myResultDetailsBinding.myResult = myResult
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setCancelable(true)
+                .setView(myResultDetailsBinding.root)
+                .create()
+        alertDialog?.show()
+
+        myResultDetailsBinding.detailResultOkBtn.setOnClickListener {
+            alertDialog?.dismiss()
         }
+    }
 
-        fun showMyResultDetail(context: Context, myResult: MyResult) {
-            val myResultDetailsBinding = MyResultDetailsBinding.inflate(LayoutInflater.from(context))
-            // setting result data through Data Binding
-            myResultDetailsBinding.myResult = myResult
-            val myResultDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setCancelable(true)
-                    .setView(myResultDetailsBinding.root)
-                    .create()
-            myResultDialog.show()
+    fun showParticipantDetailResult(context: Context, result: MyResult) {
+        val participantResultDetailsBinding = ParticipantResultDetailsBinding.inflate(LayoutInflater.from(context))
+        // setting result data through data binding
+        participantResultDetailsBinding.myResult = result
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setCancelable(true)
+                .setView(participantResultDetailsBinding.root)
+                .create()
+        alertDialog?.show()
 
-            myResultDetailsBinding.detailResultOkBtn.setOnClickListener {
-                myResultDialog.dismiss()
-            }
+        participantResultDetailsBinding.participantDetailResultOkBtn.setOnClickListener {
+            alertDialog?.dismiss()
         }
+    }
 
-        fun showParticipantDetailResult(context: Context, result: MyResult) {
-            val participantResultDetailsBinding = ParticipantResultDetailsBinding.inflate(LayoutInflater.from(context))
-            // setting result data through data binding
-            participantResultDetailsBinding.myResult = result
-            val participantResultDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setCancelable(true)
-                    .setView(participantResultDetailsBinding.root)
-                    .create()
-            participantResultDialog.show()
+    fun showTimeUpDialog(context: Context, function: () -> Unit) {
+        val timeUpDialogBinding = TimeUpDialogBinding.inflate(LayoutInflater.from(context))
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setView(timeUpDialogBinding.root)
+                .setCancelable(false)
+                .create()
+        alertDialog?.show()
 
-            participantResultDetailsBinding.participantDetailResultOkBtn.setOnClickListener {
-                participantResultDialog.dismiss()
-            }
+        timeUpDialogBinding.timeUpGotoResultBtn.setOnClickListener {
+            function.invoke()
+            alertDialog?.dismiss()
         }
+    }
 
-        fun showTimeUpDialog(context: Context, function: () -> Unit) {
-            val timeUpDialogBinding = TimeUpDialogBinding.inflate(LayoutInflater.from(context))
-            val timesUpDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setView(timeUpDialogBinding.root)
-                    .setCancelable(false)
-                    .create()
-            timesUpDialog.show()
+    fun showConnectionErrorDialog(context: Context, isConnected: Boolean) {
+        val connectionLostDialogBinding = ConnectionLostDialogBinding.inflate(LayoutInflater.from(context))
 
-            timeUpDialogBinding.timeUpGotoResultBtn.setOnClickListener {
-                function.invoke()
-                timesUpDialog.dismiss()
-            }
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setCancelable(false)
+                .setView(connectionLostDialogBinding.root)
+                .create()
+        alertDialog?.show()
+    }
+
+    fun showJoinQuizDialog(context: Context) {
+        val joinQuizDialogBinding = JoinQuizDilaogBinding.inflate(LayoutInflater.from(context))
+        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+                .setView(joinQuizDialogBinding.root)
+                .setCancelable(false)
+                .create()
+        alertDialog?.show()
+
+        joinQuizDialogBinding.cancelJoinBtn.setOnClickListener {
+            alertDialog?.dismiss()
         }
+    }
 
-        fun showConnectionErrorDialog(context: Context, isConnected: Boolean) {
-            val connectionLostDialogBinding = ConnectionLostDialogBinding.inflate(LayoutInflater.from(context))
-
-            connectionDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                    .setCancelable(false)
-                    .setView(connectionLostDialogBinding.root)
-                    .create()
-            connectionDialog?.show()
-        }
-
-        fun dismissConnectionDialog() {
-            connectionDialog?.dismiss()
-        }
+    fun dismissDialog() {
+        alertDialog?.dismiss()
     }
 }

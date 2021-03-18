@@ -67,11 +67,11 @@
                 android:id="@+id/admin_result_quiz_desc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="@{quizData.description}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@id/admin_result_quiz_name"
                 app:layout_constraintStart_toStartOf="@id/admin_result_quiz_name"
                 app:layout_constraintTop_toBottomOf="@id/admin_result_quiz_name"
@@ -82,12 +82,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="24dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="Total Participants"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_desc" />
 
@@ -99,7 +99,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="NA"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_result_total_participants_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/admin_result_total_participants_text"
@@ -115,7 +115,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Quiz held on"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/admin_result_total_participants_text" />
 
@@ -127,7 +127,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:dateFormatter="@{quizData.quizStartDate}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_held_on_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_held_on_text"
@@ -142,7 +142,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Quiz Duration"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_held_on_text" />
 
@@ -154,7 +154,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="@{String.valueOf(quizData.quizDurationHour) + ` hour ` + String.valueOf(quizData.quizDurationMin) + ` min`}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_duration_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_duration_text"
@@ -169,7 +169,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Difficulty"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_duration_text" />
 
@@ -181,7 +181,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="@{quizData.level}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_difficulty_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_difficulty_text"
@@ -196,7 +196,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Total questions"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_difficulty_text" />
 
@@ -208,7 +208,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="@{String.valueOf(quizData.questions)}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_questions_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_questions_text"
@@ -223,7 +223,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Marks for correct answer"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_questions_text" />
 
@@ -235,7 +235,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="@{String.valueOf(quizData.correctAnsMarks)}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_result_correct_ans_marks_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/admin_result_correct_ans_marks_text"
@@ -251,7 +251,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Marks for wrong answer"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/admin_result_correct_ans_marks_text" />
 
@@ -263,7 +263,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="@{String.valueOf(quizData.wrongAnsMarks)}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/admin_result_wrong_ans_marks_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/admin_result_wrong_ans_marks_text"
