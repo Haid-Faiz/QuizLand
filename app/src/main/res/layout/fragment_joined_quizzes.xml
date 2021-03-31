@@ -34,17 +34,6 @@
             app:layout_constraintTop_toBottomOf="@+id/list_page_title"
             tools:listitem="@layout/single_list_item" />
 
-        <ProgressBar
-            android:id="@+id/joined_page_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/my_purple"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/list_page_title" />
-
-
         <LinearLayout
             android:id="@+id/joined_quiz_list_empty_bottle"
             android:layout_width="0dp"
@@ -81,26 +70,14 @@
 
         </LinearLayout>
 
-<!--        <com.facebook.shimmer.ShimmerFrameLayout-->
-<!--            android:id="@+id/shimmer_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            app:shimmer_auto_start="true"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/list_page_title">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical">-->
-<!--                <include layout="@layout/shimmer_layout" />-->
-<!--                <include layout="@layout/shimmer_layout" />-->
-<!--                <include layout="@layout/shimmer_layout" />-->
-<!--            </LinearLayout>-->
-
-<!--        </com.facebook.shimmer.ShimmerFrameLayout>-->
+        <ProgressBar
+            android:id="@+id/joined_page_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/my_purple"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_page_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

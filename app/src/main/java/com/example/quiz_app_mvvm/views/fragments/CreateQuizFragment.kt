@@ -44,6 +44,7 @@ class CreateQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        isClicked = false
         navController = Navigation.findNavController(view)
         pickedDate = QuizModel.MyDate()
 

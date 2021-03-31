@@ -26,7 +26,7 @@ class FirebaseRepo {
 
     fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
             val queryOfParticipatedQuiz = quizDao.userCollection
                     .document(quizDao.user?.uid!!)
                     .collection("MyParticipatedQuiz")

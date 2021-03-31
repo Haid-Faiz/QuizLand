@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,11 +28,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
 
     private lateinit var quizListViewModel: QuizListViewModel
     private var quizListAdapter: QuizListAdapter? = null
-
-    //    private lateinit var quizListModels: ArrayList<QuizModel>
+    private lateinit var quizDao: QuizDao
     private lateinit var fragmentJoinedQuizzesBinding: FragmentJoinedQuizzesBinding
-    private lateinit var fadeInAnim: Animation
-    private lateinit var fadeOutAnim: Animation
     private lateinit var arr: ObservableSnapshotArray<QuizModel>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +41,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
-        fadeOutAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+
+        quizDao = QuizDao(this)
         quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
         fragmentJoinedQuizzesBinding.joinedPageRecyclerview.layoutManager = LinearLayoutManager(context)
         fragmentJoinedQuizzesBinding.joinedPageRecyclerview.setHasFixedSize(true)
@@ -54,19 +52,19 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         super.onStart()
         quizListViewModel.getParticipatedQuizOptions().observe(viewLifecycleOwner, {
 
+            fragmentJoinedQuizzesBinding.joinedPageProgressBar.isVisible = true
+            fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = false
             arr = it.snapshots
-            quizListAdapter = QuizListAdapter(it, this) { itemCount: Int ->
-                onListItemChanged(itemCount)
-            }
+            quizListAdapter = QuizListAdapter(it, this)
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.adapter = quizListAdapter
             quizListAdapter?.startListening()
             // Fade out the progress bar & show recyclerview
-            fragmentJoinedQuizzesBinding.joinedPageRecyclerview.startAnimation(fadeInAnim)
-            fragmentJoinedQuizzesBinding.joinedPageProgressBar.startAnimation(fadeOutAnim)
         })
     }
 
-    private fun onListItemChanged(itemCount: Int) {
+    override fun onListItemChanged(itemCount: Int) {
+        fragmentJoinedQuizzesBinding.joinedPageProgressBar.isVisible = false
+        fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = true
         if (itemCount == 0) {
             fragmentJoinedQuizzesBinding.joinedQuizListEmptyBottle.visibility = View.VISIBLE
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.visibility = View.INVISIBLE
@@ -76,14 +74,16 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         }
     }
 
+
     override fun onQuizItemClicked(position: Int) {
         quizListViewModel.setQuizData(arr[position])
         helloCheck(position)
     }
 
     override fun onUnEnrolClicked(adapterPosition: Int) {
-        QuizDao().unEnrolQuiz(arr[adapterPosition].quiz_id)
-        // now it will give callback through isDeleted overridden method that weather it has been deleted or not
+        quizDao.unEnrolQuiz(arr[adapterPosition].quiz_id)
+        // now it will give callback through isDeleted overridden
+        // method that weather it has been deleted or not
     }
 
     override fun isDeleted(isDeleted: Boolean) {

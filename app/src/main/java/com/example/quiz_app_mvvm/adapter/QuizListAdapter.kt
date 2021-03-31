@@ -15,13 +15,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 class QuizListAdapter(
         options: FirestoreRecyclerOptions<QuizModel>,
         private val onQuizListItemClicked: OnQuizListItemClicked,
-        private val f: (itemCount: Int) -> Unit
+//        private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<QuizModel, QuizListAdapter.ViewHolder>(options) {
 
 
     override fun onDataChanged() {
         super.onDataChanged()
-        f.invoke(itemCount)   // f(getItemCount())  we can also invoke it like this
+//        f.invoke(itemCount)   // f(getItemCount())  we can also invoke it like this
+        onQuizListItemClicked.onListItemChanged(itemCount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -59,5 +60,6 @@ class QuizListAdapter(
     interface OnQuizListItemClicked {
         fun onQuizItemClicked(position: Int)
         fun onUnEnrolClicked(adapterPosition: Int)
+        fun onListItemChanged(itemCount: Int)
     }
 }

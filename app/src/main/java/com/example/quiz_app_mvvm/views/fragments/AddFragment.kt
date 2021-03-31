@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
@@ -14,6 +15,7 @@ import com.example.quiz_app_mvvm.daos.QuizDao
 import com.example.quiz_app_mvvm.databinding.FragmentAddBinding
 import com.example.quiz_app_mvvm.databinding.JoinQuizDilaogBinding
 import com.example.quiz_app_mvvm.utilities.DialogsUtil
+import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -21,6 +23,7 @@ class AddFragment : BottomSheetDialogFragment(), QuizDao.UploadedCallBack {
 
     private lateinit var navController: NavController
     private lateinit var fragmentAddBinding: FragmentAddBinding
+    private lateinit var viewModel: QuizListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -32,6 +35,7 @@ class AddFragment : BottomSheetDialogFragment(), QuizDao.UploadedCallBack {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(requireActivity(), R.id.list_fragment_host)
+        viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
 
         fragmentAddBinding.createQuizSelectBtn.setOnClickListener {
             navController.navigate(R.id.action_addFragment_to_createQuizFragment)
@@ -71,7 +75,7 @@ class AddFragment : BottomSheetDialogFragment(), QuizDao.UploadedCallBack {
                                     navController.navigate(R.id.action_addFragment_to_listSecFragment)
                                 } else {
                                     DialogsUtil.dismissDialog()
-                                    this.dismiss()
+                                    this@AddFragment.dismiss()
                                     Toast.makeText(requireContext(), "Invalid quiz id or this quiz doesn't exist", Toast.LENGTH_SHORT).show()
                                     Snackbar.make(fragmentAddBinding.root, "Invalid quiz id or this quiz doesn't exist", Snackbar.LENGTH_LONG).show()
                                 }
@@ -86,6 +90,7 @@ class AddFragment : BottomSheetDialogFragment(), QuizDao.UploadedCallBack {
 
     override fun isUploaded(isAdded: Boolean, docID: String) {
         DialogsUtil.dismissDialog()
+        this@AddFragment.dismiss()
         if (isAdded) {
             Snackbar.make(fragmentAddBinding.root, "Join Successfully", Snackbar.LENGTH_LONG).show()
         } else {
