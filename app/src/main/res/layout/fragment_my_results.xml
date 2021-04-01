@@ -22,12 +22,12 @@
         android:id="@+id/my_result_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/work_sans_semibold"
         android:text="My Results"
         android:textColor="@color/my_purple"
-        android:textSize="20sp"
+        android:textSize="22sp"
         app:layout_constraintStart_toEndOf="@id/my_results_back_btn"
         app:layout_constraintTop_toTopOf="parent" />
 

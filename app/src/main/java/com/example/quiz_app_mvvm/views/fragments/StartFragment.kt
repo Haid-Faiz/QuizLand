@@ -154,7 +154,6 @@ class StartFragment : Fragment(), FirebaseAuth.AuthStateListener {
     override fun onStop() {
         super.onStop()
         Firebase.auth.removeAuthStateListener(this)
-        timer.cancel()
     }
 
     override fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {

@@ -13,7 +13,7 @@ import com.firebase.ui.firestore.ObservableSnapshotArray
 class CreatedQuizzesAdapter(
         options: FirestoreRecyclerOptions<QuizModel>,
         private val onCreatedQuizItemClicked: OnCreatedQuizItemClicked,
-        private val f: (itemCount: Int) -> Unit
+//        private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<QuizModel, CreatedQuizzesAdapter.ViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,22 +25,24 @@ class CreatedQuizzesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: QuizModel) {
         holder.createdQuizItemBinding.quiz = model
         holder.createdQuizItemBinding.position = position
-
 //        snapshots.get(holder.adapterPosition).quiz_id
     }
 
     override fun onDataChanged() {
         super.onDataChanged()
 
-        f(itemCount)  // invoking HOF
+//        f(itemCount)  // invoking HOF
+        onCreatedQuizItemClicked.onListItemChanged(itemCount)
     }
 
-    class ViewHolder(val createdQuizItemBinding: CreatedQuizItemBinding) : RecyclerView.ViewHolder(createdQuizItemBinding.root)
+    class ViewHolder(val createdQuizItemBinding: CreatedQuizItemBinding)
+        : RecyclerView.ViewHolder(createdQuizItemBinding.root)
 
 
     interface OnCreatedQuizItemClicked {
         fun onGetResultClicked(position: Int)
         fun onDeleteClicked(position: Int)
         fun onShareQuizClicked(position: Int)
+        fun onListItemChanged(itemCount: Int)
     }
 }

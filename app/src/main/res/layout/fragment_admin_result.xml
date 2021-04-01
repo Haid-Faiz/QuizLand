@@ -24,27 +24,27 @@
                 android:id="@+id/admin_result_discard_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="36dp"
-                android:padding="12dp"
+                android:layout_marginStart="12dp"
+                android:padding="8dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/cross"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/all_result_text"
+                app:layout_constraintBottom_toBottomOf="@id/all_result_text"/>
 
             <TextView
                 android:id="@+id/all_result_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/work_sans_semibold"
-                android:text="Results"
+                android:text="Results :"
                 android:textColor="@color/my_purple"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/admin_result_discard_btn"
                 app:layout_constraintStart_toEndOf="@id/admin_result_discard_btn"
-                app:layout_constraintTop_toTopOf="@id/admin_result_discard_btn" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/admin_result_quiz_name"

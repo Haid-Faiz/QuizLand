@@ -17,7 +17,11 @@
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_addFragment_to_createQuizFragment"
-            app:destination="@id/createQuizFragment" />
+            app:destination="@id/createQuizFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_addFragment_to_listSecFragment"
             app:destination="@id/listSecFragment" />
@@ -42,7 +46,11 @@
         tools:layout="@layout/fragment_create_quiz" >
         <action
             android:id="@+id/action_createQuizFragment_to_addQuestFragment"
-            app:destination="@id/addQuestFragment" />
+            app:destination="@id/addQuestFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addQuestFragment"
@@ -52,6 +60,10 @@
         <action
             android:id="@+id/action_addQuestFragment_to_createdQuizesFragment"
             app:destination="@id/createdQuizesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/createQuizFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -62,7 +74,11 @@
         tools:layout="@layout/fragment_created_quizes" >
         <action
             android:id="@+id/action_createdQuizesFragment_to_adminResultFragment"
-            app:destination="@id/adminResultFragment" />
+            app:destination="@id/adminResultFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/adminResultFragment"

@@ -15,6 +15,7 @@ class QuizListViewModel : ViewModel() {
     private var createdQuizModel = QuizModel()
     private var myResult = MyResult()
 
+
     fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
         return firebaseRepo.getParticipatedQuizOptions()
     }

@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.adapter.QuizListAdapter
@@ -46,6 +47,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
         fragmentJoinedQuizzesBinding.joinedPageRecyclerview.layoutManager = LinearLayoutManager(context)
         fragmentJoinedQuizzesBinding.joinedPageRecyclerview.setHasFixedSize(true)
+
     }
 
     override fun onStart() {
@@ -54,6 +56,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
 
             fragmentJoinedQuizzesBinding.joinedPageProgressBar.isVisible = true
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = false
+
             arr = it.snapshots
             quizListAdapter = QuizListAdapter(it, this)
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.adapter = quizListAdapter
@@ -65,12 +68,13 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
     override fun onListItemChanged(itemCount: Int) {
         fragmentJoinedQuizzesBinding.joinedPageProgressBar.isVisible = false
         fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = true
+
         if (itemCount == 0) {
-            fragmentJoinedQuizzesBinding.joinedQuizListEmptyBottle.visibility = View.VISIBLE
-            fragmentJoinedQuizzesBinding.joinedPageRecyclerview.visibility = View.INVISIBLE
+            fragmentJoinedQuizzesBinding.joinedQuizListEmptyBottle.isVisible = true
+            fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = false
         } else {
-            fragmentJoinedQuizzesBinding.joinedQuizListEmptyBottle.visibility = View.INVISIBLE
-            fragmentJoinedQuizzesBinding.joinedPageRecyclerview.visibility = View.VISIBLE
+            fragmentJoinedQuizzesBinding.joinedQuizListEmptyBottle.isVisible = false
+            fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = true
         }
     }
 
@@ -87,11 +91,10 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
     }
 
     override fun isDeleted(isDeleted: Boolean) {
-        Log.d("check", "isDeleted: chl gya")  // ye method nhi chlta
         if (isDeleted) {
-            Snackbar.make(fragmentJoinedQuizzesBinding.root, "Successfully UnEnrolled", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(fragmentJoinedQuizzesBinding.root, "Successfully UnEnrolled", Snackbar.LENGTH_SHORT).show()
         } else
-            Snackbar.make(fragmentJoinedQuizzesBinding.root, "Something went wrong", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(fragmentJoinedQuizzesBinding.root, "Something went wrong", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun isUploaded(isAdded: Boolean, docID: String) {
@@ -107,9 +110,11 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         quizListAdapter?.let {
             it.stopListening()
         }
+        quizListAdapter?.onDetachedFromRecyclerView(fragmentJoinedQuizzesBinding.joinedPageRecyclerview)
     }
 
-//    override fun onConnectionReceive(isConnected: Boolean) {
-//        DialogsUtil.showConnectionErrorDialog(requireContext(), isConnected)
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        quizListAdapter?.onDetachedFromRecyclerView(fragmentJoinedQuizzesBinding.joinedPageRecyclerview)
+    }
 }

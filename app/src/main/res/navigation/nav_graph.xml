@@ -28,6 +28,9 @@
             android:id="@+id/action_quizFragment_to_resultFragment"
             app:destination="@id/resultFragment"
             app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
             app:popUpTo="@id/detailsFragment"
             app:popUpToInclusive="true" />
         <argument
@@ -81,6 +84,8 @@
         <action
             android:id="@+id/action_resultFragment_to_listFragment"
             app:destination="@id/listFragment"
+            app:enterAnim="@anim/slide_down"
+            app:exitAnim="@anim/fade_out"
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="true" />
     </fragment>

@@ -1,15 +1,11 @@
 package com.example.quiz_app_mvvm.views.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -31,19 +27,14 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 //    private val quizListViewModel: QuizListViewModel by viewModels()
     private lateinit var quizListViewModel: QuizListViewModel
     private lateinit var createdListAdapter: CreatedQuizzesAdapter
-
-    //    private lateinit var quizListModels: ArrayList<QuizModel>
-    private lateinit var fadeInAnim: Animation
-    private lateinit var fadeOutAnim: Animation
-    private lateinit var fragmentCreatedQuizesBinding: FragmentCreatedQuizesBinding
+    private lateinit var binding: FragmentCreatedQuizesBinding
     private lateinit var navController: NavController
     private lateinit var arr: ObservableSnapshotArray<QuizModel>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        // Inflate the layout for this fragment
-        fragmentCreatedQuizesBinding = FragmentCreatedQuizesBinding.inflate(inflater, container, false)
-        return fragmentCreatedQuizesBinding.root
+        binding = FragmentCreatedQuizesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,43 +42,43 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
         navController = Navigation.findNavController(view)
 
-        fragmentCreatedQuizesBinding.createdQuizBackBtn.setOnClickListener {
+        binding.createdQuizBackBtn.setOnClickListener {
             navController.popBackStack()
         }
 
         quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
-        fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
-        fadeOutAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out)
+//        fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+//        fadeOutAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out)
 
-        fragmentCreatedQuizesBinding.createdQuizRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        fragmentCreatedQuizesBinding.createdQuizRecyclerview.setHasFixedSize(true)
+        binding.createdQuizRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        binding.createdQuizRecyclerview.setHasFixedSize(true)
     }
 
     override fun onStart() {
         super.onStart()
 
         quizListViewModel.getMyCreatedQuizzes().observe(viewLifecycleOwner, {
+            binding.createdProgressBar.isVisible = true
+            binding.createdQuizRecyclerview.isVisible = false
 
             arr = it.snapshots
-            createdListAdapter = CreatedQuizzesAdapter(it, this) { itemCount: Int ->
-                onListItemChanged(itemCount)
-            }
+            createdListAdapter = CreatedQuizzesAdapter(it, this)
             createdListAdapter.startListening()
-
-            fragmentCreatedQuizesBinding.createdQuizRecyclerview.adapter = createdListAdapter
-
-            fragmentCreatedQuizesBinding.createdQuizRecyclerview.visibility = View.VISIBLE
-            fragmentCreatedQuizesBinding.createdProgressBar.visibility = View.INVISIBLE
+            binding.createdQuizRecyclerview.adapter = createdListAdapter
         })
     }
 
-    private fun onListItemChanged(itemCount: Int) {
+    override fun onListItemChanged(itemCount: Int) {
+
+        binding.createdProgressBar.isVisible = false
+        binding.createdQuizRecyclerview.isVisible = true
+
         if (itemCount == 0) {
-            fragmentCreatedQuizesBinding.emptyListView.visibility = View.VISIBLE
-            fragmentCreatedQuizesBinding.createdQuizRecyclerview.visibility = View.INVISIBLE
+            binding.emptyListView.isVisible = true
+            binding.createdQuizRecyclerview.isVisible = false
         } else {
-            fragmentCreatedQuizesBinding.emptyListView.visibility = View.INVISIBLE
-            fragmentCreatedQuizesBinding.createdQuizRecyclerview.visibility = View.VISIBLE
+            binding.emptyListView.isVisible = false
+            binding.createdQuizRecyclerview.isVisible = true
         }
     }
 
@@ -118,9 +109,9 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
     override fun isDeleted(isDeleted: Boolean) {
         if (isDeleted)
-            Snackbar.make(fragmentCreatedQuizesBinding.root, "Successfully Deleted", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, "Successfully Deleted", Snackbar.LENGTH_LONG).show()
         else
-            Snackbar.make(fragmentCreatedQuizesBinding.root, "Oops.. Something went wrong", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, "Oops.. Something went wrong", Snackbar.LENGTH_LONG).show()
     }
 
     override fun isUploaded(isAdded: Boolean, docID: String) {
