@@ -1,10 +1,12 @@
 package com.example.quiz_app_mvvm.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -48,6 +50,13 @@ class QuizFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(view)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this@QuizFragment) {
+            DialogsUtil.showExitQuizDialog(
+                    requireContext(),
+                    navController,
+                    fragmentQuizBinding.normalCountDownView)
+        }
 
         val args: QuizFragmentArgs by navArgs()
         quizId = args.quizDocumentID
@@ -212,13 +221,13 @@ class QuizFragment : Fragment(), View.OnClickListener {
                 quizDao.user.photoUrl.toString()
         )
         // calculate progress
-        val totalMarks: Long = randomQueList.size * quizData.correctAnsMarks
-        val marksScored: Long = correctAnswer * quizData.correctAnsMarks - wrongAnswer * quizData.wrongAnsMarks  /////// negative marking lgani hai abhi
-        val marksPercent: Long = (marksScored / totalMarks) * 100
+        val totalMarks: Float = randomQueList.size * quizData.correctAnsMarks
+        val marksScored: Float = (correctAnswer * quizData.correctAnsMarks) - (wrongAnswer * (-quizData.wrongAnsMarks))  /////// negative marking lgani hai abhi
+        val marksPercent: Float = (marksScored / totalMarks) * 100
 
         val myResult = MyResult(
                 quizName = quizName,
-                heldOn = quizData.quizStartDate,      // Todo: Format start time
+                heldOn = quizData.quizStartDate,
                 user = user,
                 correctAns = correctAnswer,
                 wrongAns = wrongAnswer,

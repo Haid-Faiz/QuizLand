@@ -46,6 +46,8 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("bn2", "onViewCreated: called")
+
         navController = Navigation.findNavController(view)
         fragmentAddQuestBinding.questNum.text = currentQuestNum.toString()
         popUpAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pop_in)
@@ -66,26 +68,6 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
         fragmentAddQuestBinding.discardQestionBtn.setOnClickListener {
             navController.popBackStack()
         }
-
-        fragmentAddQuestBinding.enterOptionOne.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d("oe1", "afterTextChanged: ${p0.toString()}  ....   ${fragmentAddQuestBinding.enterOptionOne.text}")
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-                Log.d("oe2", "afterTextChanged: ${p0.toString()}  ....   ${fragmentAddQuestBinding.enterOptionOne.text}")
-            }
-        })
-
-        fragmentAddQuestBinding.enterOptionOne.doAfterTextChanged {
-            Log.d("oe3", "afterTextChanged:  ${fragmentAddQuestBinding.enterOptionOne.text}")
-        }
-
 
         fragmentAddQuestBinding.nextQuestionBtn.setOnClickListener {
             val question = fragmentAddQuestBinding.enterQuestion.text.toString().trim()
@@ -170,6 +152,11 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d("bn2", "onStop: called")
+    }
+
     private fun submitQuiz(quizModel: QuizModel) {
 //        fragmentAddQuestBinding.pb.visibility = View.VISIBLE
         DialogsUtil.showLoadingDialog(requireContext())
@@ -193,9 +180,7 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
         }
     }
 
-    override fun isDeleted(isDeleted: Boolean) {
-//        TODO("Not yet implemented")
-    }
+    override fun isDeleted(isDeleted: Boolean) {}
 
     private fun resetOption() {
         fragmentAddQuestBinding.enterQuestion.text.clear()

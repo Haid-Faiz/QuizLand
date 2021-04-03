@@ -44,7 +44,7 @@
                 android:fontFamily="@font/work_sans_semibold"
                 android:text="Loading Quiz..."
                 android:textColor="@color/my_purple"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/normalCountDownView"
                 app:layout_constraintStart_toEndOf="@+id/quiz_close_btn"
                 app:layout_constraintTop_toTopOf="@+id/quiz_close_btn" />

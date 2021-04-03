@@ -50,9 +50,12 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
 
     }
 
+
     override fun onStart() {
         super.onStart()
-        quizListViewModel.getParticipatedQuizOptions().observe(viewLifecycleOwner, {
+        Log.d("TAG1", "onStart: called")
+        quizListViewModel.getParticipatedQuizOptions()
+        quizListViewModel.liveOptions.observe(viewLifecycleOwner, {
 
             fragmentJoinedQuizzesBinding.joinedPageProgressBar.isVisible = true
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = false
@@ -110,11 +113,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         quizListAdapter?.let {
             it.stopListening()
         }
-        quizListAdapter?.onDetachedFromRecyclerView(fragmentJoinedQuizzesBinding.joinedPageRecyclerview)
-    }
+        Log.d("TAG", "onStop: called")
 
-    override fun onDestroy() {
-        super.onDestroy()
-        quizListAdapter?.onDetachedFromRecyclerView(fragmentJoinedQuizzesBinding.joinedPageRecyclerview)
+//        quizListViewModel.liveOptions?.removeObservers(this)
     }
 }

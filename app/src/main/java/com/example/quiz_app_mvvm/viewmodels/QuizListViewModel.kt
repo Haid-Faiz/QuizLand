@@ -5,8 +5,10 @@ import com.example.quiz_app_mvvm.repositories.FirebaseRepo
 import com.example.quiz_app_mvvm.model.QuizModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.quiz_app_mvvm.model.MyResult
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import kotlinx.coroutines.launch
 
 class QuizListViewModel : ViewModel() {
 
@@ -15,10 +17,19 @@ class QuizListViewModel : ViewModel() {
     private var createdQuizModel = QuizModel()
     private var myResult = MyResult()
 
+    private var _liveOptions: MutableLiveData<FirestoreRecyclerOptions<QuizModel>> = MutableLiveData()
+    var liveOptions: MutableLiveData<FirestoreRecyclerOptions<QuizModel>> = _liveOptions
 
-    fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
-        return firebaseRepo.getParticipatedQuizOptions()
+
+    fun getParticipatedQuizOptions() = viewModelScope.launch {
+        val quizOptions: FirestoreRecyclerOptions<QuizModel> = firebaseRepo.getParticipateQuizOptions()
+        _liveOptions.postValue(quizOptions)
     }
+
+
+//    fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
+//        return firebaseRepo.getParticipatedQuizOptions()
+//    }
 
     fun getMyCreatedQuizzes(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
         return firebaseRepo.getMyCreatedQuizzes()

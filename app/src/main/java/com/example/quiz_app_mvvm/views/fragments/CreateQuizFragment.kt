@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreateQuizBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class CreateQuizFragment : Fragment() {
@@ -44,6 +46,8 @@ class CreateQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("bn1", "onViewCreated: called")
+
         isClicked = false
         navController = Navigation.findNavController(view)
         pickedDate = QuizModel.MyDate()
@@ -53,7 +57,7 @@ class CreateQuizFragment : Fragment() {
         fragmentCreateQuizBinding.quizDurationMinPicker.minValue = 0
         fragmentCreateQuizBinding.quizDurationMinPicker.maxValue = 59
         fragmentCreateQuizBinding.quizDurationHourPicker.minValue = 0
-        fragmentCreateQuizBinding.quizDurationHourPicker.maxValue = 20
+        fragmentCreateQuizBinding.quizDurationHourPicker.maxValue = 23
 
         fragmentCreateQuizBinding.discardQuizBtn.setOnClickListener {
             navController.navigateUp()
@@ -93,7 +97,7 @@ class CreateQuizFragment : Fragment() {
             if (quizName.isNotEmpty() && quizDesc.isNotEmpty() && difficultyLevel.isNotEmpty()
                     && totalQuestNumString.isNotEmpty() && quizCreatedBy.isNotEmpty() &&
                     correctAnsMarks.isNotEmpty() && wrongAnsMarks.isNotEmpty()
-                    && isClicked && isQuizDurationSet) {
+                    && isClicked && isQuizDurationSet && wrongAnsMarks.toFloat() <= 0) {
 
                 // creating quiz object
                 val quizModel = QuizModel(
@@ -108,14 +112,21 @@ class CreateQuizFragment : Fragment() {
                         visibility = "public",
                         quizDurationHour = hourDuration,
                         quizDurationMin = minDuration,
-                        correctAnsMarks = correctAnsMarks.toLong(),
-                        wrongAnsMarks = wrongAnsMarks.toLong()
+                        correctAnsMarks = correctAnsMarks.toFloat(),
+                        wrongAnsMarks = wrongAnsMarks.toFloat()
                 )
 
                 quizListViewModel.setQuizData(quizModel)    // sending data to next fragment with help of viewmodel
                 navController.navigate(R.id.action_createQuizFragment_to_addQuestFragment)
 
             } else {
+
+                if (wrongAnsMarks.toFloat() > 0){
+                    fragmentCreateQuizBinding.enterWrongAnsMarks.error = "It should be zero or negative"
+                    Snackbar.make(fragmentCreateQuizBinding.root, "Wrong answer marks cannot be greater than zero!", Snackbar.LENGTH_SHORT).show()
+                }
+                else
+                    fragmentCreateQuizBinding.enterWrongAnsMarks.error = null
 
                 if (isClicked)
                     fragmentCreateQuizBinding.quizStartTime.error = null
@@ -172,6 +183,11 @@ class CreateQuizFragment : Fragment() {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("bn1", "onStop: called")
     }
 
     private fun pickDate() {

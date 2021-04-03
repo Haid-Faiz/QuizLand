@@ -39,18 +39,20 @@ class ResultFragment : Fragment() {
         val viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
         // get results
         val result = viewModel.getResult()
-        loadAnimation(result.scoredPercent)
+        loadAnimation(result.scoredPercent, result.marksScored, result.totalMarks)
         fragmentResultBinding.resultCorrectText.text = result.correctAns.toString()
         fragmentResultBinding.resultWrongText.text = result.wrongAns.toString()
         fragmentResultBinding.resultMissedText.text = result.missedAns.toString()
-        fragmentResultBinding.resultPercent.text = "${result.scoredPercent.toString()} %" //percent.toString() + "%"
+        fragmentResultBinding.resultPercent.text = "${String.format("%.1f", result.scoredPercent)}%"              //percent.toString() + "%"
         fragmentResultBinding.resultProgress.progress = result.scoredPercent.toInt()
     }
 
-    private fun loadAnimation(percent: Long) {
+    private fun loadAnimation(percent: Float, marksScored: Float, totalMarks: Float) {
         if (percent >= 60) {
             fragmentResultBinding.fireworksAnimation.visibility = View.VISIBLE
-            fragmentResultBinding.resultFeedback.text = "Yay! you scored ${percent}"
+            fragmentResultBinding.resultFeedback.text = "Yay! you scored ${String.format("%.1f", marksScored)} out of ${String.format("%.1f", totalMarks)}"
+        } else {
+            fragmentResultBinding.resultFeedback.text = "You scored ${String.format("%.1f", marksScored)} out of ${String.format("%.1f", totalMarks)}"
         }
     }
 }

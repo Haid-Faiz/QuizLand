@@ -6,8 +6,10 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.quiz_app_mvvm.R
@@ -17,7 +19,7 @@ import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.utilities.DialogsUtil
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class ListFragment : Fragment(){
+class ListFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var fragmentListBinding: FragmentListBinding
@@ -33,6 +35,11 @@ class ListFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 //        quizBroadcastReceiver = QuizBroadcastReceiver()
         navController = Navigation.findNavController(requireActivity(), R.id.list_fragment_host)
+        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener {
+            override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+                fragmentListBinding.bottomNavBar.isVisible = !(destination.id == R.id.addQuestFragment || destination.id == R.id.createQuizFragment)
+            }
+        })
         navControllerMain = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_container)
         NavigationUI.setupWithNavController(fragmentListBinding.bottomNavBar, navController)
     }
@@ -57,8 +64,8 @@ class ListFragment : Fragment(){
         }
 
         @JvmStatic
-        fun goToStartFrag(){
-            if (navControllerMain.currentDestination?.id == R.id.listFragment){
+        fun goToStartFrag() {
+            if (navControllerMain.currentDestination?.id == R.id.listFragment) {
                 navControllerMain.navigate(R.id.action_listFragment_to_startFragment)
             }
         }

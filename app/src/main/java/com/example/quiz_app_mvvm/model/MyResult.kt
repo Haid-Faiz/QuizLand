@@ -1,5 +1,10 @@
 package com.example.quiz_app_mvvm.model
 
+import android.icu.text.NumberFormat
+import android.util.Log
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+
 data class MyResult(
         var quizName: String = "",
         var user: User? = null,
@@ -7,7 +12,19 @@ data class MyResult(
         var correctAns: Int = 0,
         var wrongAns: Int = 0,
         var missedAns: Int = 0,
-        var scoredPercent: Long = 0L,
-        var marksScored: Long = 0L,
-        var totalMarks: Long = 0L,
-)
+        var scoredPercent: Float = 0F,
+        var marksScored: Float = 0F,
+        var totalMarks: Float = 0F,
+) {
+
+    companion object {
+
+        @BindingAdapter("android:formatFloat")
+        @JvmStatic
+        fun formatPercent(textView: TextView, floatNum: Float) {
+            textView.text = "${String.format("%.1f", floatNum)}%"
+        }
+
+    }
+
+}

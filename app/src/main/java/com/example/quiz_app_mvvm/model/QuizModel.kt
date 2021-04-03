@@ -24,8 +24,8 @@ data class QuizModel(
         val quizStartDate: MyDate? = null,
         val quizDurationHour: Int = 0,
         val quizDurationMin: Int = 0,
-        val correctAnsMarks: Long = 0L,
-        val wrongAnsMarks: Long = 0L
+        val correctAnsMarks: Float = 0F,
+        val wrongAnsMarks: Float = 0F
 ) {
 
     companion object {

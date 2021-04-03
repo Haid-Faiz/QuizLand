@@ -24,24 +24,37 @@ class FirebaseRepo {
     private var liveMyResultsOptions: MutableLiveData<FirestoreRecyclerOptions<MyResult>> = MutableLiveData()
     private var livePublicResultsOptions: MutableLiveData<FirestoreRecyclerOptions<MyResult>> = MutableLiveData()
 
-    fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
+    fun getParticipateQuizOptions(): FirestoreRecyclerOptions<QuizModel> {
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val queryOfParticipatedQuiz = quizDao.userCollection
-                    .document(quizDao.user?.uid!!)
-                    .collection("MyParticipatedQuiz")
-                    .orderBy("createdAt", Query.Direction.DESCENDING)
+        val queryOfParticipatedQuiz: Query = quizDao.userCollection
+                .document(quizDao.user?.uid!!)
+                .collection("MyParticipatedQuiz")
+                .orderBy("createdAt", Query.Direction.DESCENDING)
 
-            val options: FirestoreRecyclerOptions<QuizModel> = FirestoreRecyclerOptions.Builder<QuizModel>()
-                    .setQuery(queryOfParticipatedQuiz, QuizModel::class.java)
-                    .build()
-
-            withContext(Dispatchers.Main) {
-                liveQuizOptions.value = options
-            }
-        }
-        return liveQuizOptions
+        // Returning firebase recycler option of QuizModel type
+        return FirestoreRecyclerOptions.Builder<QuizModel>()
+                .setQuery(queryOfParticipatedQuiz, QuizModel::class.java)
+                .build()
     }
+
+//    fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
+//
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val queryOfParticipatedQuiz = quizDao.userCollection
+//                    .document(quizDao.user?.uid!!)
+//                    .collection("MyParticipatedQuiz")
+//                    .orderBy("createdAt", Query.Direction.DESCENDING)
+//
+//            val options: FirestoreRecyclerOptions<QuizModel> = FirestoreRecyclerOptions.Builder<QuizModel>()
+//                    .setQuery(queryOfParticipatedQuiz, QuizModel::class.java)
+//                    .build()
+//
+//            withContext(Dispatchers.Main) {
+//                liveQuizOptions.value = options
+//            }
+//        }
+//        return liveQuizOptions
+//    }
 
     fun getMyCreatedQuizzes(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
 
