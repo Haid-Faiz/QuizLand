@@ -48,8 +48,8 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
         super.onStart()
 
         val viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
-        viewModel.getMyResults().observe(viewLifecycleOwner, {
-
+        viewModel.getMyResults()
+        viewModel.myResultOptions.observe(viewLifecycleOwner, {
 
             observableSnapshotArray = it.snapshots
             // invisible progress bar here

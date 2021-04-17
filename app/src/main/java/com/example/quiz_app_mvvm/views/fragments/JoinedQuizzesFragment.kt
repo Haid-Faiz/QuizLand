@@ -5,21 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.adapter.QuizListAdapter
 import com.example.quiz_app_mvvm.adapter.QuizListAdapter.OnQuizListItemClicked
-import com.example.quiz_app_mvvm.broadcast.QuizBroadcastReceiver
 import com.example.quiz_app_mvvm.daos.QuizDao
 import com.example.quiz_app_mvvm.databinding.FragmentJoinedQuizzesBinding
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.example.quiz_app_mvvm.views.fragments.ListFragment.Companion.helloCheck
 import com.firebase.ui.firestore.ObservableSnapshotArray
@@ -55,7 +49,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         super.onStart()
         Log.d("TAG1", "onStart: called")
         quizListViewModel.getParticipatedQuizOptions()
-        quizListViewModel.liveOptions.observe(viewLifecycleOwner, {
+        quizListViewModel.participatedQuizOptions.observe(viewLifecycleOwner, {
 
             fragmentJoinedQuizzesBinding.joinedPageProgressBar.isVisible = true
             fragmentJoinedQuizzesBinding.joinedPageRecyclerview.isVisible = false
@@ -115,6 +109,6 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         }
         Log.d("TAG", "onStop: called")
 
-//        quizListViewModel.liveOptions?.removeObservers(this)
+//        quizListViewModel.participatedQuizOptions?.removeObservers(this)
     }
 }

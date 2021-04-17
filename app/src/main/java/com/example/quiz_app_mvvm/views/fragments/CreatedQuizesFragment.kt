@@ -57,7 +57,8 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
     override fun onStart() {
         super.onStart()
 
-        quizListViewModel.getMyCreatedQuizzes().observe(viewLifecycleOwner, {
+        quizListViewModel.getMyCreatedQuizzes()
+        quizListViewModel.createdQuizOptions.observe(viewLifecycleOwner, {
             binding.createdProgressBar.isVisible = true
             binding.createdQuizRecyclerview.isVisible = false
 

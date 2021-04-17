@@ -1,28 +1,17 @@
 package com.example.quiz_app_mvvm.repositories
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.quiz_app_mvvm.daos.QuizDao
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 class FirebaseRepo {
 
     private val quizDao = QuizDao()
-    private var liveQuizOptions: MutableLiveData<FirestoreRecyclerOptions<QuizModel>> = MutableLiveData()
-    private var liveCreatedQuizOptions: MutableLiveData<FirestoreRecyclerOptions<QuizModel>> = MutableLiveData()
-    private var liveMyResultsOptions: MutableLiveData<FirestoreRecyclerOptions<MyResult>> = MutableLiveData()
-    private var livePublicResultsOptions: MutableLiveData<FirestoreRecyclerOptions<MyResult>> = MutableLiveData()
 
-    fun getParticipateQuizOptions(): FirestoreRecyclerOptions<QuizModel> {
+    suspend fun getParticipateQuizOptions(): FirestoreRecyclerOptions<QuizModel> {
 
         val queryOfParticipatedQuiz: Query = quizDao.userCollection
                 .document(quizDao.user?.uid!!)
@@ -35,95 +24,48 @@ class FirebaseRepo {
                 .build()
     }
 
-//    fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val queryOfParticipatedQuiz = quizDao.userCollection
-//                    .document(quizDao.user?.uid!!)
-//                    .collection("MyParticipatedQuiz")
-//                    .orderBy("createdAt", Query.Direction.DESCENDING)
-//
-//            val options: FirestoreRecyclerOptions<QuizModel> = FirestoreRecyclerOptions.Builder<QuizModel>()
-//                    .setQuery(queryOfParticipatedQuiz, QuizModel::class.java)
-//                    .build()
-//
-//            withContext(Dispatchers.Main) {
-//                liveQuizOptions.value = options
-//            }
-//        }
-//        return liveQuizOptions
-//    }
+    suspend fun getMyCreatedQuizzes(): FirestoreRecyclerOptions<QuizModel> {
+        val queryOfCreatedQuiz = quizDao.userCollection
+                .document(quizDao.user?.uid!!)
+                .collection("MyCreatedQuiz")
+                .orderBy("createdAt", Query.Direction.DESCENDING)
 
-    fun getMyCreatedQuizzes(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
-
-        GlobalScope.launch(Dispatchers.IO) {
-
-            val queryOfCreatedQuiz = quizDao.userCollection
-                    .document(quizDao.user?.uid!!)
-                    .collection("MyCreatedQuiz")
-                    .orderBy("createdAt", Query.Direction.DESCENDING)
-
-            val options: FirestoreRecyclerOptions<QuizModel> = FirestoreRecyclerOptions.Builder<QuizModel>()
-                    .setQuery(queryOfCreatedQuiz, QuizModel::class.java)
-                    .build()
-
-            withContext(Dispatchers.Main) {
-                liveCreatedQuizOptions.value = options
-            }
-        }
-        return liveCreatedQuizOptions
+        // Returning firebase recycler option of QuizModel type
+        return FirestoreRecyclerOptions.Builder<QuizModel>()
+                .setQuery(queryOfCreatedQuiz, QuizModel::class.java)
+                .build()
     }
 
-    fun getMyResults(): LiveData<FirestoreRecyclerOptions<MyResult>> {
+    suspend fun getMyResults(): FirestoreRecyclerOptions<MyResult> {
 
-        GlobalScope.launch(Dispatchers.IO) {
-            val query: Query = quizDao.userCollection
-                    .document(quizDao.user?.uid!!)
-                    .collection("MyResults")
-                    .get()
-                    .await()
-                    .query
+        val query: Query = quizDao.userCollection
+                .document(quizDao.user?.uid!!)
+                .collection("MyResults")
+                .get()
+                .await()
+                .query
 
-            val options: FirestoreRecyclerOptions<MyResult> = FirestoreRecyclerOptions.Builder<MyResult>()
-                    .setQuery(query, MyResult::class.java)
-                    .build()
-
-            withContext(Dispatchers.Main) {
-                liveMyResultsOptions.value = options
-            }
-        }
-        return liveMyResultsOptions
+        return FirestoreRecyclerOptions.Builder<MyResult>()
+                .setQuery(query, MyResult::class.java)
+                .build()
     }
 
-    fun getPublicResults(quizID: String): LiveData<FirestoreRecyclerOptions<MyResult>> {
+    suspend fun getPublicResults(quizID: String): FirestoreRecyclerOptions<MyResult> {
 
-        GlobalScope.launch(Dispatchers.IO){
-            val query = quizDao.resultCollection
-                    .document(quizID)
-                    .collection("AllResults")
-                    .orderBy("marksScored", Query.Direction.DESCENDING)
+        val query = quizDao.resultCollection
+                .document(quizID)
+                .collection("AllResults")
+                .orderBy("marksScored", Query.Direction.DESCENDING)
 //                    .get()
 //                    .await()
 //                    .query
 
-            val options = FirestoreRecyclerOptions.Builder<MyResult>()
-                    .setQuery(query, MyResult::class.java)
-                    .build()
-
-            withContext(Dispatchers.Main) {
-                livePublicResultsOptions.value = options
-            }
-        }
-        return livePublicResultsOptions
+        return FirestoreRecyclerOptions.Builder<MyResult>()
+                .setQuery(query, MyResult::class.java)
+                .build()
     }
 
-
-    ///////////////////////    val queryOfParticipatedQuiz = postCollection.orderBy("createdAt", Query.Direction.DESCENDING)
-
-
-    /////////////    private CollectionReference quizListRef = database.collection("QuizList");
 //    private val quizListRef: Query = database.collection("QuizList").whereEqualTo("visibility", "public")
-
 
 //    val quizData: Unit get() {
 //            quizListRef.get().addOnCompleteListener { task ->
@@ -132,9 +74,4 @@ class FirebaseRepo {
 //                else onFirestoreTaskComplete.onError(task.exception)
 //            }
 //        }
-
-//    interface OnFirestoreTaskComplete {
-//        fun quizListDataAdded(quizList: List<QuizModel>?)
-//        fun onError(e: Exception?)
-//    }
 }

@@ -56,24 +56,23 @@ class AdminResultFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        quizListViewModel
-                .getPublicResults(quizID = quizData.quiz_id)
-                .observe(viewLifecycleOwner, {
+        quizListViewModel.getPublicResults(quizID = quizData.quiz_id)
+        quizListViewModel.publicResultOptions.observe(viewLifecycleOwner, {
 
-                    arr = it.snapshots
-                    publicResultsAdapter = PublicResultsAdapter(options = it,
-                            clickListenerFunction = { myResult: MyResult ->
-                                DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
-                            },
-                            onItemChanged = { itemCount: Int ->
-                                fragmentAdminResultBinding.adminResultTotalParticipants.text = itemCount.toString()
-                                onListItemChanged(itemCount)
-                            })
-                    publicResultsAdapter.startListening()
-                    fragmentAdminResultBinding.participantsRankListRecyclerview.adapter = publicResultsAdapter
+            arr = it.snapshots
+            publicResultsAdapter = PublicResultsAdapter(options = it,
+                    clickListenerFunction = { myResult: MyResult ->
+                        DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
+                    },
+                    onItemChanged = { itemCount: Int ->
+                        fragmentAdminResultBinding.adminResultTotalParticipants.text = itemCount.toString()
+                        onListItemChanged(itemCount)
+                    })
+            publicResultsAdapter.startListening()
+            fragmentAdminResultBinding.participantsRankListRecyclerview.adapter = publicResultsAdapter
 
-                    fragmentAdminResultBinding.publicResultsProgressBar.visibility = View.INVISIBLE
-                })
+            fragmentAdminResultBinding.publicResultsProgressBar.visibility = View.INVISIBLE
+        })
     }
 
     private fun onListItemChanged(itemCount: Int) {
