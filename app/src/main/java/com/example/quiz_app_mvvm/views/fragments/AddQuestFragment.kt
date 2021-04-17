@@ -1,5 +1,7 @@
 package com.example.quiz_app_mvvm.views.fragments
 
+import android.content.Context
+import android.hardware.input.InputManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
@@ -20,6 +23,7 @@ import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.utilities.DialogsUtil
 import com.example.quiz_app_mvvm.daos.QuizDao
 import com.example.quiz_app_mvvm.databinding.FragmentAddQuestBinding
+import com.example.quiz_app_mvvm.databinding.FragmentListBinding
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
@@ -152,29 +156,28 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.d("bn2", "onStop: called")
-    }
-
     private fun submitQuiz(quizModel: QuizModel) {
-//        fragmentAddQuestBinding.pb.visibility = View.VISIBLE
+        closeKeyboard()
+        // switch bottom bar to account
         DialogsUtil.showLoadingDialog(requireContext())
         val quizDao = QuizDao(this)
         quizDao.createQuiz(quizModel, questionsList)
     }
 
+    private fun closeKeyboard() {
+        val currentView: View? = requireActivity().currentFocus
+        currentView?.let {
+            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+    }
+
     override fun isUploaded(isAdded: Boolean, docID: String) {
-
-//        fragmentAddQuestBinding.pb.visibility = View.INVISIBLE
         DialogsUtil.dismissDialog()
-
         if (isAdded) {
-
             Snackbar.make(fragmentAddQuestBinding.root, "Your quiz is Successfully uploaded", Snackbar.LENGTH_LONG).show()
             DialogsUtil.showShareIDDialog(requireContext(), docID, activity)
             navController.navigate(R.id.action_addQuestFragment_to_createdQuizesFragment)
-
         } else {
             Snackbar.make(fragmentAddQuestBinding.root, "Something went wrong...", Snackbar.LENGTH_LONG).show()
         }

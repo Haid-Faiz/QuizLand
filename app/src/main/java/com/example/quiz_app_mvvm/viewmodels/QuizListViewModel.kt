@@ -27,10 +27,6 @@ class QuizListViewModel : ViewModel() {
     }
 
 
-//    fun getParticipatedQuizOptions(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
-//        return firebaseRepo.getParticipatedQuizOptions()
-//    }
-
     fun getMyCreatedQuizzes(): LiveData<FirestoreRecyclerOptions<QuizModel>> {
         return firebaseRepo.getMyCreatedQuizzes()
     }
@@ -42,12 +38,6 @@ class QuizListViewModel : ViewModel() {
     fun getPublicResults(quizID: String): LiveData<FirestoreRecyclerOptions<MyResult>> {
         return firebaseRepo.getPublicResults(quizID)
     }
-
-//    fun getListSizeCheck(): MutableLiveData<Int> {
-//        return firebaseRepo.getListSizeCheck()
-//    }
-
-// ----------------------------------------------------------------------------------------------
 
     // These setter and getter are for data transfer from one fragment to another
     fun setQuizData(quizModel: QuizModel) {
@@ -65,12 +55,4 @@ class QuizListViewModel : ViewModel() {
     fun getResult(): MyResult {
         return myResult
     }
-
-//    override fun quizListDataAdded(quizList: List<QuizModel>?) {
-//        quizListLiveData.value = quizList
-//    }
-//
-//    override fun onError(e: Exception?) {
-//        TODO("Not yet implemented")
-//    }
 }

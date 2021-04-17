@@ -17,8 +17,6 @@ import kotlinx.coroutines.tasks.await
 class FirebaseRepo {
 
     private val quizDao = QuizDao()
-
-    //    private var liveListSize: MutableLiveData<Int> = MutableLiveData()
     private var liveQuizOptions: MutableLiveData<FirestoreRecyclerOptions<QuizModel>> = MutableLiveData()
     private var liveCreatedQuizOptions: MutableLiveData<FirestoreRecyclerOptions<QuizModel>> = MutableLiveData()
     private var liveMyResultsOptions: MutableLiveData<FirestoreRecyclerOptions<MyResult>> = MutableLiveData()

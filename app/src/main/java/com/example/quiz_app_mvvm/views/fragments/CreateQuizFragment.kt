@@ -2,6 +2,7 @@ package com.example.quiz_app_mvvm.views.fragments
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -9,6 +10,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.DatePicker
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
@@ -45,8 +48,6 @@ class CreateQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d("bn1", "onViewCreated: called")
 
         isClicked = false
         navController = Navigation.findNavController(view)
@@ -116,18 +117,11 @@ class CreateQuizFragment : Fragment() {
                         wrongAnsMarks = wrongAnsMarks.toFloat()
                 )
 
+                closeKeyBoard()
                 quizListViewModel.setQuizData(quizModel)    // sending data to next fragment with help of viewmodel
                 navController.navigate(R.id.action_createQuizFragment_to_addQuestFragment)
 
             } else {
-
-                if (wrongAnsMarks.toFloat() > 0){
-                    fragmentCreateQuizBinding.enterWrongAnsMarks.error = "It should be zero or negative"
-                    Snackbar.make(fragmentCreateQuizBinding.root, "Wrong answer marks cannot be greater than zero!", Snackbar.LENGTH_SHORT).show()
-                }
-                else
-                    fragmentCreateQuizBinding.enterWrongAnsMarks.error = null
-
                 if (isClicked)
                     fragmentCreateQuizBinding.quizStartTime.error = null
                 else
@@ -168,9 +162,14 @@ class CreateQuizFragment : Fragment() {
                 else
                     fragmentCreateQuizBinding.enterCorrectAnsMarks.error = "Required"
 
-                if (wrongAnsMarks.isNotEmpty())
+                if (wrongAnsMarks.isNotEmpty()) {
                     fragmentCreateQuizBinding.enterWrongAnsMarks.error = null
-                else
+
+                    if (wrongAnsMarks.toFloat() > 0) {
+                        fragmentCreateQuizBinding.enterWrongAnsMarks.error = "It should be zero or negative"
+                        Snackbar.make(fragmentCreateQuizBinding.root, "Wrong answer marks cannot be greater than zero!", Snackbar.LENGTH_SHORT).show()
+                    }
+                } else
                     fragmentCreateQuizBinding.enterWrongAnsMarks.error = "Required"
             }
         }
@@ -185,9 +184,10 @@ class CreateQuizFragment : Fragment() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.d("bn1", "onStop: called")
+    private fun closeKeyBoard() {
+        val currentView = this.requireView()
+        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentView.windowToken, 0)
     }
 
     private fun pickDate() {

@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.androchef.happytimer.utils.extensions.visible
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentResultBinding
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
@@ -49,10 +51,11 @@ class ResultFragment : Fragment() {
 
     private fun loadAnimation(percent: Float, marksScored: Float, totalMarks: Float) {
         if (percent >= 60) {
-            fragmentResultBinding.fireworksAnimation.visibility = View.VISIBLE
+            fragmentResultBinding.fireworksAnimation.isVisible = true
             fragmentResultBinding.resultFeedback.text = "Yay! you scored ${String.format("%.1f", marksScored)} out of ${String.format("%.1f", totalMarks)}"
         } else {
             fragmentResultBinding.resultFeedback.text = "You scored ${String.format("%.1f", marksScored)} out of ${String.format("%.1f", totalMarks)}"
+            fragmentResultBinding.lowResultFeedback.isVisible = true
         }
     }
 }

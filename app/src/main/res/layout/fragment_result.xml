@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/work_sans_semibold"
         android:text="Result"
@@ -45,13 +45,32 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/noto_sans"
-        tools:text="Yay! you scored 84%"
         android:textAllCaps="false"
         android:textColor="@color/my_purple"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/result_progress"
         app:layout_constraintStart_toStartOf="@+id/result_progress"
-        app:layout_constraintTop_toBottomOf="@+id/result_progress" />
+        app:layout_constraintTop_toBottomOf="@+id/result_progress"
+        tools:text="Yay! you scored 84 out 100" />
+
+    <TextView
+        android:id="@+id/low_result_feedback"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/noto_sans"
+        android:gravity="center"
+        android:text="We know you have 🔥 inside you...\nTry hard next time"
+        android:textAllCaps="false"
+        android:textColor="@color/colorLightText"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_feedback"
+        tools:text="We know you have 🔥 inside you...\nTry hard next time" />
 
     <TextView
         android:id="@+id/result_percent"
@@ -71,21 +90,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="42dp"
         android:fontFamily="@font/noto_sans"
         android:text="Correct answers"
         android:textAllCaps="false"
         android:textColor="@color/colorLightText"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_feedback" />
+        app:layout_constraintTop_toBottomOf="@+id/low_result_feedback" />
 
     <TextView
         android:id="@+id/result_wrong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/noto_sans"
         android:text="Wrong answers"
         android:textAllCaps="false"
@@ -99,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/noto_sans"
         android:text="Question missed"
         android:textAllCaps="false"
@@ -169,12 +188,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/cele_last"
         app:layout_constraintBottom_toTopOf="@id/result_home_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/cele_last" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
