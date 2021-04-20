@@ -41,13 +41,11 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizDao.Uploade
         quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
         fragmentJoinedQuizzesBinding.joinedPageRecyclerview.layoutManager = LinearLayoutManager(context)
         fragmentJoinedQuizzesBinding.joinedPageRecyclerview.setHasFixedSize(true)
-
     }
 
 
     override fun onStart() {
         super.onStart()
-        Log.d("TAG1", "onStart: called")
         quizListViewModel.getParticipatedQuizOptions()
         quizListViewModel.participatedQuizOptions.observe(viewLifecycleOwner, {
 

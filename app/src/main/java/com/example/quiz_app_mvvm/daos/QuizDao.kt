@@ -9,6 +9,7 @@ import com.example.quiz_app_mvvm.views.fragments.QuizFragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -174,14 +175,35 @@ class QuizDao(private val uploadedCallBack: UploadedCallBack? = null) {
 
     fun unEnrolQuiz(quizID: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            userCollection.document(user?.uid!!)
+            userCollection
+                    .document(user?.uid!!)
                     .collection("MyParticipatedQuiz")
                     .document(quizID)
-                    .delete().addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            uploadedCallBack?.isDeleted(true)
-                        }
+                    .collection("Questions")
+                    .get()
+                    .await()
+                    .documents
+                    .get(0)
+                    .id.also {
+                        userCollection
+                                .document(user?.uid!!)
+                                .collection("MyParticipatedQuiz")
+                                .document(quizID)
+                                .collection("Questions")
+                                .document(it)
+                                .delete().isSuccessful.also {
+                                    userCollection
+                                            .document(user?.uid!!)
+                                            .collection("MyParticipatedQuiz")
+                                            .document(quizID)
+                                            .delete()
+                                }
                     }
+//                    .delete().addOnCompleteListener {
+//                        if (it.isSuccessful) {
+//                            uploadedCallBack?.isDeleted(true)
+//                        }
+//                    }
 
             // Also delete corresponding result from My Results
             userCollection.document(user.uid)
@@ -192,21 +214,68 @@ class QuizDao(private val uploadedCallBack: UploadedCallBack? = null) {
     }
 
     fun deleteQuiz(quizID: String) {
-        GlobalScope.launch(Dispatchers.IO) {
+        //This method will be called when Admin will delete the quiz
+        CoroutineScope(Dispatchers.IO).launch {
+
             userCollection.document(user?.uid!!)
                     .collection("MyCreatedQuiz")
                     .document(quizID)
-                    .delete().isSuccessful.let {
-                        if (it) {
-                            // Now also delete from QuizList collection
-                            quizListCollection.document(quizID).delete().isComplete.let { isDeleted: Boolean ->
+                    .collection("Questions")
+                    .get()
+                    .await()
+                    .documents
+                    .get(0)
+                    .id.also {
+                        Log.d("checkD0", "id: $it")
+                        userCollection.document(user?.uid!!)
+                                .collection("MyCreatedQuiz")
+                                .document(quizID)
+                                .collection("Questions")
+                                .document(it)
+                                .delete().isSuccessful.also { isDeleted: Boolean ->
+                                    // Now also delete completely from QuizList collection
+                                    Log.d("checkD1", "deleteQuiz: $isDeleted")
 
-                                withContext(Dispatchers.Main) {
-                                    uploadedCallBack?.isDeleted(isDeleted)
+                                    userCollection.document(user?.uid!!)
+                                            .collection("MyCreatedQuiz")
+                                            .document(quizID)
+                                            .delete()
+
+                                    quizListCollection
+                                            .document(quizID)
+                                            .collection("Questions")
+                                            .get()
+                                            .await()
+                                            .documents
+                                            .get(0)
+                                            .id.let { questionsId: String ->
+                                                quizListCollection
+                                                        .document(quizID)
+                                                        .collection("Questions")
+                                                        .document(questionsId)
+                                                        .delete().isSuccessful.let {
+                                                            quizListCollection
+                                                                    .document(quizID)
+                                                                    .delete()
+                                                        }
+                                            }
                                 }
-                            }
-                        }
                     }
+
+//                    .let {
+//                        Log.d("checkD0", "deleteQuiz: $it")
+//                        if (it) {
+//                            Log.d("checkD1", "deleteQuiz: $it")
+//                            // Now also delete from QuizList collection
+//                            quizListCollection.document(quizID).delete()
+////                                    .isComplete.let { isDeleted: Boolean ->
+////
+////                                withContext(Dispatchers.Main) {
+////                                    uploadedCallBack?.isDeleted(isDeleted)
+////                                }
+////                            }
+//                        }
+//                    }
         }
     }
 

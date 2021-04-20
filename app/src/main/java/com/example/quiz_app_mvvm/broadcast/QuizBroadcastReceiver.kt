@@ -28,5 +28,4 @@ class QuizBroadcastReceiver : BroadcastReceiver() {
     interface ConnectivityListener {
         fun onConnectionReceive(isConnected: Boolean)
     }
-
 }

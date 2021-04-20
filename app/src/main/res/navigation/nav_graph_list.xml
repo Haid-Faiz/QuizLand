@@ -76,7 +76,7 @@
             android:id="@+id/action_createdQuizesFragment_to_adminResultFragment"
             app:destination="@id/adminResultFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/fade_out"
+
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>

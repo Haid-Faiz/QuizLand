@@ -20,7 +20,6 @@ class PublicResultsAdapter(
 //        resultsListItemBinding.participantResultListener = participantResultListener
 //        resultsListItemBinding.f = this
         resultsListItemBinding.kf = clickListenerFunction
-
         return ViewHolder(resultsListItemBinding)
     }
 

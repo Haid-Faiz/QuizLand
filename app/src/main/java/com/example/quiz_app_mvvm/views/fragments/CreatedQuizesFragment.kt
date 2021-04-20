@@ -116,7 +116,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
     }
 
     override fun isUploaded(isAdded: Boolean, docID: String) {
-        // TODO("Not yet implemented")
+
     }
 
 }
