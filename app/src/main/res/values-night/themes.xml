@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Quiz_App_MVVM" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/my_purple</item>
+        <item name="colorPrimary">@color/primary_text</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
@@ -14,5 +14,23 @@
         <!-- Customize your theme here. -->
 
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBSDialogTheme</item>
     </style>
+
+    <style name="CustomBSDialogTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBSDStyle</item>
+    </style>
+
+    <style name="CustomBSDStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="shapeAppearanceOverlay">@style/CustomBSDshapeAppereance</item>
+    </style>
+
+    <style name="CustomBSDshapeAppereance" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
 </resources>
