@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".views.fragments.DetailsFragment">
+        tools:context=".ui.fragments.DetailsFragment">
 
 
         <ScrollView
@@ -62,7 +62,7 @@
                     android:layout_marginEnd="24dp"
                     android:fontFamily="@font/noto_sans_bold"
                     android:text="@{quiz.name}"
-                    android:textColor="@color/my_purple"
+                    android:textColor="@color/primary_text"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
                     android:layout_marginEnd="24dp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{quiz.description}"
-                    android:textColor="@color/white"
+                    android:textColor="@color/primary_text"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -307,16 +307,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.widget.Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/details_start_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:cornerRadius="4dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/primary_btn_bg"
             android:fontFamily="@font/noto_sans"
-            android:foreground="?attr/selectableItemBackground"
             android:text="Start Quiz"
             android:textAllCaps="false"
             android:textColor="@color/black"

@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.views.fragments
+package com.example.quiz_app_mvvm.ui.fragments
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -6,12 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.DatePicker
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment

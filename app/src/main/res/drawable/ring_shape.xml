@@ -10,6 +10,6 @@
         android:right="24dp"
         android:top="24dp"
         android:bottom="24dp"/>
-    <solid android:color="@color/my_purple"/>
+    <solid android:color="@color/primary_text"/>
 
 </shape>

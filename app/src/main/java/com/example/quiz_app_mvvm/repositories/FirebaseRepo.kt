@@ -1,6 +1,5 @@
 package com.example.quiz_app_mvvm.repositories
 
-import com.example.quiz_app_mvvm.daos.QuizDao
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -9,7 +8,7 @@ import kotlinx.coroutines.tasks.await
 
 class FirebaseRepo {
 
-    private val quizDao = QuizDao()
+    private val quizDao = QuizRepo()
 
     suspend fun getParticipateQuizOptions(): FirestoreRecyclerOptions<QuizModel> {
 

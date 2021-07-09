@@ -15,7 +15,7 @@
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/noto_sans"
         android:text="Share this unique quiz ID with others in order to let them participate in this quiz."
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

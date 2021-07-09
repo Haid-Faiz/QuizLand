@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.views.fragments
+package com.example.quiz_app_mvvm.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,16 +12,16 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.adapter.CreatedQuizzesAdapter
-import com.example.quiz_app_mvvm.daos.QuizDao
+import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentCreatedQuizesBinding
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
+import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.firebase.ui.firestore.ObservableSnapshotArray
 import com.google.android.material.snackbar.Snackbar
 
 
-class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizItemClicked, QuizDao.UploadedCallBack {
+class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizItemClicked, QuizRepo.UploadedCallBack {
 
     //    private val quizListViewModel: QuizListViewModel by activityViewModels()
 //    private val quizListViewModel: QuizListViewModel by viewModels()
@@ -98,7 +98,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
         // **Note** -> when we only have single functional parameter then we move that single lambda argument out of parenthesis
         DialogsUtil.showDeleteDialog(requireContext()) {
             // delete the quiz from MyCreated collection and from QuizList collection
-            val quizDao = QuizDao()
+            val quizDao = QuizRepo()
             quizDao.deleteQuiz(arr[position].quiz_id)
             // now it will give callback through isDeleted overridden method that weather it has been deleted or not
         }

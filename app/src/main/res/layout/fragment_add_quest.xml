@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".views.fragments.AddQuestFragment">
+    tools:context=".ui.fragments.AddQuestFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,23 +28,20 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/work_sans_semibold"
             android:text="Add questions"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/next_question_btn"
             app:layout_constraintStart_toEndOf="@id/discard_qestion_btn"
             app:layout_constraintTop_toTopOf="@id/next_question_btn" />
 
-        <android.widget.Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/next_question_btn"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
+            app:cornerRadius="4dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="14dp"
-            android:background="@drawable/primary_btn_bg"
             android:fontFamily="@font/noto_sans"
-            android:foreground="?attr/selectableItemBackground"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:text="Next question"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -59,7 +56,7 @@
             android:layout_marginTop="36dp"
             android:fontFamily="@font/noto_sans"
             android:text="Question No."
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +69,7 @@
             android:background="@drawable/ring_shape"
             android:fontFamily="@font/noto_sans"
             android:text="1"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="26dp"
             app:layout_constraintEnd_toEndOf="@id/quest_num_text"
             app:layout_constraintStart_toStartOf="@id/quest_num_text"
@@ -86,7 +83,7 @@
             android:layout_marginTop="36dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter question"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/quest_num" />
 
@@ -102,7 +99,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Enter question here"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -119,7 +116,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter option one"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_question" />
 
@@ -172,7 +169,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Enter option one here"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -188,7 +185,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter option two"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_option_one" />
 
@@ -216,7 +213,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Enter option two here"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -245,7 +242,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter option three"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_option_second" />
 
@@ -286,7 +283,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Enter option three here"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -302,7 +299,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter option fourth"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_option_three" />
 
@@ -346,7 +343,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Enter option four here"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"

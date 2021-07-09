@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.MyResultsFragment">
+    tools:context=".ui.fragments.MyResultsFragment">
 
     <ImageButton
         android:id="@+id/my_results_back_btn"
@@ -26,7 +26,7 @@
         android:layout_marginTop="36dp"
         android:fontFamily="@font/work_sans_semibold"
         android:text="My Results"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="22sp"
         app:layout_constraintStart_toEndOf="@id/my_results_back_btn"
         app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +82,7 @@
         android:id="@+id/my_results_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/my_purple"
+        android:indeterminateTint="@color/primary_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,7 +1,6 @@
-package com.example.quiz_app_mvvm.views.fragments
+package com.example.quiz_app_mvvm.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.adapter.MyResultsAdapter
 import com.example.quiz_app_mvvm.databinding.FragmentMyResultsBinding
 import com.example.quiz_app_mvvm.model.MyResult
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
+import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.firebase.ui.firestore.ObservableSnapshotArray
 

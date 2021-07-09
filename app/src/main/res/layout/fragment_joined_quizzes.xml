@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".views.fragments.JoinedQuizzesFragment" >
+        tools:context=".ui.fragments.JoinedQuizzesFragment" >
 
         <TextView
             android:id="@+id/list_page_title"
@@ -17,7 +17,7 @@
             android:layout_marginTop="36dp"
             android:fontFamily="@font/work_sans_semibold"
             android:text="QuizLand"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,6 +28,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
             android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +75,7 @@
             android:id="@+id/joined_page_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/my_purple"
+            android:indeterminateTint="@color/primary_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

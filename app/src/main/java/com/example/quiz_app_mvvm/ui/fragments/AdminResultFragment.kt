@@ -1,7 +1,6 @@
-package com.example.quiz_app_mvvm.views.fragments
+package com.example.quiz_app_mvvm.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.adapter.PublicResultsAdapter
-import com.example.quiz_app_mvvm.daos.QuizDao
 import com.example.quiz_app_mvvm.databinding.FragmentAdminResultBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
+import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.ObservableSnapshotArray
 
 

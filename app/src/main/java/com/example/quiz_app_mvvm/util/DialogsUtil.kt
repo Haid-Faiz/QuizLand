@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.utilities
+package com.example.quiz_app_mvvm.util
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -146,18 +146,18 @@ object DialogsUtil {
         alertDialog?.show()
     }
 
-    fun showJoinQuizDialog(context: Context) {
-        val joinQuizDialogBinding = JoinQuizDilaogBinding.inflate(LayoutInflater.from(context))
-        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setView(joinQuizDialogBinding.root)
-                .setCancelable(false)
-                .create()
-        alertDialog?.show()
-
-        joinQuizDialogBinding.cancelJoinBtn.setOnClickListener {
-            alertDialog?.dismiss()
-        }
-    }
+//    fun showJoinQuizDialog(context: Context) {
+//        val joinQuizDialogBinding = JoinQuizDilaogBinding.inflate(LayoutInflater.from(context))
+//        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+//                .setView(joinQuizDialogBinding.root)
+//                .setCancelable(false)
+//                .create()
+//        alertDialog?.show()
+//
+//        joinQuizDialogBinding.cancelJoinBtn.setOnClickListener {
+//            alertDialog?.dismiss()
+//        }
+//    }
 
     fun dismissDialog() {
         alertDialog?.dismiss()

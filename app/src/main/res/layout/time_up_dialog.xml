@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Oops...! Times up"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="24dp"
         android:fontFamily="@font/work_sans_semibold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,17 +44,16 @@
         app:layout_constraintTop_toBottomOf="@+id/time_up_textView"
         app:srcCompat="@drawable/ic_hourglass" />
 
-    <android.widget.Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/time_up_goto_result_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cornerRadius="4dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/primary_btn_bg"
         android:fontFamily="@font/noto_sans"
-        android:foreground="?attr/selectableItemBackground"
         android:text="Goto Result"
         android:textAllCaps="false"
         android:textColor="@color/black"

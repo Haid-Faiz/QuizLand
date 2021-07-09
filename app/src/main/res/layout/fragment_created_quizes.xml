@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.CreatedQuizesFragment">
+    tools:context=".ui.fragments.CreatedQuizesFragment">
 
 
     <ImageButton
@@ -27,7 +27,7 @@
         android:layout_marginTop="36dp"
         android:fontFamily="@font/work_sans_semibold"
         android:text="My created quiz"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="22sp"
         app:layout_constraintStart_toEndOf="@+id/created_quiz_back_btn"
         app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +84,7 @@
         android:id="@+id/created_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/my_purple"
+        android:indeterminateTint="@color/primary_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

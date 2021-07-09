@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".views.fragments.CreateQuizFragment">
+    tools:context=".ui.fragments.CreateQuizFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,23 +30,19 @@
             android:layout_marginStart="12dp"
             android:fontFamily="@font/work_sans_semibold"
             android:text="Create quiz"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@id/add_question_btn"
             app:layout_constraintStart_toEndOf="@id/discard_quiz_btn"
             app:layout_constraintTop_toTopOf="@id/add_question_btn" />
 
-        <android.widget.Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/add_question_btn"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:background="@drawable/primary_btn_bg"
             android:fontFamily="@font/noto_sans"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:text="Add questions"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -79,7 +75,7 @@
             android:layout_marginTop="36dp"
             android:fontFamily="@font/noto_sans"
             android:text="Upload quiz image (optional)"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/note" />
 
@@ -115,7 +111,7 @@
             android:layout_margin="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter quiz name"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_quiz_image" />
 
@@ -131,7 +127,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Enter quiz name here"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -147,7 +143,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter quiz description"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_quiz_name" />
 
@@ -163,7 +159,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Enter quiz description here"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -178,7 +174,7 @@
             android:layout_margin="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter total number of questions"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_quiz_description" />
 
@@ -195,7 +191,7 @@
             android:hint="Enter total no. of questions here"
             android:inputType="number"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -211,7 +207,7 @@
             android:layout_margin="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter marks for correct answer"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_quest_num" />
 
@@ -228,7 +224,7 @@
             android:hint="Enter correct answer marks"
             android:inputType="number|numberDecimal"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -244,7 +240,7 @@
             android:layout_margin="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Enter marks for wrong answer"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_correct_ans_marks" />
 
@@ -261,15 +257,13 @@
             android:hint="Enter wrong answer marks"
             android:inputType="numberSigned|number|numberDecimal"
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_wrong_marks_hint" />
-
-
 
         <TextView
             android:id="@+id/enter_created_by_hint"
@@ -278,7 +272,7 @@
             android:layout_margin="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Quiz created by"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_wrong_ans_marks" />
 
@@ -294,7 +288,7 @@
             android:fontFamily="@font/noto_sans"
             android:hint="Quiz created by "
             android:padding="16dp"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textColorHint="@color/colorLightText"
             android:textCursorDrawable="@null"
             android:textSize="16sp"
@@ -309,20 +303,22 @@
             android:layout_margin="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Select quiz start time"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_quiz_created_by" />
 
-        <android.widget.Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/quiz_start_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/colorLightText"
+            app:cornerRadius="4dp"
+            android:padding="12dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/outline_light_btn_bg"
             android:fontFamily="@font/noto_sans"
-            android:foreground="?attr/selectableItemBackground"
             android:text="10:00 am, 15/12/2021"
             android:textColor="@color/colorLightText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -336,7 +332,7 @@
             android:layout_margin="24dp"
             android:fontFamily="@font/noto_sans"
             android:text="Select quiz duration"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/quiz_start_time" />
 
@@ -346,7 +342,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="hour"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:fontFamily="@font/noto_sans"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/quiz_duration_hour_picker"
@@ -367,7 +363,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="minute"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:fontFamily="@font/noto_sans"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/select_hour_hint"
@@ -392,7 +388,7 @@
             android:fontFamily="@font/noto_sans"
             android:gravity="start"
             android:text="Difficulty level:"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/quiz_duration_hour_picker" />

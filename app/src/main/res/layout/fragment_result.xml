@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".views.fragments.ResultFragment">
+    tools:context=".ui.fragments.ResultFragment">
 
 
     <TextView
@@ -18,7 +18,7 @@
         android:fontFamily="@font/work_sans_semibold"
         android:text="Result"
         android:textAllCaps="false"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="32dp"
-        android:indeterminateTint="@color/my_purple"
+        android:indeterminateTint="@color/primary_text"
         android:progress="75"
         android:progressDrawable="@drawable/circular_progress"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/noto_sans"
         android:textAllCaps="false"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/result_progress"
         app:layout_constraintStart_toStartOf="@+id/result_progress"
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/noto_sans"
         android:text="100%"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="@+id/result_progress"
         app:layout_constraintEnd_toEndOf="@+id/result_progress"
@@ -166,21 +166,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/result_missed" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/result_home_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cornerRadius="4dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/primary_btn_bg"
         android:fontFamily="@font/noto_sans"
         android:text="Go to home"
         android:textColor="@color/black"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearance="@drawable/primary_btn_bg" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <com.airbnb.lottie.LottieAnimationView

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.quiz_app_mvvm.databinding.JoinQuizBsdBinding
 import com.example.quiz_app_mvvm.repositories.QuizRepo
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
+import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 

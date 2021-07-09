@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.views.fragments
+package com.example.quiz_app_mvvm.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.androchef.happytimer.utils.extensions.visible
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentResultBinding
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel

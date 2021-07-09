@@ -20,7 +20,7 @@
             android:layout_marginTop="24dp"
             android:fontFamily="@font/noto_sans_bold"
             android:text="Delete quiz !"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
             android:layout_marginTop="18dp"
             android:fontFamily="@font/noto_sans"
             android:text="Sure.. Do you want to delete quiz ?"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/delete_quiz_text"
             app:layout_constraintTop_toBottomOf="@id/delete_quiz_text" />
@@ -49,7 +49,7 @@
             android:padding="8dp"
             android:text="Delete"
             android:textAllCaps="false"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/sure_text"
@@ -65,7 +65,7 @@
             android:padding="4dp"
             android:text="Cancel"
             android:textAllCaps="false"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/delete_yes_btn" />

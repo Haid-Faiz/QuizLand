@@ -1,15 +1,14 @@
-package com.example.quiz_app_mvvm.daos
+package com.example.quiz_app_mvvm.repositories
 
 import android.net.Uri
 import android.util.Log
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.views.fragments.QuizFragment
+import com.example.quiz_app_mvvm.ui.fragments.QuizFragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -17,7 +16,7 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
-class QuizDao(private val uploadedCallBack: UploadedCallBack? = null) {
+class QuizRepo(private val uploadedCallBack: UploadedCallBack? = null) {
 
     val user = Firebase.auth.currentUser
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()

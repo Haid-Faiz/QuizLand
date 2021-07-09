@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.fragments.AddFragment"
+    tools:context=".ui.fragments.AddFragment"
     android:background="@color/colorDark">
 
 
@@ -15,7 +15,7 @@
         android:text="Create a quiz"
         style="?attr/selectableItemBackground"
         android:fontFamily="@font/noto_sans"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="18sp"
         android:textAllCaps="false"
         android:gravity="start"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:text="Join a quiz"
         android:fontFamily="@font/noto_sans"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="18dp"
         android:gravity="start"
         android:padding="24dp"

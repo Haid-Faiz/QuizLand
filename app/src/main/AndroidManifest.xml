@@ -13,11 +13,10 @@
         android:theme="@style/Theme.Quiz_App_MVVM">
 
         <activity
-            android:name="com.example.quiz_app_mvvm.views.activities.MainActivity">
+            android:name="com.example.quiz_app_mvvm.ui.MainActivity">
 <!--            android:windowSoftInputMode="adjustResize"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

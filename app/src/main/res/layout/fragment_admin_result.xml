@@ -13,7 +13,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.AdminResultFragment">
+        tools:context=".ui.fragments.AdminResultFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_marginTop="36dp"
                 android:fontFamily="@font/work_sans_semibold"
                 android:text="Results :"
-                android:textColor="@color/my_purple"
+                android:textColor="@color/primary_text"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/admin_result_discard_btn"
@@ -55,7 +55,7 @@
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/noto_sans_bold"
                 android:text="@{quizData.name}"
-                android:textColor="@color/my_purple"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -276,7 +276,7 @@
                 android:layout_margin="24dp"
                 android:fontFamily="@font/noto_sans_bold"
                 android:text="Participants Rank List"
-                android:textColor="@color/my_purple"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -316,7 +316,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
                 tools:visibility="invisible"
-                android:indeterminateTint="@color/my_purple"
+                android:indeterminateTint="@color/primary_text"
                 app:layout_constraintEnd_toEndOf="@id/participants_rank_list_recyclerview"
                 app:layout_constraintStart_toStartOf="@id/participants_rank_list_recyclerview"
                 app:layout_constraintTop_toTopOf="@id/participants_rank_list_recyclerview" />

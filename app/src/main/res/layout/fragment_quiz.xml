@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".views.fragments.QuizFragment">
+    tools:context=".ui.fragments.QuizFragment">
 
 
     <ScrollView
@@ -43,7 +43,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/work_sans_semibold"
                 android:text="Loading Quiz..."
-                android:textColor="@color/my_purple"
+                android:textColor="@color/primary_text"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/normalCountDownView"
                 app:layout_constraintStart_toEndOf="@+id/quiz_close_btn"
@@ -82,7 +82,7 @@
                 android:layout_marginTop="8dp"
                 app:normal_timer_text_size="16sp"
                 app:normal_timer_label_text_size="14sp"
-                app:normal_timer_text_color="@color/my_purple"
+                app:normal_timer_text_color="@color/primary_text"
                 app:normal_timer_text_label_color="@color/colorLightText"
                 app:normal_timer_text__label_isBold="false"
                 app:normal_timer_text_isBold="false"
@@ -203,14 +203,13 @@
 
     </ScrollView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/quiz_next_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/primary_btn_bg"
         android:fontFamily="@font/noto_sans"
         android:text="Next Question"
         android:textAllCaps="false"
@@ -220,8 +219,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearance="@drawable/primary_btn_bg"
         tools:visibility="visible" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

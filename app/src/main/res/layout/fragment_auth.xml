@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".views.fragments.StartFragment">
+    tools:context=".ui.auth.AuthFragment">
 
     <TextView
         android:id="@+id/start_title"
@@ -14,7 +14,7 @@
         android:layout_marginTop="56dp"
         android:fontFamily="@font/work_sans_semibold"
         android:text="QuizLand"
-        android:textColor="@color/my_purple"
+        android:textColor="@color/primary_text"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
-        app:dotsColor="@color/my_purple"
+        app:dotsColor="@color/primary_text"
         app:dotsCornerRadius="8dp"
         app:dotsSize="8dp"
         app:dotsSpacing="4dp"
@@ -44,18 +44,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.widget.Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/google_signin_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        app:icon="@drawable/ic_google_logo"
+        app:iconTint="@null"
+        app:strokeColor="@color/primary_text"
+        app:cornerRadius="32dp"
+        android:padding="10dp"
+        android:gravity="center"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/google_signin_btn_bg"
         android:fontFamily="@font/noto_sans"
         android:text="Sign in with Google"
         android:textAllCaps="false"
-        android:textColor="@color/my_purple"
         app:layout_constraintBottom_toTopOf="@+id/start_progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -65,7 +70,7 @@
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:layout_marginBottom="16dp"
-        android:indeterminateTint="@color/my_purple"
+        android:indeterminateTint="@color/primary_text"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/google_signin_btn"

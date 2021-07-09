@@ -13,8 +13,7 @@ import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentAccountBinding
 import com.example.quiz_app_mvvm.model.User
-import com.example.quiz_app_mvvm.ui.activities.HelloCheck
-import com.example.quiz_app_mvvm.ui.activities.MainActivity
+import com.example.quiz_app_mvvm.ui.HelloCheck
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 

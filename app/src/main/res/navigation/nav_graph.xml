@@ -7,29 +7,29 @@
 
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.example.quiz_app_mvvm.views.fragments.StartFragment"
+        android:name="com.example.quiz_app_mvvm.ui.auth.AuthFragment"
         android:label="fragment_start"
-        tools:layout="@layout/fragment_start">
+        tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_startFragment_to_listFragment"
             app:destination="@id/listFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.quiz_app_mvvm.views.fragments.QuizFragment"
+        android:name="com.example.quiz_app_mvvm.ui.fragments.QuizFragment"
         android:label="fragment_quiz"
         tools:layout="@layout/fragment_quiz">
         <action
             android:id="@+id/action_quizFragment_to_resultFragment"
             app:destination="@id/resultFragment"
-            app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
+            app:enterAnim="@android:transition/slide_top"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@anim/slide_down"
             app:popUpTo="@id/detailsFragment"
             app:popUpToInclusive="true" />
@@ -56,15 +56,15 @@
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.quiz_app_mvvm.views.fragments.DetailsFragment"
+        android:name="com.example.quiz_app_mvvm.ui.fragments.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_detailsFragment_to_quizFragment"
             app:destination="@id/quizFragment"
             app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@anim/slide_down" />
         <argument
             android:name="position"
@@ -74,7 +74,7 @@
 
     <fragment
         android:id="@+id/resultFragment"
-        android:name="com.example.quiz_app_mvvm.views.fragments.ResultFragment"
+        android:name="com.example.quiz_app_mvvm.ui.fragments.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result">
         <argument
@@ -85,7 +85,7 @@
             android:id="@+id/action_resultFragment_to_listFragment"
             app:destination="@id/listFragment"
             app:enterAnim="@anim/slide_down"
-            app:exitAnim="@anim/fade_out"
+            app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.quiz_app_mvvm.views.fragments.ListFragment"
+        android:name="com.example.quiz_app_mvvm.ui.fragments.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list">
         <action

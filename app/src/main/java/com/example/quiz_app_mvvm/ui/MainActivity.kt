@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.activities
+package com.example.quiz_app_mvvm.ui
 
 import android.content.IntentFilter
 import android.net.ConnectivityManager
@@ -10,7 +10,7 @@ import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.broadcast.QuizBroadcastReceiver
 import com.example.quiz_app_mvvm.databinding.ActivityMainBinding
 import com.example.quiz_app_mvvm.ui.fragments.ListFragmentDirections
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
+import com.example.quiz_app_mvvm.util.DialogsUtil
 
 class MainActivity : AppCompatActivity(), QuizBroadcastReceiver.ConnectivityListener, HelloCheck {
 

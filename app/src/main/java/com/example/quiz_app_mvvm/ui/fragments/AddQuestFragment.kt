@@ -1,10 +1,7 @@
-package com.example.quiz_app_mvvm.views.fragments
+package com.example.quiz_app_mvvm.ui.fragments
 
 import android.content.Context
-import android.hardware.input.InputManager
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,23 +10,20 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
-import android.widget.Toast
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
-import com.example.quiz_app_mvvm.daos.QuizDao
+import com.example.quiz_app_mvvm.util.DialogsUtil
+import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentAddQuestBinding
-import com.example.quiz_app_mvvm.databinding.FragmentListBinding
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.OnCheckedChangeListener {
+class AddQuestFragment : Fragment(), QuizRepo.UploadedCallBack, CompoundButton.OnCheckedChangeListener {
 
     private lateinit var fragmentAddQuestBinding: FragmentAddQuestBinding
     private lateinit var quizModel: QuizModel
@@ -160,7 +154,7 @@ class AddQuestFragment : Fragment(), QuizDao.UploadedCallBack, CompoundButton.On
         closeKeyboard()
         // switch bottom bar to account
         DialogsUtil.showLoadingDialog(requireContext())
-        val quizDao = QuizDao(this)
+        val quizDao = QuizRepo(this)
         quizDao.createQuiz(quizModel, questionsList)
     }
 

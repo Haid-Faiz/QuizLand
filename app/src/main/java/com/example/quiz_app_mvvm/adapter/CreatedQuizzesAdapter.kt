@@ -30,7 +30,6 @@ class CreatedQuizzesAdapter(
 
     override fun onDataChanged() {
         super.onDataChanged()
-
 //        f(itemCount)  // invoking HOF
         onCreatedQuizItemClicked.onListItemChanged(itemCount)
     }

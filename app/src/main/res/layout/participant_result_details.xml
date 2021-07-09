@@ -35,7 +35,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/noto_sans_bold"
             android:text="@{myResult.user.displayName}"
-            android:textColor="@color/my_purple"
+            android:textColor="@color/primary_text"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/participant_image_detail"
@@ -215,17 +215,16 @@
             tools:text="NA" />
 
 
-        <android.widget.Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/participant_detail_result_ok_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:cornerRadius="4dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/primary_btn_bg"
             android:fontFamily="@font/noto_sans"
-            android:foreground="?attr/selectableItemBackground"
             android:text="Okay"
             android:textAllCaps="false"
             android:textColor="@color/black"

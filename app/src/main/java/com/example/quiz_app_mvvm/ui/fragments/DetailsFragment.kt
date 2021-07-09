@@ -1,23 +1,18 @@
-package com.example.quiz_app_mvvm.views.fragments
+package com.example.quiz_app_mvvm.ui.fragments
 
 import androidx.navigation.NavController
-import com.google.firebase.firestore.FirebaseFirestore
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.example.quiz_app_mvvm.R
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.example.quiz_app_mvvm.broadcast.QuizBroadcastReceiver
 import com.example.quiz_app_mvvm.databinding.FragmentDetailsBinding
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.utilities.DialogsUtil
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -64,14 +59,6 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         fragmentDetailsBinding.detailsBackBtn.setOnClickListener {
             navController.popBackStack()
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // Use the 'by viewModels()' Kotlin property delegate
-        // from the activity-ktx artifact
-
-//        val quizListViewModel: QuizListViewModel by viewModels()
     }
 
     override fun onClick(view: View) {
