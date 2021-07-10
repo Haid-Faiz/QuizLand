@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui.join_quiz
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,13 +37,13 @@ class QuizFragment : Fragment(), View.OnClickListener {
     private var wrongAnswer = 0
     private val randomQueList: MutableList<QuestionsModel> = ArrayList()
     private var canAnswer = false
-    private lateinit var fragmentQuizBinding: FragmentQuizBinding
+    private lateinit var _binding: FragmentQuizBinding
 //    private val viewModel: QuizListViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        fragmentQuizBinding = FragmentQuizBinding.inflate(inflater, container, false)
-        return fragmentQuizBinding.root
+        _binding = FragmentQuizBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,10 +55,10 @@ class QuizFragment : Fragment(), View.OnClickListener {
             DialogsUtil.showExitQuizDialog(
                     requireContext(),
                     navController,
-                    fragmentQuizBinding.normalCountDownView)
+                    _binding.normalCountDownView)
         }
 
-        val args: QuizFragmentArgs by navArgs()
+        val args: com.example.quiz_app_mvvm.ui.fragments.QuizFragmentArgs by navArgs()
         quizId = args.quizDocumentID
         totalQuestions = args.totalQuestions
         quizName = args.quizName
@@ -80,7 +80,8 @@ class QuizFragment : Fragment(), View.OnClickListener {
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
 
-                        val questionListModel: QuestionsListModel? = it.result?.documents?.get(0)?.toObject(QuestionsListModel::class.java)
+                        val questionListModel: QuestionsListModel? = it.result?.documents?.get(0)?.toObject(
+                            QuestionsListModel::class.java)
 
 //                        val querySnapshot: QuerySnapshot? = it.result
 //                        val a: MutableList<DocumentSnapshot>? = querySnapshot?.documents
@@ -92,16 +93,16 @@ class QuizFragment : Fragment(), View.OnClickListener {
                         loadUI()
                     } else {
                         // set the error
-                        fragmentQuizBinding.quizTitle.text = "Error loading in data..."
+                        _binding.quizTitle.text = "Error loading in data..."
                     }
                 }
 
-        fragmentQuizBinding.quizOptionOne.setOnClickListener(this)
-        fragmentQuizBinding.quizOptionTwo.setOnClickListener(this)
-        fragmentQuizBinding.quizOptionThree.setOnClickListener(this)
-        fragmentQuizBinding.quizOptionFour.setOnClickListener(this)
-        fragmentQuizBinding.quizNextBtn.setOnClickListener(this)
-        fragmentQuizBinding.quizCloseBtn.setOnClickListener(this)
+        _binding.quizOptionOne.setOnClickListener(this)
+        _binding.quizOptionTwo.setOnClickListener(this)
+        _binding.quizOptionThree.setOnClickListener(this)
+        _binding.quizOptionFour.setOnClickListener(this)
+        _binding.quizNextBtn.setOnClickListener(this)
+        _binding.quizCloseBtn.setOnClickListener(this)
     }
 
     private fun pickQuestion(questionList: ArrayList<QuestionsModel>?) {
@@ -113,7 +114,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loadUI() {
-        fragmentQuizBinding.quizTitle.text = quizName
+        _binding.quizTitle.text = quizName
         // Enable options
         enableOptions()
         loadQuestion(1)          // question no. 1
@@ -123,32 +124,32 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
     private fun enableOptions() {
         // show all options button
-        fragmentQuizBinding.quizOptionOne.isVisible = true
-        fragmentQuizBinding.quizOptionTwo.isVisible = true
-        fragmentQuizBinding.quizOptionThree.isVisible = true
-        fragmentQuizBinding.quizOptionFour.isVisible = true
+        _binding.quizOptionOne.isVisible = true
+        _binding.quizOptionTwo.isVisible = true
+        _binding.quizOptionThree.isVisible = true
+        _binding.quizOptionFour.isVisible = true
 
         // enable options button
-        fragmentQuizBinding.quizOptionOne.isEnabled = true
-        fragmentQuizBinding.quizOptionTwo.isEnabled = true
-        fragmentQuizBinding.quizOptionThree.isEnabled = true
-        fragmentQuizBinding.quizOptionFour.isEnabled = true
+        _binding.quizOptionOne.isEnabled = true
+        _binding.quizOptionTwo.isEnabled = true
+        _binding.quizOptionThree.isEnabled = true
+        _binding.quizOptionFour.isEnabled = true
         // show next button
-        fragmentQuizBinding.quizNextBtn.isVisible = false
+        _binding.quizNextBtn.isVisible = false
     }
 
     private fun loadQuestion(questionSerialNum: Int) {
-        fragmentQuizBinding.quizQuestionNum.text = "Q.No. ${questionSerialNum.toString()} out of ${randomQueList.size}"
+        _binding.quizQuestionNum.text = "Q.No. ${questionSerialNum.toString()} out of ${randomQueList.size}"
         // load question text
-        fragmentQuizBinding.quizQuestion.text = randomQueList[questionSerialNum - 1].question
+        _binding.quizQuestion.text = randomQueList[questionSerialNum - 1].question
         // load option button
-        fragmentQuizBinding.quizOptionOne.text = randomQueList[questionSerialNum - 1].option_a
-        fragmentQuizBinding.quizOptionTwo.text = randomQueList[questionSerialNum - 1].option_b
-        fragmentQuizBinding.quizOptionThree.text = randomQueList[questionSerialNum - 1].option_c
-        fragmentQuizBinding.quizOptionFour.text = randomQueList[questionSerialNum - 1].option_d
+        _binding.quizOptionOne.text = randomQueList[questionSerialNum - 1].option_a
+        _binding.quizOptionTwo.text = randomQueList[questionSerialNum - 1].option_b
+        _binding.quizOptionThree.text = randomQueList[questionSerialNum - 1].option_c
+        _binding.quizOptionFour.text = randomQueList[questionSerialNum - 1].option_d
 
         if (questionSerialNum == randomQueList.size) {
-            fragmentQuizBinding.quizNextBtn.text = "Submit Quiz"
+            _binding.quizNextBtn.text = "Submit Quiz"
         }
         // question loaded, now user can ans the question
         canAnswer = true
@@ -168,9 +169,9 @@ class QuizFragment : Fragment(), View.OnClickListener {
         val remainingTime = endTimeInSeconds - currentTimeInSeconds
 
         // Initializing Timer with seconds
-        fragmentQuizBinding.normalCountDownView.initTimer(remainingTime)
+        _binding.normalCountDownView.initTimer(remainingTime)
         // set OnTickListener for getting updates on time.
-        fragmentQuizBinding.normalCountDownView.setOnTickListener(object : HappyTimer.OnTickListener {
+        _binding.normalCountDownView.setOnTickListener(object : HappyTimer.OnTickListener {
 
             override fun onTick(completedSeconds: Int, remainingSeconds: Int) {}
 
@@ -182,19 +183,19 @@ class QuizFragment : Fragment(), View.OnClickListener {
                 }
             }
         })
-        fragmentQuizBinding.normalCountDownView.startTimer()
+        _binding.normalCountDownView.startTimer()
     }
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.quiz_option_one -> verifyAnswer(fragmentQuizBinding.quizOptionOne)
-            R.id.quiz_option_two -> verifyAnswer(fragmentQuizBinding.quizOptionTwo)
-            R.id.quiz_option_three -> verifyAnswer(fragmentQuizBinding.quizOptionThree)
-            R.id.quiz_option_four -> verifyAnswer(fragmentQuizBinding.quizOptionFour)
+            R.id.quiz_option_one -> verifyAnswer(_binding.quizOptionOne)
+            R.id.quiz_option_two -> verifyAnswer(_binding.quizOptionTwo)
+            R.id.quiz_option_three -> verifyAnswer(_binding.quizOptionThree)
+            R.id.quiz_option_four -> verifyAnswer(_binding.quizOptionFour)
             R.id.quiz_next_btn -> {
                 if (currentQuesNum == randomQueList.size) {
                     // submit results
-                    fragmentQuizBinding.normalCountDownView.stopTimer()    // Saved memory leak
+                    _binding.normalCountDownView.stopTimer()    // Saved memory leak
                     submitResult()
                     navController.navigate(R.id.action_quizFragment_to_resultFragment)
                 } else {
@@ -206,7 +207,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
             R.id.quiz_close_btn -> DialogsUtil.showExitQuizDialog(
                     requireContext(),
                     navController,
-                    fragmentQuizBinding.normalCountDownView)
+                    _binding.normalCountDownView)
         }
     }
 
@@ -255,14 +256,14 @@ class QuizFragment : Fragment(), View.OnClickListener {
     }
 
     private fun resetOptions() {
-        fragmentQuizBinding.quizOptionOne.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        fragmentQuizBinding.quizOptionTwo.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        fragmentQuizBinding.quizOptionThree.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        fragmentQuizBinding.quizOptionFour.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        fragmentQuizBinding.quizOptionOne.setTextColor(resources.getColor(R.color.colorLightText))
-        fragmentQuizBinding.quizOptionTwo.setTextColor(resources.getColor(R.color.colorLightText))
-        fragmentQuizBinding.quizOptionThree.setTextColor(resources.getColor(R.color.colorLightText))
-        fragmentQuizBinding.quizOptionFour.setTextColor(resources.getColor(R.color.colorLightText))
+        _binding.quizOptionOne.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
+        _binding.quizOptionTwo.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
+        _binding.quizOptionThree.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
+        _binding.quizOptionFour.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
+        _binding.quizOptionOne.setTextColor(resources.getColor(R.color.colorLightText))
+        _binding.quizOptionTwo.setTextColor(resources.getColor(R.color.colorLightText))
+        _binding.quizOptionThree.setTextColor(resources.getColor(R.color.colorLightText))
+        _binding.quizOptionFour.setTextColor(resources.getColor(R.color.colorLightText))
     }
 
     private fun verifyAnswer(selectedButton: Button) {

@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui.join_quiz
 
 import androidx.navigation.NavController
 import android.view.LayoutInflater
@@ -26,37 +26,36 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     private lateinit var navController: NavController
 
     // Binding variable
-    private lateinit var fragmentDetailsBinding: FragmentDetailsBinding
+    private lateinit var _binding: FragmentDetailsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        fragmentDetailsBinding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return fragmentDetailsBinding.root
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(view)
-        fragmentDetailsBinding.detailsStartBtn.setOnClickListener(this)
+        _binding.detailsStartBtn.setOnClickListener(this)
         val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
         quizData = quizListViewModel.getQuizData()
-        fragmentDetailsBinding.quiz = quizData
-
+        _binding.quiz = quizData
 
 //        In Java --->
 //        position = DetailsFragmentArgs.fromBundle(getArguments()).position
 //        In Kotlin --->
 //        val args by navArgs<DetailsFragmentArgs>()
-        val args: DetailsFragmentArgs by navArgs()
+        val args: com.example.quiz_app_mvvm.ui.fragments.DetailsFragmentArgs by navArgs()
         position = args.position
         // -----------------------
         quizId = quizData.quiz_id
         totalQuestions = quizData.questions
         quizName = quizData.name
 
-        fragmentDetailsBinding.detailsBackBtn.setOnClickListener {
+        _binding.detailsBackBtn.setOnClickListener {
             navController.popBackStack()
         }
     }
@@ -84,7 +83,8 @@ class DetailsFragment : Fragment(), View.OnClickListener {
                             && quizData.quizStartDate?.date == currentDay
                             && currentMinutesOfDay in startMinutes until endMinutes
                     ) {
-                        val action = DetailsFragmentDirections.actionDetailsFragmentToQuizFragment()
+                        val action =
+                            com.example.quiz_app_mvvm.ui.fragments.DetailsFragmentDirections.actionDetailsFragmentToQuizFragment()
                         //   action.setPosition(position);
                         action.quizDocumentID = quizId
                         action.quizName = quizName
@@ -92,12 +92,12 @@ class DetailsFragment : Fragment(), View.OnClickListener {
                         action.totalQuestions = totalQuestions
                         navController.navigate(action)
                     } else if (currentMinutesOfDay < startMinutes)
-                        Snackbar.make(fragmentDetailsBinding.root,
+                        Snackbar.make(_binding.root,
                                 "This quiz has not been started yet !",
                                 Snackbar.LENGTH_LONG).show()
-                    else Snackbar.make(fragmentDetailsBinding.root, "Oops..! This quiz has been ended", Snackbar.LENGTH_LONG).show()
+                    else Snackbar.make(_binding.root, "Oops..! This quiz has been ended", Snackbar.LENGTH_LONG).show()
 
-                } else Snackbar.make(fragmentDetailsBinding.root, "You have already given this quiz", Snackbar.LENGTH_LONG).show()
+                } else Snackbar.make(_binding.root, "You have already given this quiz", Snackbar.LENGTH_LONG).show()
             }
         }
     }

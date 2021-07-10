@@ -16,14 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".ui.fragments.DetailsFragment">
+        tools:context=".ui.join_quiz.DetailsFragment">
 
 
         <ScrollView
             android:id="@+id/details_description_scroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="14dp"
             app:layout_constraintBottom_toTopOf="@id/details_start_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -314,7 +314,7 @@
             app:cornerRadius="4dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="14dp"
             android:fontFamily="@font/noto_sans"
             android:text="Start Quiz"
             android:textAllCaps="false"

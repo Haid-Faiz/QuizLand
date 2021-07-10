@@ -7,12 +7,13 @@
 
     <fragment
         android:id="@+id/listSecFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.JoinedQuizzesFragment"
+        android:name="com.example.quiz_app_mvvm.ui.join_quiz.JoinedQuizzesFragment"
         android:label="fragment_list_sec"
         tools:layout="@layout/fragment_joined_quizzes" />
+
     <dialog
         android:id="@+id/addFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.AddFragment"
+        android:name="com.example.quiz_app_mvvm.ui.AddFragment"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" >
         <action
@@ -31,7 +32,7 @@
     </dialog>
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.AccountFragment"
+        android:name="com.example.quiz_app_mvvm.ui.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
@@ -44,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/createQuizFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.CreateQuizFragment"
+        android:name="com.example.quiz_app_mvvm.ui.create_quiz.CreateQuizFragment"
         android:label="fragment_create_quiz"
         tools:layout="@layout/fragment_create_quiz" >
         <action
@@ -53,11 +54,11 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addQuestFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.AddQuestFragment"
+        android:name="com.example.quiz_app_mvvm.ui.create_quiz.AddQuestFragment"
         android:label="fragment_add_quest"
         tools:layout="@layout/fragment_add_quest" >
         <action
@@ -65,14 +66,14 @@
             app:destination="@id/createdQuizesFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/createQuizFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/createdQuizesFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.CreatedQuizesFragment"
+        android:name="com.example.quiz_app_mvvm.ui.create_quiz.CreatedQuizesFragment"
         android:label="fragment_created_quizes"
         tools:layout="@layout/fragment_created_quizes" >
         <action
@@ -80,21 +81,21 @@
             app:destination="@id/adminResultFragment"
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/adminResultFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.AdminResultFragment"
+        android:name="com.example.quiz_app_mvvm.ui.result.AdminResultFragment"
         android:label="fragment_admin_result"
         tools:layout="@layout/fragment_admin_result" />
     <fragment
         android:id="@+id/myResultsFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.MyResultsFragment"
+        android:name="com.example.quiz_app_mvvm.ui.result.MyResultsFragment"
         android:label="fragment_my_results"
         tools:layout="@layout/fragment_my_results" />
     <dialog
         android:id="@+id/joinQuizBSDFragment"
-        android:name="com.example.quiz_app_mvvm.ui.fragments.JoinQuizBSDFragment"
+        android:name="com.example.quiz_app_mvvm.ui.join_quiz.JoinQuizBSDFragment"
         android:label="JoinQuizBSDFragment"
         tools:layout="@layout/join_quiz_bsd"/>
 </navigation>

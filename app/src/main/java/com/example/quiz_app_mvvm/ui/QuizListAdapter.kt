@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.adapter
+package com.example.quiz_app_mvvm.ui
 
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -13,8 +13,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 
 class QuizListAdapter(
-        options: FirestoreRecyclerOptions<QuizModel>,
-        private val onQuizListItemClicked: OnQuizListItemClicked,
+    options: FirestoreRecyclerOptions<QuizModel>,
+    private val onQuizListItemClicked: OnQuizListItemClicked,
 //        private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<QuizModel, QuizListAdapter.ViewHolder>(options) {
 

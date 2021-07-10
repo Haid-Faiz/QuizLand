@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui.create_quiz
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.R
-import com.example.quiz_app_mvvm.adapter.CreatedQuizzesAdapter
 import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentCreatedQuizesBinding
 import com.example.quiz_app_mvvm.model.QuizModel

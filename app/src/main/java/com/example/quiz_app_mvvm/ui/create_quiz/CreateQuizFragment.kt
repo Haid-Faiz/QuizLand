@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui.create_quiz
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -27,7 +27,7 @@ import java.util.*
 class CreateQuizFragment : Fragment() {
 
     private lateinit var navController: NavController
-    private lateinit var fragmentCreateQuizBinding: FragmentCreateQuizBinding
+    private lateinit var _binding: FragmentCreateQuizBinding
     private var hourDuration: Int = 0
     private var minDuration: Int = 0
     private var difficultyLevel: String = ""
@@ -39,9 +39,8 @@ class CreateQuizFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        fragmentCreateQuizBinding = FragmentCreateQuizBinding.inflate(inflater, container, false)
-        return fragmentCreateQuizBinding.root
-//        return inflater.inflate(R.layout.fragment_create_quiz, container, false)
+        _binding = FragmentCreateQuizBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,26 +52,26 @@ class CreateQuizFragment : Fragment() {
 
         val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
 
-        fragmentCreateQuizBinding.quizDurationMinPicker.minValue = 0
-        fragmentCreateQuizBinding.quizDurationMinPicker.maxValue = 59
-        fragmentCreateQuizBinding.quizDurationHourPicker.minValue = 0
-        fragmentCreateQuizBinding.quizDurationHourPicker.maxValue = 23
+        _binding.quizDurationMinPicker.minValue = 0
+        _binding.quizDurationMinPicker.maxValue = 59
+        _binding.quizDurationHourPicker.minValue = 0
+        _binding.quizDurationHourPicker.maxValue = 23
 
-        fragmentCreateQuizBinding.discardQuizBtn.setOnClickListener {
+        _binding.discardQuizBtn.setOnClickListener {
             navController.navigateUp()
         }
 
-        fragmentCreateQuizBinding.quizDurationHourPicker.setOnValueChangedListener(object : NumberPicker.OnValueChangeListener {
+        _binding.quizDurationHourPicker.setOnValueChangedListener(object : NumberPicker.OnValueChangeListener {
             override fun onValueChange(numberPicker: NumberPicker?, oldValue: Int, newValue: Int) {
                 hourDuration = newValue
             }
         })
 
-        fragmentCreateQuizBinding.quizDurationMinPicker.setOnValueChangedListener { numberPicker, oldValue, newValue ->
+        _binding.quizDurationMinPicker.setOnValueChangedListener { numberPicker, oldValue, newValue ->
             minDuration = newValue
         }
 
-        fragmentCreateQuizBinding.radioGrp.setOnCheckedChangeListener { radioGroup, selectedButtonid ->
+        _binding.radioGrp.setOnCheckedChangeListener { radioGroup, selectedButtonid ->
             when (selectedButtonid) {
                 R.id.radio_btn_beginner_level -> difficultyLevel = "Beginner"
                 R.id.intermediate_level_radio_btn -> difficultyLevel = "Intermediate"
@@ -80,18 +79,18 @@ class CreateQuizFragment : Fragment() {
             }
         }
 
-        fragmentCreateQuizBinding.addQuestionBtn.setOnClickListener {
+        _binding.addQuestionBtn.setOnClickListener {
 
             // taking inputs from user
-            val quizName = fragmentCreateQuizBinding.enterQuizName.text.toString().trim()
-            val quizDesc = fragmentCreateQuizBinding.enterQuizDescription.text.toString().trim()
-            val totalQuestNumString = fragmentCreateQuizBinding.enterQuestNum.text.toString().trim()
-            val correctAnsMarks = fragmentCreateQuizBinding.enterCorrectAnsMarks.text.toString().trim()
-            val wrongAnsMarks = fragmentCreateQuizBinding.enterWrongAnsMarks.text.toString().trim()
-            val quizCreatedBy = fragmentCreateQuizBinding.enterQuizCreatedBy.text.toString().trim()
+            val quizName = _binding.enterQuizName.text.toString().trim()
+            val quizDesc = _binding.enterQuizDescription.text.toString().trim()
+            val totalQuestNumString = _binding.enterQuestNum.text.toString().trim()
+            val correctAnsMarks = _binding.enterCorrectAnsMarks.text.toString().trim()
+            val wrongAnsMarks = _binding.enterWrongAnsMarks.text.toString().trim()
+            val quizCreatedBy = _binding.enterQuizCreatedBy.text.toString().trim()
 
-            val isQuizDurationSet = fragmentCreateQuizBinding.quizDurationMinPicker.value != 0 ||
-                    fragmentCreateQuizBinding.quizDurationHourPicker.value != 0
+            val isQuizDurationSet = _binding.quizDurationMinPicker.value != 0 ||
+                    _binding.quizDurationHourPicker.value != 0
 
             if (quizName.isNotEmpty() && quizDesc.isNotEmpty() && difficultyLevel.isNotEmpty()
                     && totalQuestNumString.isNotEmpty() && quizCreatedBy.isNotEmpty() &&
@@ -121,62 +120,62 @@ class CreateQuizFragment : Fragment() {
 
             } else {
                 if (isClicked)
-                    fragmentCreateQuizBinding.quizStartTime.error = null
+                    _binding.quizStartTime.error = null
                 else
-                    fragmentCreateQuizBinding.quizStartTime.error = "Required"
+                    _binding.quizStartTime.error = "Required"
 
                 if (isQuizDurationSet)
-                    fragmentCreateQuizBinding.selectDurationHint.error = null
+                    _binding.selectDurationHint.error = null
                 else
-                    fragmentCreateQuizBinding.selectDurationHint.error = "Required"
+                    _binding.selectDurationHint.error = "Required"
 
                 if (quizName.isNotEmpty())
-                    fragmentCreateQuizBinding.enterQuizName.error = null
+                    _binding.enterQuizName.error = null
                 else
-                    fragmentCreateQuizBinding.enterQuizName.error = "Required"
+                    _binding.enterQuizName.error = "Required"
 
                 if (quizDesc.isNotEmpty())
-                    fragmentCreateQuizBinding.enterQuizDescription.error = null
+                    _binding.enterQuizDescription.error = null
                 else
-                    fragmentCreateQuizBinding.enterQuizDescription.error = "Required"
+                    _binding.enterQuizDescription.error = "Required"
 
                 if (difficultyLevel.isNotEmpty())
-                    fragmentCreateQuizBinding.selectDifficulty.error = null
+                    _binding.selectDifficulty.error = null
                 else
-                    fragmentCreateQuizBinding.selectDifficulty.error = "Required"
+                    _binding.selectDifficulty.error = "Required"
 
                 if (totalQuestNumString.isNotEmpty())
-                    fragmentCreateQuizBinding.enterQuestNum.error = null
+                    _binding.enterQuestNum.error = null
                 else
-                    fragmentCreateQuizBinding.enterQuestNum.error = "Required"
+                    _binding.enterQuestNum.error = "Required"
 
                 if (quizCreatedBy.isNotEmpty())
-                    fragmentCreateQuizBinding.enterQuizCreatedBy.error = null
+                    _binding.enterQuizCreatedBy.error = null
                 else
-                    fragmentCreateQuizBinding.enterQuizCreatedBy.error = "Required"
+                    _binding.enterQuizCreatedBy.error = "Required"
 
                 if (correctAnsMarks.isNotEmpty())
-                    fragmentCreateQuizBinding.enterCorrectAnsMarks.error = null
+                    _binding.enterCorrectAnsMarks.error = null
                 else
-                    fragmentCreateQuizBinding.enterCorrectAnsMarks.error = "Required"
+                    _binding.enterCorrectAnsMarks.error = "Required"
 
                 if (wrongAnsMarks.isNotEmpty()) {
-                    fragmentCreateQuizBinding.enterWrongAnsMarks.error = null
+                    _binding.enterWrongAnsMarks.error = null
 
                     if (wrongAnsMarks.toFloat() > 0) {
-                        fragmentCreateQuizBinding.enterWrongAnsMarks.error = "It should be zero or negative"
-                        Snackbar.make(fragmentCreateQuizBinding.root, "Wrong answer marks cannot be greater than zero!", Snackbar.LENGTH_SHORT).show()
+                        _binding.enterWrongAnsMarks.error = "It should be zero or negative"
+                        Snackbar.make(_binding.root, "Wrong answer marks cannot be greater than zero!", Snackbar.LENGTH_SHORT).show()
                     }
                 } else
-                    fragmentCreateQuizBinding.enterWrongAnsMarks.error = "Required"
+                    _binding.enterWrongAnsMarks.error = "Required"
             }
         }
 
-        fragmentCreateQuizBinding.quizStartTime.setOnClickListener {
+        _binding.quizStartTime.setOnClickListener {
             pickDate()
         }
 
-        fragmentCreateQuizBinding.addQuizImage.setOnClickListener {
+        _binding.addQuizImage.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
         }
@@ -228,7 +227,7 @@ class CreateQuizFragment : Fragment() {
                     pickedDate.quizStartTimeMin = min
                     isClicked = true
 
-                    fragmentCreateQuizBinding.quizStartTime.text = "${pickedDate.quizStartTimeHour}:${pickedDate.quizStartTimeMin}, ${pickedDate.date}/${pickedDate.month}/${pickedDate.year}"
+                    _binding.quizStartTime.text = "${pickedDate.quizStartTimeHour}:${pickedDate.quizStartTimeMin}, ${pickedDate.date}/${pickedDate.month}/${pickedDate.year}"
                 },
                 currentHour, currentMin, false    // here we can also set that... in which format we want the time
         ).show()
@@ -238,15 +237,15 @@ class CreateQuizFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GALLERY_REQUEST_CODE) {
             imageUri = data?.data.toString()
-            Glide.with(fragmentCreateQuizBinding.addQuizImage.context)
+            Glide.with(_binding.addQuizImage.context)
                     .load(imageUri)
                     .centerCrop()
-                    .into(fragmentCreateQuizBinding.addQuizImage)
+                    .into(_binding.addQuizImage)
 
             if (data != null)
-                fragmentCreateQuizBinding.lottieAnimImagePlaceholder.visibility = View.GONE
+                _binding.lottieAnimImagePlaceholder.visibility = View.GONE
             else
-                fragmentCreateQuizBinding.lottieAnimImagePlaceholder.visibility = View.VISIBLE
+                _binding.lottieAnimImagePlaceholder.visibility = View.VISIBLE
         }
     }
 

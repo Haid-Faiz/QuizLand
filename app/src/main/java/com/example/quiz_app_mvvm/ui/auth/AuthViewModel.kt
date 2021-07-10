@@ -3,15 +3,15 @@ package com.example.quiz_app_mvvm.ui.auth
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.quiz_app_mvvm.model.User
 import com.example.quiz_app_mvvm.repositories.UserRepo
 import com.example.quiz_app_mvvm.util.Resource
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-
-class AuthViewModel() : ViewModel() {
-
+class AuthViewModel : ViewModel() {
 
     private val userRepo: UserRepo = UserRepo()
 
@@ -23,5 +23,9 @@ class AuthViewModel() : ViewModel() {
     ) = viewModelScope.launch {
         _userAuthResult.postValue(Resource.Loading())
         _userAuthResult.postValue(userRepo.firebaseSignInWithGoogle(googleAuthCredential))
+    }
+
+    fun addUser(user: User) = viewModelScope.launch {
+        userRepo.addUser(user)
     }
 }

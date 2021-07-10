@@ -11,12 +11,10 @@ import com.google.firebase.ktx.Firebase
 
 class UserRepo : BaseRepo() {
     val db = FirebaseFirestore.getInstance()
-    val collection = db.collection("Users")
+    private val collection = db.collection("Users")
 
-    suspend fun addUser(user: User?) {
-        user?.let {
-            collection.document(user.userID).set(it)
-        }
+    suspend fun addUser(user: User): Resource<Void> = safeApiCall {
+        collection.document(user.userID).set(user)
     }
 
     //--------------------------------------------------------------

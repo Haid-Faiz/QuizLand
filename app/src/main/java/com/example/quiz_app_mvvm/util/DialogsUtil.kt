@@ -136,15 +136,15 @@ object DialogsUtil {
         }
     }
 
-    fun showConnectionErrorDialog(context: Context, isConnected: Boolean) {
-        val connectionLostDialogBinding = ConnectionLostDialogBinding.inflate(LayoutInflater.from(context))
-
-        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setCancelable(false)
-                .setView(connectionLostDialogBinding.root)
-                .create()
-        alertDialog?.show()
-    }
+//    fun showConnectionErrorDialog(context: Context, isConnected: Boolean) {
+//        val connectionLostDialogBinding = ConnectionLostDialogBinding.inflate(LayoutInflater.from(context))
+//
+//        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
+//                .setCancelable(false)
+//                .setView(connectionLostDialogBinding.root)
+//                .create()
+//        alertDialog?.show()
+//    }
 
 //    fun showJoinQuizDialog(context: Context) {
 //        val joinQuizDialogBinding = JoinQuizDilaogBinding.inflate(LayoutInflater.from(context))

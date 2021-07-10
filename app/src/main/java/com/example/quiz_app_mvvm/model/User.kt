@@ -11,7 +11,7 @@ data class User(
     val displayName: String? = "",
     val userImageUrl: String = "",
     @Exclude
-    val isNewUser: Boolean = true
+    val isNewUser: Boolean = false
 ) {
     companion object {
 

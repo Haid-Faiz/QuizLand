@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui
 
 import android.content.Context
 import android.content.Intent
@@ -13,28 +13,27 @@ import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentAccountBinding
 import com.example.quiz_app_mvvm.model.User
-import com.example.quiz_app_mvvm.ui.HelloCheck
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class AccountFragment : Fragment() {
 
-    private lateinit var fragmentAccountBinding: FragmentAccountBinding
+    private lateinit var _binding: FragmentAccountBinding
     private lateinit var navController: NavController
-    private lateinit var a: HelloCheck
+    private lateinit var clickListener: ClickListeners
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        fragmentAccountBinding = FragmentAccountBinding.inflate(inflater, container, false)
-        return fragmentAccountBinding.root
+        _binding = FragmentAccountBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        a = context as HelloCheck
+        clickListener = context as ClickListeners
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,17 +43,16 @@ class AccountFragment : Fragment() {
 
         Firebase.auth.currentUser?.let {
             val user = User(it.uid, it.displayName, it.photoUrl.toString())
-            fragmentAccountBinding.user = user
+            _binding.user = user
         }
 
-        fragmentAccountBinding.logoutButton.setOnClickListener {
+        _binding.logoutButton.setOnClickListener {
             Firebase.auth.signOut()
             navController.popBackStack()
-//            ListFragment.goToStartFrag()
-            a.gotoStart()
+            clickListener.gotoAuthFragment()
         }
 
-        fragmentAccountBinding.shareAppButton.setOnClickListener {
+        _binding.shareAppButton.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).setType("text/plain")
             shareIntent.putExtra(
                 Intent.EXTRA_TEXT,
@@ -64,17 +62,15 @@ class AccountFragment : Fragment() {
             startActivity(chooser)
         }
 
-        fragmentAccountBinding.myCreatedQuizButton.setOnClickListener {
+        _binding.myCreatedQuizButton.setOnClickListener {
             navController.navigate(R.id.action_accountFragment_to_createdQuizesFragment)
         }
 
-        fragmentAccountBinding.myResultsButton.setOnClickListener {
+        _binding.myResultsButton.setOnClickListener {
             navController.navigate(R.id.action_accountFragment_to_myResultsFragment)
         }
 
-        fragmentAccountBinding.developerContactButton.setOnClickListener {
-            // Open Linked
-            // --------------------------------------------
+        _binding.developerContactButton.setOnClickListener {
             // this cade opens Linked In but doesn't open particular profile
 //            val launchLinkedIntent = requireActivity().packageManager.getLaunchIntentForPackage("com.linkedin.android")
 //            startActivity(launchLinkedIntent)

@@ -16,14 +16,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.quiz_app_mvvm.R
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieDrawable
 import com.example.quiz_app_mvvm.databinding.FragmentAuthBinding
-import com.example.quiz_app_mvvm.repositories.UserRepo
-import com.example.quiz_app_mvvm.databinding.IntroPageItemBinding
 import com.example.quiz_app_mvvm.model.User
 import com.example.quiz_app_mvvm.util.Resource
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -32,7 +27,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -46,7 +40,6 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
     private lateinit var navController: NavController
     private lateinit var _binding: FragmentAuthBinding
     private lateinit var startForResult: ActivityResultLauncher<Intent>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,9 +77,7 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         navController = Navigation.findNavController(view)
-        // Setting up viewpager
         setUpViewPager()
 
         val user = Firebase.auth.currentUser
@@ -124,10 +115,13 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
 
         authViewModel.userAuthResult.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Success -> updateUI(it.data?.user)
+                is Resource.Success -> updateUI(
+                    it.data!!.user,
+                    it.data.additionalUserInfo!!.isNewUser
+                )
                 is Resource.Error -> {
                     _binding.startProgressBar.isVisible = false
-                    Snackbar.make(_binding.root, "${it.message}", Snackbar.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Loading -> _binding.startProgressBar.isVisible = true
             }
@@ -150,7 +144,6 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
 
         timer.schedule(object : TimerTask() {
             override fun run() {
-
                 handler.post(Runnable {
                     var c = _binding.startViewpager.currentItem
                     if (c == 2) _binding.startViewpager.currentItem =
@@ -160,20 +153,19 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
         }, 3000, 3000)
     }
 
-    private fun updateUI(firebaseUser: FirebaseUser?) {
-        if (firebaseUser != null) {
-            // send user data to firestore collection
-            val user =
-                User(firebaseUser.uid, firebaseUser.displayName, firebaseUser.photoUrl.toString())
-            val userRepo = UserRepo()
-            lifecycleScope.launchWhenCreated { userRepo.addUser(user) }
-
-            // This is important.... Ha... Ha... Ha... Ha....
-            if (navController.currentDestination?.id == R.id.startFragment) {
-                navController.navigate(R.id.action_startFragment_to_listFragment)
+    private fun updateUI(firebaseUser: FirebaseUser?, isNewUser: Boolean = false) {
+        firebaseUser?.let {
+            if (isNewUser) {
+                // save this new user to database
+                val user = User(
+                    firebaseUser.uid,
+                    firebaseUser.displayName,
+                    firebaseUser.photoUrl.toString()
+                )
+                authViewModel.addUser(user)
             }
-        } else {
-            _binding.startProgressBar.visibility = View.INVISIBLE
+            if (navController.currentDestination?.id == R.id.startFragment)
+                navController.navigate(R.id.action_startFragment_to_listFragment)
         }
     }
 

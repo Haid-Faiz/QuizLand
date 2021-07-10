@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui.join_quiz
 
 import android.content.Context
 import android.os.Bundle
@@ -6,15 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.quiz_app_mvvm.adapter.QuizListAdapter
-import com.example.quiz_app_mvvm.adapter.QuizListAdapter.OnQuizListItemClicked
+import com.example.quiz_app_mvvm.ui.QuizListAdapter
+import com.example.quiz_app_mvvm.ui.QuizListAdapter.OnQuizListItemClicked
 import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentJoinedQuizzesBinding
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.ui.HelloCheck
+import com.example.quiz_app_mvvm.ui.ClickListeners
 import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.firebase.ui.firestore.ObservableSnapshotArray
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +25,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizRepo.Upload
     private lateinit var quizRepo: QuizRepo
     private lateinit var _binding: FragmentJoinedQuizzesBinding
     private lateinit var arr: ObservableSnapshotArray<QuizModel>
-    private lateinit var a: HelloCheck
+    private lateinit var a: ClickListeners
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,12 +76,12 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked, QuizRepo.Upload
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        a = context as HelloCheck
+        a = context as ClickListeners
     }
 
     override fun onQuizItemClicked(position: Int) {
         quizListViewModel.setQuizData(arr[position])
-        a.hello(position)
+        a.oViewQuizClicked(position)
     }
 
     override fun onUnEnrolClicked(adapterPosition: Int) {

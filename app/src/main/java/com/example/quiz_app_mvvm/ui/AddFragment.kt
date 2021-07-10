@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class AddFragment : BottomSheetDialogFragment() {
 
     private lateinit var navController: NavController
-    private lateinit var fragmentAddBinding: FragmentAddBinding
+    private lateinit var _binding: FragmentAddBinding
     private lateinit var viewModel: QuizListViewModel
 
     override fun onCreateView(
@@ -23,8 +23,8 @@ class AddFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        fragmentAddBinding = FragmentAddBinding.inflate(inflater, container, false)
-        return fragmentAddBinding.root
+        _binding = FragmentAddBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,11 +32,11 @@ class AddFragment : BottomSheetDialogFragment() {
         navController = Navigation.findNavController(requireActivity(), R.id.ls_frag_host)
         viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
 
-        fragmentAddBinding.createQuizSelectBtn.setOnClickListener {
+        _binding.createQuizSelectBtn.setOnClickListener {
             navController.navigate(R.id.action_addFragment_to_createQuizFragment)
         }
 
-        fragmentAddBinding.joinQuizSelectBtn.setOnClickListener {
+        _binding.joinQuizSelectBtn.setOnClickListener {
             navController.navigate(R.id.action_addFragment_to_joinQuizBSDFragment)
             navController.popBackStack()
         }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ui.fragments.ListFragment">
+    tools:context=".ui.ListFragment">
 
     <fragment
         android:id="@+id/ls_frag_host"

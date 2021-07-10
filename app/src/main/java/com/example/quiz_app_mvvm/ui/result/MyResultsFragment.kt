@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui.result
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.quiz_app_mvvm.adapter.MyResultsAdapter
 import com.example.quiz_app_mvvm.databinding.FragmentMyResultsBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.util.DialogsUtil
@@ -18,7 +17,7 @@ import com.firebase.ui.firestore.ObservableSnapshotArray
 
 class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
 
-    private lateinit var fragmentMyResultsBinding: FragmentMyResultsBinding
+    private lateinit var _binding: FragmentMyResultsBinding
 //    private val viewModel: QuizListViewModel by viewModels()
     private lateinit var myResultsAdapter: MyResultsAdapter
     private lateinit var observableSnapshotArray: ObservableSnapshotArray<MyResult>
@@ -27,20 +26,20 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        fragmentMyResultsBinding = FragmentMyResultsBinding.inflate(inflater, container, false)
-        return fragmentMyResultsBinding.root
+        _binding = FragmentMyResultsBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        fragmentMyResultsBinding.myResultsBackBtn.setOnClickListener {
+        _binding.myResultsBackBtn.setOnClickListener {
             navController.popBackStack()
         }
 
-        fragmentMyResultsBinding.myResultRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        fragmentMyResultsBinding.myResultRecyclerview.setHasFixedSize(true)
+        _binding.myResultRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        _binding.myResultRecyclerview.setHasFixedSize(true)
     }
 
     override fun onStart() {
@@ -56,19 +55,19 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
                 onListItemChanged(itemCount)
             }
             myResultsAdapter.startListening()
-            fragmentMyResultsBinding.myResultRecyclerview.adapter = myResultsAdapter
-            fragmentMyResultsBinding.myResultRecyclerview.visibility= View.VISIBLE
-            fragmentMyResultsBinding.myResultsProgressBar.visibility = View.INVISIBLE
+            _binding.myResultRecyclerview.adapter = myResultsAdapter
+            _binding.myResultRecyclerview.visibility= View.VISIBLE
+            _binding.myResultsProgressBar.visibility = View.INVISIBLE
         })
     }
 
     private fun onListItemChanged(itemCount: Int) {
         if (itemCount == 0) {
-            fragmentMyResultsBinding.emptyResultListView.visibility = View.VISIBLE
-            fragmentMyResultsBinding.myResultRecyclerview.visibility = View.INVISIBLE
+            _binding.emptyResultListView.visibility = View.VISIBLE
+            _binding.myResultRecyclerview.visibility = View.INVISIBLE
         } else {
-            fragmentMyResultsBinding.emptyResultListView.visibility = View.INVISIBLE
-            fragmentMyResultsBinding.myResultRecyclerview.visibility = View.VISIBLE
+            _binding.emptyResultListView.visibility = View.INVISIBLE
+            _binding.myResultRecyclerview.visibility = View.VISIBLE
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui
 
 import android.os.Bundle
 import android.view.*
@@ -26,9 +26,7 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.let {
-            navController = findNavController(it, R.id.ls_frag_host)
-        }
+        navController = findNavController(requireActivity(), R.id.ls_frag_host)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             _binding.bottomNavBar.isVisible =
                 !(destination.id == R.id.addQuestFragment || destination.id == R.id.createQuizFragment)

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    tools:context=".ui.fragments.JoinQuizBSDFragment">
+    tools:context=".ui.join_quiz.JoinQuizBSDFragment">
 
     <ImageView
         android:id="@+id/cancel_button"
@@ -14,8 +14,7 @@
         android:layout_height="32dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_baseline_cancel_24"
-        app:tint="@color/colorLightText" />
+        android:src="@drawable/ic_baseline_cancel_24" />
 
     <LinearLayout
         android:layout_width="match_parent"

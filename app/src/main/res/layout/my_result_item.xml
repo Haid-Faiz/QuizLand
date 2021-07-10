@@ -16,7 +16,7 @@
 
         <variable
             name="onMyResultClicked"
-            type="com.example.quiz_app_mvvm.adapter.MyResultsAdapter.OnMyResultClicked" />
+            type="com.example.quiz_app_mvvm.ui.result.MyResultsAdapter" />
     </data>
 
     <androidx.cardview.widget.CardView

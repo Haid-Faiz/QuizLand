@@ -1,6 +1,5 @@
-package com.example.quiz_app_mvvm.adapter
+package com.example.quiz_app_mvvm.ui.result
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

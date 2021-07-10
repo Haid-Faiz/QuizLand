@@ -1,18 +1,17 @@
-package com.example.quiz_app_mvvm.adapter
+package com.example.quiz_app_mvvm.ui.result
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quiz_app_mvvm.databinding.FragmentMyResultsBinding
 import com.example.quiz_app_mvvm.databinding.MyResultItemBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 class MyResultsAdapter(
-        options: FirestoreRecyclerOptions<MyResult>,
-        private val onMyResultClicked: OnMyResultClicked,
-        private val f: (itemCount: Int) -> Unit
+    options: FirestoreRecyclerOptions<MyResult>,
+    private val onMyResultClicked: OnMyResultClicked,
+    private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<MyResult, MyResultsAdapter.ViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

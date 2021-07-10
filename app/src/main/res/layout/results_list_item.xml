@@ -12,7 +12,7 @@
 
 <!--        <variable-->
 <!--            name="participantResultListener"-->
-<!--            type="com.example.quiz_app_mvvm.adapter.PublicResultsAdapter.ParticipantResultListener" />-->
+<!--            type="com.example.quiz_app_mvvm.ui.result.PublicResultsAdapter.ParticipantResultListener" />-->
 
         <variable
             name="position"
@@ -20,7 +20,7 @@
 
 <!--        <variable-->
 <!--            name="f"-->
-<!--            type="com.example.quiz_app_mvvm.adapter.PublicResultsAdapter" />-->
+<!--            type="com.example.quiz_app_mvvm.ui.result.PublicResultsAdapter" />-->
 
         <variable
             name="kf"

@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.fragments
+package com.example.quiz_app_mvvm.ui.join_quiz
 
 import android.os.Bundle
 import android.util.Log

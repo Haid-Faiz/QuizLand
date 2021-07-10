@@ -1,18 +1,16 @@
-package com.example.quiz_app_mvvm.adapter
+package com.example.quiz_app_mvvm.ui.create_quiz
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quiz_app_mvvm.databinding.CreatedQuizItemBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.firebase.ui.firestore.ObservableSnapshotArray
 
 class CreatedQuizzesAdapter(
-        options: FirestoreRecyclerOptions<QuizModel>,
-        private val onCreatedQuizItemClicked: OnCreatedQuizItemClicked,
+    options: FirestoreRecyclerOptions<QuizModel>,
+    private val onCreatedQuizItemClicked: OnCreatedQuizItemClicked,
 //        private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<QuizModel, CreatedQuizzesAdapter.ViewHolder>(options) {
 
