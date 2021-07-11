@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.databinding.FragmentMyResultsBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.util.DialogsUtil
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
 import com.firebase.ui.firestore.ObservableSnapshotArray
 
 class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {

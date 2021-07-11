@@ -8,12 +8,12 @@ import kotlinx.coroutines.tasks.await
 
 class FirebaseRepo {
 
-    private val quizDao = QuizRepo()
+    private val quizRepo = QuizRepo()
 
     suspend fun getParticipateQuizOptions(): FirestoreRecyclerOptions<QuizModel> {
 
-        val queryOfParticipatedQuiz: Query = quizDao.userCollection
-                .document(quizDao.user?.uid!!)
+        val queryOfParticipatedQuiz: Query = quizRepo.userCollection
+                .document(quizRepo.user?.uid!!)
                 .collection("MyParticipatedQuiz")
                 .orderBy("createdAt", Query.Direction.DESCENDING)
 
@@ -24,8 +24,8 @@ class FirebaseRepo {
     }
 
     suspend fun getMyCreatedQuizzes(): FirestoreRecyclerOptions<QuizModel> {
-        val queryOfCreatedQuiz = quizDao.userCollection
-                .document(quizDao.user?.uid!!)
+        val queryOfCreatedQuiz = quizRepo.userCollection
+                .document(quizRepo.user?.uid!!)
                 .collection("MyCreatedQuiz")
                 .orderBy("createdAt", Query.Direction.DESCENDING)
 
@@ -37,8 +37,8 @@ class FirebaseRepo {
 
     suspend fun getMyResults(): FirestoreRecyclerOptions<MyResult> {
 
-        val query: Query = quizDao.userCollection
-                .document(quizDao.user?.uid!!)
+        val query: Query = quizRepo.userCollection
+                .document(quizRepo.user?.uid!!)
                 .collection("MyResults")
                 .get()
                 .await()
@@ -51,7 +51,7 @@ class FirebaseRepo {
 
     suspend fun getPublicResults(quizID: String): FirestoreRecyclerOptions<MyResult> {
 
-        val query = quizDao.resultCollection
+        val query = quizRepo.resultCollection
                 .document(quizID)
                 .collection("AllResults")
                 .orderBy("marksScored", Query.Direction.DESCENDING)

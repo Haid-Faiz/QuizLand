@@ -1,11 +1,10 @@
-package com.example.quiz_app_mvvm.ui.create_quiz
+package com.example.quiz_app_mvvm.ui.quiz.create
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -15,7 +14,7 @@ import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentCreatedQuizesBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.util.DialogsUtil
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
 import com.firebase.ui.firestore.ObservableSnapshotArray
 import com.google.android.material.snackbar.Snackbar
 

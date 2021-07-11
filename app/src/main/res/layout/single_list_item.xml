@@ -12,7 +12,7 @@
 
         <variable
             name="onQuizListItemClicked"
-            type="com.example.quiz_app_mvvm.ui.QuizListAdapter" />
+            type="com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter" />
 
         <variable
             name="position"
@@ -36,7 +36,7 @@
             <ImageView
                 android:id="@+id/list_image"
                 android:layout_width="0dp"
-                android:layout_height="182dp"
+                android:layout_height="176dp"
                 android:quizImageUrl="@{quiz.imageUrl}"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"

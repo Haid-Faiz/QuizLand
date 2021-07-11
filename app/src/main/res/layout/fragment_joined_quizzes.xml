@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".ui.join_quiz.JoinedQuizzesFragment" >
+        tools:context=".ui.quiz.join.JoinedQuizzesFragment" >
 
         <TextView
             android:id="@+id/list_page_title"

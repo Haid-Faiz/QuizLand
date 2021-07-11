@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.join_quiz
+package com.example.quiz_app_mvvm.ui.quiz.join
 
 import androidx.navigation.NavController
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.quiz_app_mvvm.R
 import androidx.navigation.Navigation
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs

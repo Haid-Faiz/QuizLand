@@ -5,7 +5,7 @@ import android.util.Log
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.ui.join_quiz.QuizFragment
+import com.example.quiz_app_mvvm.ui.quiz.QuizFragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference

@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.create_quiz
+package com.example.quiz_app_mvvm.ui.quiz.create
 
 import android.content.Context
 import android.os.Bundle
@@ -20,7 +20,7 @@ import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentAddQuestBinding
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class AddQuestFragment : Fragment(), QuizRepo.UploadedCallBack, CompoundButton.OnCheckedChangeListener {

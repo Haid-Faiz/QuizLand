@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.viewmodels
+package com.example.quiz_app_mvvm.ui.quiz
 
 import androidx.lifecycle.ViewModel
 import com.example.quiz_app_mvvm.repositories.FirebaseRepo

@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.create_quiz
+package com.example.quiz_app_mvvm.ui.quiz.create
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreateQuizBinding
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 

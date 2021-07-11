@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.create_quiz
+package com.example.quiz_app_mvvm.ui.quiz.create
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

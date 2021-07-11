@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    tools:context=".ui.join_quiz.JoinQuizBSDFragment">
+    tools:context=".ui.quiz.join.JoinQuizBSDFragment">
 
     <ImageView
         android:id="@+id/cancel_button"

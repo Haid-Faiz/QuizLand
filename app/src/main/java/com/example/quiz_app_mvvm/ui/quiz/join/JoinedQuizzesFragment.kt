@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.join_quiz
+package com.example.quiz_app_mvvm.ui.quiz.join
 
 import android.content.Context
 import android.os.Bundle
@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.quiz_app_mvvm.ui.QuizListAdapter
-import com.example.quiz_app_mvvm.ui.QuizListAdapter.OnQuizListItemClicked
+import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter
+import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter.OnQuizListItemClicked
 import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentJoinedQuizzesBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.ClickListeners
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
 import com.firebase.ui.firestore.ObservableSnapshotArray
 import com.google.android.material.snackbar.Snackbar
 

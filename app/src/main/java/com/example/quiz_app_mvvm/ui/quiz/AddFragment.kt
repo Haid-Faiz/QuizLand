@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui
+package com.example.quiz_app_mvvm.ui.quiz
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentAddBinding
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddFragment : BottomSheetDialogFragment() {

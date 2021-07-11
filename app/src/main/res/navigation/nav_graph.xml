@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.quiz_app_mvvm.ui.join_quiz.QuizFragment"
+        android:name="com.example.quiz_app_mvvm.ui.quiz.QuizFragment"
         android:label="fragment_quiz"
         tools:layout="@layout/fragment_quiz">
         <action
@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.quiz_app_mvvm.ui.join_quiz.DetailsFragment"
+        android:name="com.example.quiz_app_mvvm.ui.quiz.join.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details">
         <action

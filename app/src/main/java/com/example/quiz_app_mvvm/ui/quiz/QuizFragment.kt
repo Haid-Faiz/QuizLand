@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui.join_quiz
+package com.example.quiz_app_mvvm.ui.quiz
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +21,6 @@ import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.model.User
 import com.example.quiz_app_mvvm.util.DialogsUtil
-import com.example.quiz_app_mvvm.viewmodels.QuizListViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -58,7 +57,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
                     _binding.normalCountDownView)
         }
 
-        val args: com.example.quiz_app_mvvm.ui.fragments.QuizFragmentArgs by navArgs()
+        val args: QuizFragmentArgs by navArgs()
         quizId = args.quizDocumentID
         totalQuestions = args.totalQuestions
         quizName = args.quizName

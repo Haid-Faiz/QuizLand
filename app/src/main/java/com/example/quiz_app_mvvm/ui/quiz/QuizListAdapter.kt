@@ -1,4 +1,4 @@
-package com.example.quiz_app_mvvm.ui
+package com.example.quiz_app_mvvm.ui.quiz
 
 import android.view.LayoutInflater
 import android.view.MenuItem
