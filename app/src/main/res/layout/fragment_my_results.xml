@@ -10,9 +10,9 @@
         android:id="@+id/my_results_back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:padding="8dp"
+        android:layout_marginStart="@dimen/_8sdp"
         android:background="@android:color/transparent"
+        android:padding="@dimen/_6sdp"
         android:src="@drawable/cross"
         app:layout_constraintBottom_toBottomOf="@id/my_result_text"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +22,12 @@
         android:id="@+id/my_result_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_24sdp"
         android:fontFamily="@font/work_sans_semibold"
         android:text="My Results"
         android:textColor="@color/primary_text"
-        android:textSize="22sp"
+        android:textSize="@dimen/_18sdp"
         app:layout_constraintStart_toEndOf="@id/my_results_back_btn"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
         android:id="@+id/my_result_recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,11 +48,11 @@
         android:id="@+id/empty_result_list_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_106sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_106sdp"
         android:orientation="vertical"
-        android:layout_marginTop="136dp"
-        android:layout_marginBottom="136dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginEnd="36dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
-            android:layout_height="116dp"
+            android:layout_height="@dimen/_96sdp"
             android:layout_marginTop="0dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
@@ -70,7 +70,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:fontFamily="@font/work_sans"
             android:gravity="center"
             android:text="You haven't participated in any quiz. So, no results. click + to participate now."
@@ -87,7 +87,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_result_text" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

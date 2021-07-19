@@ -7,24 +7,22 @@
         <variable
             name="quiz"
             type="com.example.quiz_app_mvvm.model.QuizModel" />
-
         <variable
             name="position"
             type="Integer" />
-
         <variable
             name="onCreatedQuizItemClicked"
-            type="com.example.quiz_app_mvvm.ui.quiz.create.CreatedQuizzesAdapter" />
+            type="com.example.quiz_app_mvvm.ui.quiz.create.CreatedQuizzesAdapter.OnCreatedQuizItemClicked" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardCornerRadius="8dp">
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        app:cardCornerRadius="@dimen/_6sdp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +33,7 @@
             <ImageView
                 android:id="@+id/created_quiz_image"
                 android:layout_width="0dp"
-                android:layout_height="176dp"
+                android:layout_height="@dimen/_132sdp"
                 android:scaleType="centerCrop"
                 android:quizImageUrl="@{quiz.imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,9 +43,9 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="@dimen/_42sdp"
+                android:translationZ="@dimen/_7sdp"
                 android:background="@drawable/image_cover"
-                android:translationZ="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/created_quiz_image"
                 app:layout_constraintEnd_toEndOf="@id/created_quiz_image"
                 app:layout_constraintStart_toStartOf="@id/created_quiz_image" />
@@ -56,13 +54,13 @@
                 android:id="@+id/created_quiz_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
                 android:fontFamily="@font/noto_sans_bold"
                 android:text="@{quiz.name}"
                 android:textColor="@color/primary_text"
-                android:textSize="16sp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/created_quiz_image" />
@@ -71,25 +69,24 @@
                 android:id="@+id/created_quiz_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
                 android:ellipsize="end"
                 android:fontFamily="@font/noto_sans"
                 android:maxLines="3"
                 android:text="@{quiz.description}"
                 android:textColor="@color/primary_text"
-                android:textSize="14sp"
+                android:textSize="@dimen/_11ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/created_quiz_name"
-                app:lineHeight="24dp" />
+                app:layout_constraintTop_toBottomOf="@+id/created_quiz_name" />
 
             <ImageButton
                 android:id="@+id/share_quiz_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="@dimen/_1sdp"
                 android:onClick="@{() -> onCreatedQuizItemClicked.onShareQuizClicked(position)}"
                 android:backgroundTint="@color/colorDark"
                 android:src="@drawable/ic_baseline_share_24"
@@ -101,7 +98,7 @@
                 android:id="@+id/delete_quiz_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="@dimen/_1sdp"
                 android:onClick="@{() -> onCreatedQuizItemClicked.onDeleteClicked(position)}"
                 android:backgroundTint="@color/colorDark"
                 android:src="@drawable/ic_baseline_delete_24"
@@ -115,14 +112,14 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:strokeColor="@color/colorLightText"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="14dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/noto_sans"
                 android:text="Get Results"
                 android:onClick="@{() -> onCreatedQuizItemClicked.onGetResultClicked(position)}"
                 android:textAllCaps="false"
-                android:textSize="14sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/created_quiz_description" />

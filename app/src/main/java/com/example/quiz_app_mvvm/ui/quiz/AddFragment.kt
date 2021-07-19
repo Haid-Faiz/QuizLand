@@ -15,7 +15,7 @@ class AddFragment : BottomSheetDialogFragment() {
 
     private lateinit var navController: NavController
     private lateinit var _binding: FragmentAddBinding
-    private lateinit var viewModel: QuizListViewModel
+    private lateinit var viewModel: QuizViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +29,7 @@ class AddFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(requireActivity(), R.id.ls_frag_host)
-        viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
 
         _binding.createQuizSelectBtn.setOnClickListener {
             navController.navigate(R.id.action_addFragment_to_createQuizFragment)

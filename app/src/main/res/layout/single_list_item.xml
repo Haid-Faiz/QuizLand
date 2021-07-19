@@ -5,15 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="quiz"
             type="com.example.quiz_app_mvvm.model.QuizModel" />
-
         <variable
             name="onQuizListItemClicked"
-            type="com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter" />
-
+            type="com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter.OnQuizListItemClicked" />
         <variable
             name="position"
             type="Integer" />
@@ -22,11 +19,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        app:cardCornerRadius="8dp">
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        app:cardCornerRadius="@dimen/_6sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,7 +33,7 @@
             <ImageView
                 android:id="@+id/list_image"
                 android:layout_width="0dp"
-                android:layout_height="176dp"
+                android:layout_height="@dimen/_132sdp"
                 android:quizImageUrl="@{quiz.imageUrl}"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,9 +43,9 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="@dimen/_42sdp"
+                android:translationZ="@dimen/_7sdp"
                 android:background="@drawable/image_cover"
-                android:translationZ="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/list_image"
                 app:layout_constraintEnd_toEndOf="@id/list_image"
                 app:layout_constraintStart_toStartOf="@id/list_image" />
@@ -57,13 +54,13 @@
                 android:id="@+id/list_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
                 android:fontFamily="@font/noto_sans_bold"
                 android:text="@{quiz.name}"
                 android:textColor="@color/primary_text"
-                android:textSize="16sp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toStartOf="@+id/unenrol_menu_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/list_image"
@@ -83,15 +80,15 @@
                 android:id="@+id/list_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
                 android:ellipsize="end"
                 android:fontFamily="@font/noto_sans"
                 android:maxLines="3"
                 android:text="@{quiz.description}"
                 android:textColor="@color/primary_text"
-                android:textSize="14sp"
+                android:textSize="@dimen/_11ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/list_name"
@@ -101,11 +98,11 @@
                 android:id="@+id/created_by_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/_12sdp"
                 android:fontFamily="@font/noto_sans"
                 android:text="Created by"
                 android:textColor="@color/colorLightText"
-                android:textSize="12sp"
+                android:textSize="@dimen/_8ssp"
                 app:layout_constraintBottom_toTopOf="@id/quiz_creator_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/list_button" />
@@ -114,11 +111,11 @@
                 android:id="@+id/quiz_creator_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/_12sdp"
                 android:fontFamily="@font/noto_sans"
                 android:text="@{quiz.createdBy}"
                 android:textColor="@color/colorLightText"
-                android:textSize="14sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/list_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/created_by_hint"
@@ -129,14 +126,14 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="14dp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/noto_sans"
                 android:onClick="@{() -> onQuizListItemClicked.onQuizItemClicked(position)}"
                 android:text="View Quiz"
                 android:textAllCaps="false"
-                android:textSize="14sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/list_description"

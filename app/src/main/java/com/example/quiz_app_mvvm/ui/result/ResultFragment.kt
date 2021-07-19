@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentResultBinding
-import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 
 class ResultFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var _binding: FragmentResultBinding
+    private val quizViewModel : QuizViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -37,9 +39,8 @@ class ResultFragment : Fragment() {
 //        quizId = args.quizId
 //        quizId = ResultFragmentArgs.fromBundle(arguments!!).quizId
 
-        val viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
         // get results
-        val result = viewModel.getResult()
+        val result = quizViewModel.getResult()
         loadAnimation(result.scoredPercent, result.marksScored, result.totalMarks)
         _binding.resultCorrectText.text = result.correctAns.toString()
         _binding.resultWrongText.text = result.wrongAns.toString()

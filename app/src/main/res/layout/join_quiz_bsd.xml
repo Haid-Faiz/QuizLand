@@ -10,41 +10,51 @@
 
     <ImageView
         android:id="@+id/cancel_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/_28sdp"
+        android:layout_height="@dimen/_28sdp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/_12sdp"
         android:src="@drawable/ic_baseline_cancel_24" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorDark"
-        android:orientation="vertical"
-        android:paddingStart="14dp"
-        android:paddingEnd="14dp">
+        android:background="@drawable/bsd_round_bg"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/join_quiz_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="2dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/noto_sans_bold"
             android:text="Join quiz"
             android:textColor="@color/primary_text"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/line_separator"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/join_quiz_text"
+            android:background="@drawable/line_separator_bg"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/enter_unique_quiz_id"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/line_separator"
+            android:layout_marginBottom="@dimen/_1sdp"
             android:textColorHint="@color/input_bg"
             app:boxStrokeColor="@color/input_bg"
             app:hintTextColor="@color/input_bg">
@@ -53,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/noto_sans"
+                android:textSize="@dimen/_12ssp"
                 android:hint="Enter quiz id here"
                 android:textColor="@color/primary_text" />
 
@@ -62,31 +73,47 @@
             android:id="@+id/join_quiz_text_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            app:layout_constraintTop_toBottomOf="@id/enter_unique_quiz_id"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:fontFamily="@font/noto_sans"
             android:gravity="start"
             android:text="Note: Enter unique quiz id in which you want to enroll. \nAsk your quiz creator for unique quiz id, in case you don't have"
             android:textColor="@color/colorLightText"
-            android:textSize="12sp" />
+            android:textSize="@dimen/_10ssp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/join_quiz_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:cornerRadius="4dp"
+            android:layout_marginStart="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/join_quiz_text_desc"
+            app:cornerRadius="@dimen/_3sdp"
             android:backgroundTint="@color/white"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
             android:fontFamily="@font/noto_sans"
             android:text="Join quiz"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="@dimen/_10ssp" />
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_joining"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:translationZ="@dimen/_7sdp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintTop_toTopOf="@id/join_quiz_button"
+            app:layout_constraintStart_toStartOf="@id/join_quiz_button"
+            app:layout_constraintEnd_toEndOf="@id/join_quiz_button"
+            app:layout_constraintBottom_toBottomOf="@id/join_quiz_button"
+            android:indeterminateTint="@color/colorDark"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

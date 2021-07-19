@@ -13,6 +13,9 @@ import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentAccountBinding
 import com.example.quiz_app_mvvm.model.User
+import com.example.quiz_app_mvvm.util.Constants.LINKED_ANDROID_APP_PACKAGE
+import com.example.quiz_app_mvvm.util.Constants.MY_LINKED_PROFILE
+import com.example.quiz_app_mvvm.util.Constants.QUIZ_LAND_SHARE_MSG
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -56,7 +59,7 @@ class AccountFragment : Fragment() {
             val shareIntent = Intent(Intent.ACTION_SEND).setType("text/plain")
             shareIntent.putExtra(
                 Intent.EXTRA_TEXT,
-                "Hey, Do you want to get rid of all quiz headaches ? \n If yes.. then QuizLand is the solution. \n Download now: AppUrl"
+                QUIZ_LAND_SHARE_MSG
             )
             val chooser = Intent.createChooser(shareIntent, "Share this app using...")
             startActivity(chooser)
@@ -71,13 +74,12 @@ class AccountFragment : Fragment() {
         }
 
         _binding.developerContactButton.setOnClickListener {
-            // this cade opens Linked In but doesn't open particular profile
-//            val launchLinkedIntent = requireActivity().packageManager.getLaunchIntentForPackage("com.linkedin.android")
-//            startActivity(launchLinkedIntent)
+            // This code opens Linked In but doesn't open particular profile
+            // val launchLinkedIntent = requireActivity().packageManager.getLaunchIntentForPackage("com.linkedin.android")
+            // startActivity(launchLinkedIntent)
             // ---------------------------------------------
-            val profileID = "https://www.linkedin.com/in/faizan-haider-3a4220193"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(profileID))
-            intent.setPackage("com.linkedin.android")
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(MY_LINKED_PROFILE))
+            intent.setPackage(LINKED_ANDROID_APP_PACKAGE)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }

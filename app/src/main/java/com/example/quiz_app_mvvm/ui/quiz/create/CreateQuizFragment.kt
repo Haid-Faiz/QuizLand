@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreateQuizBinding
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -50,7 +50,7 @@ class CreateQuizFragment : Fragment() {
         navController = Navigation.findNavController(view)
         pickedDate = QuizModel.MyDate()
 
-        val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
+        val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
 
         _binding.quizDurationMinPicker.minValue = 0
         _binding.quizDurationMinPicker.maxValue = 59

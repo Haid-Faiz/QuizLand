@@ -38,11 +38,11 @@
             android:id="@+id/rank_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:fontFamily="@font/noto_sans"
             android:text="@{String.valueOf(position + 1)}"
             android:textColor="@color/primary_text"
-            android:textSize="16dp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toBottomOf="@id/participant_image"
             app:layout_constraintEnd_toStartOf="@id/rank_line_separator"
             app:layout_constraintTop_toTopOf="@id/participant_image"
@@ -50,9 +50,9 @@
 
         <View
             android:id="@+id/rank_line_separator"
-            android:layout_width="1dp"
+            android:layout_width="@dimen/_1sdp"
             android:layout_height="0dp"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="@dimen/_28sdp"
             android:background="@drawable/line_separator_bg"
             app:layout_constraintBottom_toBottomOf="@id/participant_image"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,12 +60,11 @@
 
         <ImageView
             android:id="@+id/participant_image"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
             android:quizCircularImageUrl="@{result.user.userImageUrl}"
             android:src="@drawable/ic_baseline_account_circle_24"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,14 +75,13 @@
             android:id="@+id/participant_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:fontFamily="@font/noto_sans_bold"
             android:text="@{result.user.displayName}"
             android:textColor="@color/primary_text"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toStartOf="@+id/detail_result_progress"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toStartOf="@+id/participant_details_btn"
             app:layout_constraintStart_toEndOf="@id/participant_image"
             app:layout_constraintTop_toTopOf="@id/participant_image"
             tools:text="Faizan Haider" />
@@ -92,11 +90,11 @@
             android:id="@+id/participant_marks_scored_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:fontFamily="@font/noto_sans"
             android:text="@{`Marks Scored: ` + String.valueOf(result.marksScored)}"
             android:textColor="@color/colorLightText"
-            android:textSize="14sp"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintStart_toStartOf="@id/participant_name"
             app:layout_constraintTop_toBottomOf="@+id/participant_name"
             tools:text="Marks Scored: 78" />
@@ -106,7 +104,7 @@
             android:id="@+id/participant_details_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_baseline_arrow_forward_ios_24"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -115,38 +113,17 @@
 
 <!--        android:onClick="@{() -> participantResultListener.onParticipantResultClicked(result)}"-->
 
-
-        <!--        <android.widget.Button-->
-        <!--            android:id="@+id/get_participant_result_detail_btn"-->
-        <!--            android:layout_width="24dp"-->
-        <!--            android:layout_height="24dp"-->
-        <!--            android:layout_marginTop="8dp"-->
-        <!--            android:layout_marginEnd="8dp"-->
-        <!--            android:background="@drawable/dark_bg"-->
-        <!--            android:fontFamily="@font/work_sans"-->
-        <!--            android:gravity="center"-->
-        <!--            android:text=">"-->
-        <!--            android:onClick="@{ () -> participantResultListener.onParticipantResultClicked(result)}"-->
-        <!--            android:textAllCaps="false"-->
-        <!--            android:textColor="@color/my_purple"-->
-        <!--            android:textSize="16sp"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="@+id/detail_result_progress" />-->
-
-
         <View
             android:id="@+id/recycler_divider"
             android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:background="@drawable/line_separator_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </layout>

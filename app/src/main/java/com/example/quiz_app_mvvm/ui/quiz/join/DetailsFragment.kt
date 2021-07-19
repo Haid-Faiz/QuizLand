@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.quiz_app_mvvm.R
 import androidx.navigation.Navigation
-import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -40,7 +40,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
         navController = Navigation.findNavController(view)
         _binding.detailsStartBtn.setOnClickListener(this)
-        val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
+        val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
         quizData = quizListViewModel.getQuizData()
         _binding.quiz = quizData
 
@@ -48,7 +48,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 //        position = DetailsFragmentArgs.fromBundle(getArguments()).position
 //        In Kotlin --->
 //        val args by navArgs<DetailsFragmentArgs>()
-        val args: com.example.quiz_app_mvvm.ui.fragments.DetailsFragmentArgs by navArgs()
+        val args: DetailsFragmentArgs by navArgs()
         position = args.position
         // -----------------------
         quizId = quizData.quiz_id
@@ -84,7 +84,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
                             && currentMinutesOfDay in startMinutes until endMinutes
                     ) {
                         val action =
-                            com.example.quiz_app_mvvm.ui.fragments.DetailsFragmentDirections.actionDetailsFragmentToQuizFragment()
+                            DetailsFragmentDirections.actionDetailsFragmentToQuizFragment()
                         //   action.setPosition(position);
                         action.quizDocumentID = quizId
                         action.quizName = quizName

@@ -8,9 +8,9 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/connection_lost_anim"
         android:layout_width="0dp"
-        android:layout_height="196dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_height="@dimen/_152sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         app:lottie_autoPlay="true"
         app:lottie_rawRes="@raw/connection_lost"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,10 +21,10 @@
         android:id="@+id/connection_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:text="Connection Error"
         android:fontFamily="@font/noto_sans_bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/_14ssp"
         android:textColor="@color/primary_text"
         app:layout_constraintTop_toBottomOf="@+id/connection_lost_anim"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,15 +33,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="@dimen/_24sdp"
         android:text="Please check your 4G/Wifi connection"
         android:fontFamily="@font/noto_sans"
-        android:textSize="14sp"
+        android:textSize="@dimen/_10ssp"
         android:textColor="@color/colorLightText"
         app:layout_constraintTop_toBottomOf="@+id/connection_error"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

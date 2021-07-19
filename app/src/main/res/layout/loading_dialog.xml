@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="24dp"
+    android:layout_margin="@dimen/_16sdp"
     android:background="@drawable/dialog_bg"
     android:orientation="vertical">
 
@@ -11,17 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/_18sdp"
         android:indeterminateTint="@color/primary_text" />
 
     <TextView
         android:id="@+id/loading_progress_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_margin="@dimen/_18sdp"
         android:layout_gravity="center"
         android:fontFamily="@font/noto_sans"
-        android:textSize="16sp"
+        android:textSize="@dimen/_12ssp"
         android:text="Please wait..."
         android:textColor="@color/primary_text" />
 

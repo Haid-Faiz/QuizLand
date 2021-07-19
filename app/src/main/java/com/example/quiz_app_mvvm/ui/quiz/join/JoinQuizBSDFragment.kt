@@ -1,20 +1,24 @@
 package com.example.quiz_app_mvvm.ui.quiz.join
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.quiz_app_mvvm.databinding.JoinQuizBsdBinding
-import com.example.quiz_app_mvvm.repositories.QuizRepo
-import com.example.quiz_app_mvvm.util.DialogsUtil
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.Resource
+import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 
-class JoinQuizBSDFragment : BottomSheetDialogFragment(), QuizRepo.UploadedCallBack {
+class JoinQuizBSDFragment : BottomSheetDialogFragment() {
 
     private lateinit var _binding: JoinQuizBsdBinding
+    private val quizViewModel: QuizViewModel by viewModels()
+    private var uniqueQuizID = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,61 +30,71 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment(), QuizRepo.UploadedCallBa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding.cancelButton.setOnClickListener {
-            this.dismiss()
-        }
+        _binding.cancelButton.setOnClickListener { this.dismiss() }
 
         _binding.joinQuizButton.setOnClickListener {
-            val uniqueQuizID = _binding.enterUniqueQuizId.editText?.text.toString().trim()
+            uniqueQuizID = _binding.enterUniqueQuizId.editText?.text.toString().trim()
 
-            if (uniqueQuizID.isNotEmpty()) {
-                _binding.enterUniqueQuizId.error = null
-                // this.dismiss()
-                // start progress here
-                DialogsUtil.showLoadingDialog(requireActivity())
-                val quizRepo = QuizRepo(this)
+            if (uniqueQuizID.isNotEmpty() && uniqueQuizID.isNotBlank()) {
+                // show progress
+                _binding.apply {
+                    this@JoinQuizBSDFragment.isCancelable = false
+                    enterUniqueQuizId.error = null
+                    progressJoining.isVisible = true
+                    joinQuizButton.isEnabled = false
+                    joinQuizButton.text = ""
+                    enterUniqueQuizId.isEnabled = false
+                }
                 // Check first that if this quiz exists or not
-                quizRepo.quizListCollection
-                    .document(uniqueQuizID)
-                    .get()
-                    .addOnCompleteListener {
+                checkQuizExistence(uniqueQuizID)
+            } else _binding.enterUniqueQuizId.error = "Required"
+        }
+    }
 
-                        if (it.result?.exists()!!) {
-                            Log.d("TAG10", "onViewCreated: chl gya ji2")
-                            quizRepo.joinQuiz(uniqueQuizID)
-//                            navController.navigate(R.id.action_addFragment_to_listSecFragment)
+    private fun checkQuizExistence(uniqueQuizID: String) {
+        lifecycleScope.launchWhenCreated {
+            quizViewModel.isQuizExist(quizID = uniqueQuizID).let {
+                when (it) {
+                    // is Resource.Error -> DialogsUtil.dismissDialog()
+                    // is Resource.Loading -> DialogsUtil.showLoadingDialog(requireActivity())
+                    is Resource.Success -> {
+                        if (it.data?.exists()!!) {
+                            // Quiz exists... join it
+                            joinQuiz(uniqueQuizID)
                         } else {
-                            DialogsUtil.dismissDialog()
-                            this.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                "Invalid quiz id or this quiz doesn't exist",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            Snackbar.make(
-                                _binding.root,
-                                "Invalid quiz id or this quiz doesn't exist",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            _binding.apply {
+                                progressJoining.isVisible = false
+                                joinQuizButton.isEnabled = true
+                                joinQuizButton.text = "Join quiz"
+                                enterUniqueQuizId.isEnabled = true
+                                this@JoinQuizBSDFragment.isCancelable = true
+                            }
+                            showSnackBar(message = "Invalid quiz id or this quiz doesn't exist")
                         }
                     }
-                // end progress in callback
-            } else {
-                _binding.enterUniqueQuizId.error = "Required"
+                }
             }
         }
     }
 
-    override fun isUploaded(isAdded: Boolean, docID: String) {
-        DialogsUtil.dismissDialog()
-        this.dismiss()
-        if (isAdded) {
-            Snackbar.make(_binding.root, "Join Successfully", Snackbar.LENGTH_LONG).show()
-        } else {
-            Snackbar.make(_binding.root, "Something went wrong", Snackbar.LENGTH_LONG)
-                .show()
+    private suspend fun joinQuiz(uniqueQuizID: String) {
+        quizViewModel.joinQuiz(uniqueQuizID).let { isJoined: Resource<Void> ->
+            _binding.apply {
+                progressJoining.isVisible = false
+                joinQuizButton.isEnabled = true
+                enterUniqueQuizId.isEnabled = true
+                this@JoinQuizBSDFragment.isCancelable = true
+            }
+            when (isJoined) {
+                is Resource.Error -> showSnackBar(
+                    message = isJoined.message ?: "Something went wrong"
+                )
+                // is Resource.Loading -> TODO()
+                is Resource.Success -> {
+                    showSnackBar("Joined successfully")
+                    dismiss()
+                }
+            }
         }
     }
-
-    override fun isDeleted(isDeleted: Boolean) {}
 }

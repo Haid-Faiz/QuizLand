@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -21,6 +21,10 @@ import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.model.User
 import com.example.quiz_app_mvvm.util.DialogsUtil
+import com.example.quiz_app_mvvm.util.Resource
+import com.example.quiz_app_mvvm.util.showSnackBar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,9 +41,13 @@ class QuizFragment : Fragment(), View.OnClickListener {
     private val randomQueList: MutableList<QuestionsModel> = ArrayList()
     private var canAnswer = false
     private lateinit var _binding: FragmentQuizBinding
-//    private val viewModel: QuizListViewModel by viewModels()
+    private val quizViewModel: QuizViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentQuizBinding.inflate(inflater, container, false)
         return _binding.root
@@ -52,9 +60,10 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
         requireActivity().onBackPressedDispatcher.addCallback(this@QuizFragment) {
             DialogsUtil.showExitQuizDialog(
-                    requireContext(),
-                    navController,
-                    _binding.normalCountDownView)
+                requireContext(),
+                navController,
+                _binding.normalCountDownView
+            )
         }
 
         val args: QuizFragmentArgs by navArgs()
@@ -65,36 +74,32 @@ class QuizFragment : Fragment(), View.OnClickListener {
 //        totalQuestions = QuizFragmentArgs.fromBundle(getArguments).totalQuestions
 //        quizName = QuizFragmentArgs.fromBundle(getArguments).quizName
         // ---------------------------------------------
-        val viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
-        quizData = viewModel.getQuizData()
+        quizData = quizViewModel.getQuizData()
         // --------------------------------------
-
-        val quizDao = QuizRepo()
-        quizDao.userCollection
-                .document(quizDao.user?.uid!!)
-                .collection("MyParticipatedQuiz")
-                .document(quizData.quiz_id)
-                .collection("Questions")
-                .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-
-                        val questionListModel: QuestionsListModel? = it.result?.documents?.get(0)?.toObject(
-                            QuestionsListModel::class.java)
-
-//                        val querySnapshot: QuerySnapshot? = it.result
-//                        val a: MutableList<DocumentSnapshot>? = querySnapshot?.documents
-//                        val ds: DocumentSnapshot? = a?.get(0)
-//                        val questionListModel: QuestionsListModel? = ds?.toObject(QuestionsListModel::class.java)
-                        val questionList: ArrayList<QuestionsModel>? = questionListModel?.questionsList
-
-                        pickQuestion(questionList)
-                        loadUI()
-                    } else {
-                        // set the error
-                        _binding.quizTitle.text = "Error loading in data..."
-                    }
+        quizViewModel.getQuestions(
+            userId = Firebase.auth.currentUser?.uid!!,
+            quizID = quizData.quiz_id
+        )
+        quizViewModel.questions.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Error -> {
+                    showSnackBar(it.message!!)
                 }
+                is Resource.Loading -> TODO()
+                is Resource.Success -> {
+                    val questionListModel: QuestionsListModel? = it.data!!.documents[0]
+                        .toObject(QuestionsListModel::class.java)
+                    // Explanation ->
+                    // val querySnapshot: QuerySnapshot? = it.result
+                    // val a: MutableList<DocumentSnapshot>? = querySnapshot?.documents
+                    // val ds: DocumentSnapshot? = a?.get(0)
+                    // val questionListModel: QuestionsListModel? = ds?.toObject(QuestionsListModel::class.java)
+                    val questionList: ArrayList<QuestionsModel>? = questionListModel?.questionsList
+                    pickQuestion(questionList)
+                    loadUI()
+                }
+            }
+        }
 
         _binding.quizOptionOne.setOnClickListener(this)
         _binding.quizOptionTwo.setOnClickListener(this)
@@ -138,7 +143,8 @@ class QuizFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loadQuestion(questionSerialNum: Int) {
-        _binding.quizQuestionNum.text = "Q.No. ${questionSerialNum.toString()} out of ${randomQueList.size}"
+        _binding.quizQuestionNum.text =
+            "Q.No. ${questionSerialNum.toString()} out of ${randomQueList.size}"
         // load question text
         _binding.quizQuestion.text = randomQueList[questionSerialNum - 1].question
         // load option button
@@ -157,7 +163,8 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
     private fun startTimer() {
         // setting time duration
-        val endTimeInSeconds = (quizData.quizStartDate!!.quizStartTimeHour + quizData.quizDurationHour) * 3600 + (quizData.quizStartDate!!.quizStartTimeMin + quizData.quizDurationMin) * 60
+        val endTimeInSeconds =
+            (quizData.quizStartDate!!.quizStartTimeHour + quizData.quizDurationHour) * 3600 + (quizData.quizStartDate!!.quizStartTimeMin + quizData.quizDurationMin) * 60
 
         val calendar = Calendar.getInstance()
         val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -204,9 +211,10 @@ class QuizFragment : Fragment(), View.OnClickListener {
                 }
             }
             R.id.quiz_close_btn -> DialogsUtil.showExitQuizDialog(
-                    requireContext(),
-                    navController,
-                    _binding.normalCountDownView)
+                requireContext(),
+                navController,
+                _binding.normalCountDownView
+            )
         }
     }
 
@@ -216,31 +224,30 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
         val quizDao = QuizRepo()
         val user = User(
-                quizDao.user?.uid!!,
-                quizDao.user.displayName,
-                quizDao.user.photoUrl.toString()
+            quizDao.user?.uid!!,
+            quizDao.user.displayName,
+            quizDao.user.photoUrl.toString()
         )
         // calculate progress
         val totalMarks: Float = randomQueList.size * quizData.correctAnsMarks
-        val marksScored: Float = (correctAnswer * quizData.correctAnsMarks) - (wrongAnswer * (-quizData.wrongAnsMarks))  /////// negative marking lgani hai abhi
+        val marksScored: Float =
+            (correctAnswer * quizData.correctAnsMarks) - (wrongAnswer * (-quizData.wrongAnsMarks))  /////// negative marking lgani hai abhi
         val marksPercent: Float = (marksScored / totalMarks) * 100
 
         val myResult = MyResult(
-                quizName = quizName,
-                heldOn = quizData.quizStartDate,
-                user = user,
-                correctAns = correctAnswer,
-                wrongAns = wrongAnswer,
-                missedAns = randomQueList.size - correctAnswer - wrongAnswer,
-                scoredPercent = marksPercent,
-                marksScored = marksScored,
-                totalMarks = totalMarks
+            quizName = quizName,
+            heldOn = quizData.quizStartDate,
+            user = user,
+            correctAns = correctAnswer,
+            wrongAns = wrongAnswer,
+            missedAns = randomQueList.size - correctAnswer - wrongAnswer,
+            scoredPercent = marksPercent,
+            marksScored = marksScored,
+            totalMarks = totalMarks
         )
-        val viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
-        viewModel.setResult(myResult)
-        quizDao.setResult(quizId, myResult)
-        quizDao.updateParticipation(quizData.quiz_id)
-
+        quizViewModel.setResult(myResult)
+        quizViewModel.uploadResult(quizId, myResult)
+        quizViewModel.updateParticipationStatus(quizData.quiz_id)
         DialogsUtil.dismissDialog()
 
 //                    Check currentDestination before calling navigate might be helpful....

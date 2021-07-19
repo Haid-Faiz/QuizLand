@@ -77,4 +77,10 @@
     <!--        <item name="android:windowTranslucentStatus">true</item>-->
     <!--    </style>-->
 
+    <style name="TransparentDialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="background">@android:color/transparent</item>
+        <item name="android:indeterminateTint">@color/primary_text</item>
+    </style>
+
+
 </resources>

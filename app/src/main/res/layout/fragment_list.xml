@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:backgroundTint="@color/colorDark"
-        app:itemIconSize="30dp"
+        app:itemIconSize="@dimen/_22sdp"
         app:itemIconTint="@color/nav_icon_color"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,24 +14,29 @@ import com.example.quiz_app_mvvm.databinding.FragmentAdminResultBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.util.DialogsUtil
-import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.Resource
+import com.example.quiz_app_mvvm.util.showSnackBar
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.ObservableSnapshotArray
 
 
 class AdminResultFragment : Fragment() {
 
     private lateinit var navController: NavController
-    private lateinit var quizListViewModel: QuizListViewModel
-    private lateinit var fragmentAdminResultBinding: FragmentAdminResultBinding
+    private val quizViewModel: QuizViewModel by activityViewModels()
+    private lateinit var _binding: FragmentAdminResultBinding
     private lateinit var quizData: QuizModel
     private lateinit var publicResultsAdapter: PublicResultsAdapter
     private lateinit var arr: ObservableSnapshotArray<MyResult>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
-        fragmentAdminResultBinding = FragmentAdminResultBinding.inflate(inflater, container, false)
-        return fragmentAdminResultBinding.root
+        _binding = FragmentAdminResultBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,46 +44,59 @@ class AdminResultFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
-        quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
-        quizData = quizListViewModel.getQuizData()
-        fragmentAdminResultBinding.quizData = quizData
-        fragmentAdminResultBinding.adminResultDiscardBtn.setOnClickListener {
+        quizData = quizViewModel.getQuizData()
+        _binding.quizData = quizData
+        _binding.adminResultDiscardBtn.setOnClickListener {
             navController.popBackStack()
         }
 
-        fragmentAdminResultBinding.participantsRankListRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        fragmentAdminResultBinding.participantsRankListRecyclerview.setHasFixedSize(true)
+        _binding.participantsRankListRecyclerview.layoutManager =
+            LinearLayoutManager(requireContext())
+        _binding.participantsRankListRecyclerview.setHasFixedSize(true)
     }
 
     override fun onStart() {
         super.onStart()
 
-        quizListViewModel.getPublicResults(quizID = quizData.quiz_id)
-        quizListViewModel.publicResultOptions.observe(viewLifecycleOwner, {
+        quizViewModel.getPublicResults(quizID = quizData.quiz_id)
+        quizViewModel.resultList.observe(viewLifecycleOwner) {
 
-            arr = it.snapshots
-            publicResultsAdapter = PublicResultsAdapter(options = it,
-                    clickListenerFunction = { myResult: MyResult ->
-                        DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
-                    },
-                    onItemChanged = { itemCount: Int ->
-                        fragmentAdminResultBinding.adminResultTotalParticipants.text = itemCount.toString()
-                        onListItemChanged(itemCount)
-                    })
-            publicResultsAdapter.startListening()
-            fragmentAdminResultBinding.participantsRankListRecyclerview.adapter = publicResultsAdapter
+            when (it) {
+                is Resource.Error -> showSnackBar(message = it.message ?: "Something went wrong")
+                is Resource.Loading -> {
+                    _binding.publicResultsProgressBar.isVisible = true
+                    _binding.participantsRankListRecyclerview.isVisible = false
+                }
+                is Resource.Success -> {
+                    val options = FirestoreRecyclerOptions.Builder<MyResult>()
+                        .setQuery(it.data?.query!!, MyResult::class.java)
+                        .build()
 
-            fragmentAdminResultBinding.publicResultsProgressBar.visibility = View.INVISIBLE
-        })
+                    arr = options.snapshots
+                    publicResultsAdapter = PublicResultsAdapter(options = options,
+                        clickListenerFunction = { myResult: MyResult ->
+                            DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
+                        },
+                        onItemChanged = { itemCount: Int ->
+                            _binding.adminResultTotalParticipants.text =
+                                itemCount.toString()
+                            onListItemChanged(itemCount)
+                        })
+                    publicResultsAdapter.startListening()
+                    _binding.participantsRankListRecyclerview.adapter =
+                        publicResultsAdapter
+                }
+            }
+        }
     }
 
     private fun onListItemChanged(itemCount: Int) {
         if (itemCount == 0) {
-            fragmentAdminResultBinding.noOneParticipatedText.visibility = View.VISIBLE
-            fragmentAdminResultBinding.participantsRankListRecyclerview.visibility = View.INVISIBLE
+            _binding.noOneParticipatedText.visibility = View.VISIBLE
+            _binding.participantsRankListRecyclerview.visibility = View.INVISIBLE
         } else {
-            fragmentAdminResultBinding.noOneParticipatedText.visibility = View.INVISIBLE
-            fragmentAdminResultBinding.participantsRankListRecyclerview.visibility = View.VISIBLE
+            _binding.noOneParticipatedText.visibility = View.INVISIBLE
+            _binding.participantsRankListRecyclerview.visibility = View.VISIBLE
         }
     }
 

@@ -1,312 +1,427 @@
 package com.example.quiz_app_mvvm.repositories
 
 import android.net.Uri
-import android.util.Log
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizFragment
+import com.example.quiz_app_mvvm.util.Constants.ALL_RESULTS_COLLECTION
+import com.example.quiz_app_mvvm.util.Constants.MY_CREATED_COLLECTION
+import com.example.quiz_app_mvvm.util.Constants.MY_RESULTS_COLLECTION
+import com.example.quiz_app_mvvm.util.Constants.Participated_Quiz_COLLECTION
+import com.example.quiz_app_mvvm.util.Constants.QUESTIONS_COLLECTION
+import com.example.quiz_app_mvvm.util.Constants.QUIZ_LIST_COLLECTION
+import com.example.quiz_app_mvvm.util.Constants.RESULTS_COLLECTION
+import com.example.quiz_app_mvvm.util.Constants.USERS_COLLECTION
+import com.example.quiz_app_mvvm.util.Resource
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.*
+import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.tasks.await
 
-class QuizRepo(private val uploadedCallBack: UploadedCallBack? = null) {
+class QuizRepo : BaseRepo() {
 
     val user = Firebase.auth.currentUser
-    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    val quizListCollection: CollectionReference = db.collection("QuizList")
-    val userCollection = db.collection("Users")
-    val resultCollection = db.collection("Results")
-
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val quizListCollection: CollectionReference = db.collection(QUIZ_LIST_COLLECTION)
+    private val userCollection = db.collection(USERS_COLLECTION)
+    private val resultCollection = db.collection(RESULTS_COLLECTION)
     // Firebase Storage
     private var storageRef: StorageReference = FirebaseStorage.getInstance().reference
 
-    fun createQuiz(quizModel: QuizModel, questionsList: ArrayList<QuestionsModel>) {
 
-        GlobalScope.launch(Dispatchers.IO) {
-            // uploading the image
-
-            if (!quizModel.imageUrl.isNullOrBlank())
-                quizModel.imageUrl = uploadImage(Uri.parse(quizModel.imageUrl))
-
-            // got the doc id first
-            val docID: String = quizListCollection.document().id
-            // setting the quizID
-            quizModel.quiz_id = docID
-            // now upload the quizModel
-            quizListCollection.document(docID).set(quizModel)
-            addQuestions(docID, questionsList)
-
-            // Also add quiz to user account in MyCreatedQuiz collection
-            userCollection.document(user?.uid!!)
-                    .collection("MyCreatedQuiz")
-                    .document(docID)
-                    .set(quizModel)
-
-            val hashMap = HashMap<String, ArrayList<QuestionsModel>>()
-            hashMap["questionsList"] = questionsList
-
-            userCollection.document(user.uid)
-                    .collection("MyCreatedQuiz")
-                    .document(docID)
-                    .collection("Questions")
-                    .document()
-                    .set(hashMap)
+    suspend fun fetchQuestions(userId: String, quizId: String): Resource<QuerySnapshot> =
+        safeApiCall {
+            val questionsTask: Task<QuerySnapshot> = userCollection
+                .document(userId)
+                .collection(Participated_Quiz_COLLECTION)
+                .document(quizId)
+                .collection(QUESTIONS_COLLECTION)
+                .get()
+            // passing this to safeApiCall
+            questionsTask
         }
+
+    suspend fun isQuizExist(quizID: String): Resource<DocumentSnapshot> = safeApiCall {
+        val task: Task<DocumentSnapshot> = quizListCollection.document(quizID).get()
+        task
     }
 
-    private suspend fun uploadImage(imageUri: Uri): String {
+    suspend fun joinQuiz(quizId: String): Resource<Void> {
+        // firstly retrieve quiz from QuizList
+        getQuiz(quizId).let {
+            when (it) {
+                is Resource.Error -> TODO()
+                is Resource.Loading -> TODO()
+                is Resource.Success -> {
+                    val quiz: QuizModel? = it.data?.toObject(QuizModel::class.java)
 
-        val filePath = storageRef.child("QuizImages").child(imageUri.lastPathSegment.toString())
-        return filePath.putFile(imageUri).await().storage.downloadUrl.await().toString()
-//                .addOnCompleteListener { task: Task<UploadTask.TaskSnapshot> ->
-//            if (task.isSuccessful){
-//                task.result?.storage?.downloadUrl?.addOnCompleteListener { t: Task<Uri> ->
-//                    if (t.isSuccessful){
-//
-//                    }
-//                }
-//            }
-//        }
-    }
+                    // Now retrieve question list
+                    getQuestions(quizId).let { questions: Resource<QuerySnapshot> ->
+                        when (questions) {
+                            is Resource.Error -> TODO()
+                            is Resource.Loading -> TODO()
+                            is Resource.Success -> {
+                                val questionList = questions.data!!.documents[0]
+                                    .toObject(QuizFragment.QuestionsListModel::class.java)?.questionsList
 
-//    private fun uploadImage(imageUri: Uri?): String {
-////        val taskOne: UploadTask.TaskSnapshot = filePath.putFile(imageUri).await()
-////        val taskTwo: Uri = taskOne.storage.downloadUrl.await()
-////        val downloadURL = taskTwo.toString()
-//        var returnURL = ""
-//        imageUri?.let {
-//            GlobalScope.launch(Dispatchers.IO) {
-//                val filePath = storageRef.child("QuizImages")
-//                        .child(it.lastPathSegment.toString())
-//
-//                val downloadedUrl = filePath.putFile(it).await().storage.downloadUrl.await().toString()
-//                Log.d("superMan3", "uploadImage: $returnURL")
-//                withContext(Dispatchers.Main) {
-//                    returnURL = downloadedUrl
-//                }
-//            }
-//            Log.d("superMan", "uploadImage: $returnURL")
-//        }
-//        Log.d("superMan2", "uploadImage: $returnURL")
-//        return returnURL
-//    }
-
-    private fun addQuestions(docID: String, questionsList: ArrayList<QuestionsModel>) {
-
-        val hashMap = HashMap<String, ArrayList<QuestionsModel>>()
-        hashMap["questionsList"] = questionsList      // Kotlin style
-
-        quizListCollection
-                .document(docID)
-                .collection("Questions")
-                .document()
-                .set(hashMap).addOnCompleteListener {
-                    val isAdded = it.isSuccessful
-                    if (isAdded) {
-                        uploadedCallBack?.isUploaded(isAdded, docID)
-                    }
-                }
-    }
-
-    fun joinQuiz(uniqueQuizId: String) {
-
-        GlobalScope.launch(Dispatchers.IO) {
-
-//            val isQuizExists = quizListCollection
-//                    .document(uniqueQuizId)
-//                    .get()
-//                    .await()
-//                    .exists()
-
-            // firstly retrieve quiz from QuizList
-            val quiz: QuizModel? = quizListCollection
-                    .document(uniqueQuizId)
-                    .get()
-                    .await()
-                    .toObject(QuizModel::class.java)
-
-            val questionsListModel: QuizFragment.QuestionsListModel? = quizListCollection
-                    .document(uniqueQuizId)
-                    .collection("Questions")
-                    .get()
-                    .await()
-                    .documents[0]
-                    .toObject(QuizFragment.QuestionsListModel::class.java)
-
-            val questionList: ArrayList<QuestionsModel>? = questionsListModel?.questionsList
-
-            // Now add quiz and quizModel to MyParticipatedQuiz collection
-            userCollection
-                    .document(user?.uid!!)
-                    .collection("MyParticipatedQuiz")
-                    .document(uniqueQuizId)
-                    .set(quiz!!)
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val map = HashMap<String, ArrayList<QuestionsModel>?>()
-                            map["questionsList"] = questionList
-
-                            userCollection
-                                    .document(user.uid)
-                                    .collection("MyParticipatedQuiz")
-                                    .document(uniqueQuizId)
-                                    .collection("Questions")
-                                    .document()
-                                    .set(map).addOnCompleteListener { task: Task<Void> ->
-                                        if (task.isSuccessful) {
-                                            uploadedCallBack?.isUploaded(true)
+                                // Now add quiz to MyParticipatedQuiz collection
+                                setQuiz(quizId, quiz).let { quiz: Resource<Void> ->
+                                    when (quiz) {
+                                        is Resource.Error -> TODO()
+                                        is Resource.Loading -> TODO()
+                                        is Resource.Success -> {
+                                            // Now finally add question list to MyParticipatedQuiz collection
+                                            setQuestions(
+                                                quizId,
+                                                questionList
+                                            ).let { result: Resource<Void> ->
+                                                when (result) {
+                                                    is Resource.Error -> TODO()
+                                                    is Resource.Loading -> TODO()
+                                                    is Resource.Success -> {
+                                                        return result
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
-                        } else {
-                            uploadedCallBack?.isUploaded(false)
+                                }
+                            }
                         }
                     }
-            // FireStore Adapter will automatically update the participated quiz list
+                }
+            }
         }
+        // FireStore Adapter will automatically update the participated quiz list
     }
 
-    fun unEnrolQuiz(quizID: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            userCollection
-                    .document(user?.uid!!)
-                    .collection("MyParticipatedQuiz")
-                    .document(quizID)
-                    .collection("Questions")
-                    .get()
-                    .await()
-                    .documents
-                    .get(0)
-                    .id.also {
-                        userCollection
-                                .document(user?.uid!!)
-                                .collection("MyParticipatedQuiz")
-                                .document(quizID)
-                                .collection("Questions")
-                                .document(it)
-                                .delete().isSuccessful.also {
-                                    userCollection
-                                            .document(user?.uid!!)
-                                            .collection("MyParticipatedQuiz")
-                                            .document(quizID)
-                                            .delete()
-                                }
-                    }
-//                    .delete().addOnCompleteListener {
-//                        if (it.isSuccessful) {
-//                            uploadedCallBack?.isDeleted(true)
-//                        }
-//                    }
-
-            // Also delete corresponding result from My Results
-            userCollection.document(user.uid)
-                    .collection("MyResults")
-                    .document(quizID)
-                    .delete()
-        }
+    private suspend fun getQuiz(quizId: String) = safeApiCall {
+        quizListCollection.document(quizId).get()
     }
 
-    fun deleteQuiz(quizID: String) {
-        //This method will be called when Admin will delete the quiz
-        CoroutineScope(Dispatchers.IO).launch {
+    private suspend fun getQuestions(quizId: String) = safeApiCall {
+        quizListCollection.document(quizId).collection(QUESTIONS_COLLECTION).get()
+    }
 
-            userCollection.document(user?.uid!!)
-                    .collection("MyCreatedQuiz")
-                    .document(quizID)
-                    .collection("Questions")
-                    .get()
-                    .await()
-                    .documents
-                    .get(0)
-                    .id.also {
-                        Log.d("checkD0", "id: $it")
-                        userCollection.document(user?.uid!!)
-                                .collection("MyCreatedQuiz")
-                                .document(quizID)
-                                .collection("Questions")
-                                .document(it)
-                                .delete().isSuccessful.also { isDeleted: Boolean ->
-                                    // Now also delete completely from QuizList collection
-                                    Log.d("checkD1", "deleteQuiz: $isDeleted")
+    private suspend fun setQuiz(quizId: String, quiz: QuizModel?) = safeApiCall {
+        userCollection
+            .document(user?.uid!!)
+            .collection(Participated_Quiz_COLLECTION)
+            .document(quizId)
+            .set(quiz!!)
+    }
 
-                                    userCollection.document(user?.uid!!)
-                                            .collection("MyCreatedQuiz")
-                                            .document(quizID)
-                                            .delete()
+    private suspend fun setQuestions(
+        quizId: String,
+        questionList: ArrayList<QuestionsModel>?
+    ): Resource<Void> =
+        safeApiCall {
+            val map = HashMap<String, ArrayList<QuestionsModel>?>()
+            map["questionsList"] = questionList
 
-                                    quizListCollection
-                                            .document(quizID)
-                                            .collection("Questions")
-                                            .get()
-                                            .await()
-                                            .documents
-                                            .get(0)
-                                            .id.let { questionsId: String ->
-                                                quizListCollection
-                                                        .document(quizID)
-                                                        .collection("Questions")
-                                                        .document(questionsId)
-                                                        .delete().isSuccessful.let {
-                                                            quizListCollection
-                                                                    .document(quizID)
-                                                                    .delete()
-                                                        }
+            val task: Task<Void> = userCollection
+                .document(user?.uid!!)
+                .collection(Participated_Quiz_COLLECTION)
+                .document(quizId)
+                .collection(QUESTIONS_COLLECTION)
+                .document()
+                .set(map)
+            task
+        }
+
+
+    suspend fun getParticipateQuizList(): Resource<QuerySnapshot> = safeApiCall {
+        val queryOfParticipatedQuiz: Task<QuerySnapshot> = userCollection
+            .document(user?.uid!!)
+            .collection(Participated_Quiz_COLLECTION)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .get()
+
+        queryOfParticipatedQuiz
+    }
+
+    suspend fun unEnrolQuiz(quizID: String): Resource<Void> {
+        // Firstly getting id of question list document of quiz to be unEnrolled
+        // because we need to delete both quiz & question list
+        getQuestionListDocumentId(quizID).let {
+            when (it) {
+                is Resource.Error -> TODO()
+                is Resource.Loading -> TODO()
+                is Resource.Success -> {
+                    val questionListID = it.data!!.documents[0].id
+                    // now we got the question list id... lets delete it
+                    deleteQuestionList(quizID, questionListID).let { isDeleted: Resource<Void> ->
+                        when (isDeleted) {
+                            is Resource.Error -> TODO()
+                            is Resource.Loading -> TODO()
+                            is Resource.Success -> {
+                                // now deleting the quiz itself
+                                deleteParticipatedQuiz(quizID).let { isQuizDeleted: Resource<Void> ->
+                                    when (isQuizDeleted) {
+                                        is Resource.Error -> TODO()
+                                        is Resource.Loading -> TODO()
+                                        is Resource.Success -> {
+                                            // Also delete corresponding result from My Results
+                                            deleteResult(quizID).let { isResultDeleted ->
+                                                when (isResultDeleted) {
+                                                    is Resource.Error -> TODO()
+                                                    is Resource.Loading -> TODO()
+                                                    is Resource.Success -> {
+                                                        return isResultDeleted
+                                                    }
+                                                }
                                             }
+                                        }
+                                    }
                                 }
+                            }
+                        }
                     }
-
-//                    .let {
-//                        Log.d("checkD0", "deleteQuiz: $it")
-//                        if (it) {
-//                            Log.d("checkD1", "deleteQuiz: $it")
-//                            // Now also delete from QuizList collection
-//                            quizListCollection.document(quizID).delete()
-////                                    .isComplete.let { isDeleted: Boolean ->
-////
-////                                withContext(Dispatchers.Main) {
-////                                    uploadedCallBack?.isDeleted(isDeleted)
-////                                }
-////                            }
-//                        }
-//                    }
+                }
+            }
         }
     }
 
-    fun setResult(quizId: String, myResult: MyResult) {
+    private suspend fun getQuestionListDocumentId(quizId: String) = safeApiCall {
+        userCollection
+            .document(user?.uid!!)
+            .collection(Participated_Quiz_COLLECTION)
+            .document(quizId)
+            .collection(QUESTIONS_COLLECTION)
+            .get()
+    }
 
-        GlobalScope.launch(Dispatchers.IO) {
-            // Adding result in User > MyResults
+    private suspend fun deleteQuestionList(quizId: String, questionListID: String) = safeApiCall {
+        userCollection
+            .document(user?.uid!!)
+            .collection(Participated_Quiz_COLLECTION)
+            .document(quizId)
+            .collection(QUESTIONS_COLLECTION)
+            .document(questionListID)
+            .delete()
+    }
+
+    private suspend fun deleteParticipatedQuiz(quizId: String) = safeApiCall {
+        userCollection
+            .document(user?.uid!!)
+            .collection(Participated_Quiz_COLLECTION)
+            .document(quizId)
+            .delete()
+    }
+
+    private suspend fun deleteResult(quizId: String) = safeApiCall {
+        userCollection.document(user?.uid!!)
+            .collection(MY_RESULTS_COLLECTION)
+            .document(quizId)
+            .delete()
+    }
+
+    suspend fun createQuiz(
+        quizModel: QuizModel,
+        questionsList: ArrayList<QuestionsModel>
+    ): Resource<Void> {
+        return if (!quizModel.imageUrl.isNullOrBlank()) {
+            // uploading the image
+            uploadImage(Uri.parse(quizModel.imageUrl)).let {
+                when (it) {
+                    is Resource.Error -> TODO()
+                    is Resource.Loading -> TODO()
+                    is Resource.Success -> {
+                        downloadImage(it.data!!).let { uri: Resource<Uri> ->
+                            return when (uri) {
+                                is Resource.Error -> TODO()
+                                is Resource.Loading -> TODO()
+                                is Resource.Success -> {
+                                    addQuiz(quizModel, questionsList)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            addQuiz(quizModel, questionsList)
+        }
+    }
+
+    private suspend fun addQuiz(
+        quizModel: QuizModel,
+        questionsList: ArrayList<QuestionsModel>
+    ): Resource<Void> {
+        val docID: String = quizListCollection.document().id
+        // setting the quizID
+        quizModel.quiz_id = docID
+        // now upload the quizModel in public collection
+        quizListCollection.document(docID).set(quizModel)
+        // Adding questions to public & user collection
+        return addQuestions(docID, questionsList, quizModel)
+    }
+
+    private suspend fun uploadImage(imageUri: Uri): Resource<UploadTask.TaskSnapshot> =
+        safeApiCall {
+            val filePath = storageRef.child("QuizImages").child(imageUri.lastPathSegment.toString())
+            filePath.putFile(imageUri)
+        }
+
+    private suspend fun downloadImage(data: UploadTask.TaskSnapshot) = safeApiCall {
+        data.storage.downloadUrl
+    }
+
+    private suspend fun addQuestions(
+        docID: String,
+        questionsList: ArrayList<QuestionsModel>,
+        quizModel: QuizModel
+    ): Resource<Void> {
+
+        safeApiCall {
+            // adding questions list to public collection
+            val hashMap = HashMap<String, ArrayList<QuestionsModel>>()
+            hashMap["questionsList"] = questionsList      // Kotlin style
+            quizListCollection
+                .document(docID)
+                .collection(QUESTIONS_COLLECTION)
+                .document()
+                .set(hashMap)
+        }.let {
+            when (it) {
+                is Resource.Error -> return it
+                is Resource.Loading -> TODO()
+                is Resource.Success -> {
+                    safeApiCall {
+                        // adding questions list user collection
+                        val hashMap = HashMap<String, ArrayList<QuestionsModel>>()
+                        hashMap["questionsList"] = questionsList
+
+                        userCollection.document(user?.uid!!)
+                            .collection(MY_CREATED_COLLECTION)
+                            .document(docID)
+                            .collection(QUESTIONS_COLLECTION)
+                            .document()
+                            .set(hashMap)
+                    }.let { result: Resource<Void> ->
+                        return when (result) {
+                            is Resource.Error -> result
+                            is Resource.Loading -> TODO()
+                            is Resource.Success -> safeApiCall {
+                                // Also add quiz to user account in MyCreatedQuiz collection
+                                userCollection.document(user?.uid!!)
+                                    .collection(MY_CREATED_COLLECTION)
+                                    .document(docID)
+                                    .set(quizModel)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    suspend fun getMyCreatedQuizzes(): Resource<QuerySnapshot> = safeApiCall {
+        val queryOfCreatedQuiz: Task<QuerySnapshot> = userCollection
+            .document(user?.uid!!)
+            .collection(MY_CREATED_COLLECTION)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .get()
+
+        queryOfCreatedQuiz
+    }
+
+    suspend fun uploadResult(quizId: String, myResult: MyResult): Resource<Void> {
+        // Adding result in User > MyResults
+        safeApiCall {
             userCollection.document(user?.uid!!)
-                    .collection("MyResults")
-                    .document(quizId)
-                    .set(myResult)
-
-            // now also add result in Result collection > Quiz id
-            resultCollection.document(quizId)
-                    .collection("AllResults")
-                    .document(user.uid)
-                    .set(myResult)
+                .collection(MY_RESULTS_COLLECTION)
+                .document(quizId)
+                .set(myResult)
+        }.let {
+            return when (it) {
+                is Resource.Error -> TODO()
+                is Resource.Loading -> TODO()
+                is Resource.Success -> safeApiCall {
+                    // now also add result in Result collection > Quiz id
+                    resultCollection.document(quizId)
+                        .collection(ALL_RESULTS_COLLECTION)
+                        .document(user!!.uid)
+                        .set(myResult)
+                }
+            }
         }
     }
 
-    fun updateParticipation(quizId: String) {
-        GlobalScope.launch(Dispatchers.IO) {
-            userCollection
-                    .document(user?.uid!!)
-                    .collection("MyParticipatedQuiz")
-                    .document(quizId)
-                    .update("participated", true)
-        }
+    suspend fun updateParticipationStatus(quizId: String) = safeApiCall {
+        userCollection
+            .document(user?.uid!!)
+            .collection("MyParticipatedQuiz")
+            .document(quizId)
+            .update("participated", true)
     }
 
-    interface UploadedCallBack {
-        fun isUploaded(isAdded: Boolean, docID: String = "")
-        fun isDeleted(isDeleted: Boolean)
+    suspend fun getPublicResults(quizID: String): Resource<QuerySnapshot> = safeApiCall {
+        val query = resultCollection
+            .document(quizID)
+            .collection(ALL_RESULTS_COLLECTION)
+            .orderBy("marksScored", Query.Direction.DESCENDING)
+            .get()
+        query
+    }
+
+    suspend fun getMyResults(): Resource<QuerySnapshot> = safeApiCall {
+        val query = userCollection
+            .document(user?.uid!!)
+            .collection(MY_RESULTS_COLLECTION)
+            .get()
+        query
+    }
+
+    //------------------------------------------------------------------------------
+
+    suspend fun deleteCreatedQuiz(quizID: String): Resource<Void> {
+
+        userCollection.document(user?.uid!!)
+            .collection(MY_CREATED_COLLECTION)
+            .document(quizID)
+            .collection(QUESTIONS_COLLECTION)
+            .get()
+            .await()
+            .documents[0]
+            .id.also {
+                userCollection.document(user.uid)
+                    .collection(MY_CREATED_COLLECTION)
+                    .document(quizID)
+                    .collection(QUESTIONS_COLLECTION)
+                    .document(it)
+                    .delete().isSuccessful.also {
+                        // Now also delete completely from QuizList collection
+                        userCollection.document(user.uid)
+                            .collection(MY_CREATED_COLLECTION)
+                            .document(quizID)
+                            .delete()
+
+                        quizListCollection
+                            .document(quizID)
+                            .collection(QUESTIONS_COLLECTION)
+                            .get()
+                            .await()
+                            .documents[0]
+                            .id.let { questionsId: String ->
+                                quizListCollection
+                                    .document(quizID)
+                                    .collection(QUESTIONS_COLLECTION)
+                                    .document(questionsId)
+                                    .delete().isSuccessful.let {
+                                        return safeApiCall {
+                                            quizListCollection
+                                                .document(quizID)
+                                                .delete()
+                                        }
+                                    }
+                            }
+                    }
+            }
     }
 }

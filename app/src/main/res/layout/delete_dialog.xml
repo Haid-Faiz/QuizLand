@@ -11,17 +11,16 @@
         android:layout_height="match_parent"
         android:background="@drawable/dialog_bg">
 
-
         <TextView
             android:id="@+id/delete_quiz_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_18sdp"
             android:fontFamily="@font/noto_sans_bold"
             android:text="Delete quiz !"
             android:textColor="@color/primary_text"
-            android:textSize="18sp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,44 +28,48 @@
             android:id="@+id/sure_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="@dimen/_14sdp"
             android:fontFamily="@font/noto_sans"
             android:text="Sure.. Do you want to delete quiz ?"
             android:textColor="@color/primary_text"
-            android:textSize="14sp"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintStart_toStartOf="@id/delete_quiz_text"
             app:layout_constraintTop_toBottomOf="@id/delete_quiz_text" />
 
 
-        <android.widget.Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_yes_btn"
-            android:layout_width="76dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/dialog_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeWidth="@dimen/_1sdp"
+            app:strokeColor="@color/colorLightText"
+            app:cornerRadius="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:fontFamily="@font/noto_sans"
-            android:padding="8dp"
             android:text="Delete"
             android:textAllCaps="false"
             android:textColor="@color/primary_text"
-            android:textSize="12sp"
+            android:textSize="@dimen/_8ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/sure_text"
             app:layout_constraintTop_toBottomOf="@+id/sure_text" />
 
-        <android.widget.Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/dont_delete_btn"
-            android:layout_width="76dp"
-            android:layout_height="34dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/dialog_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeWidth="@dimen/_1sdp"
+            app:strokeColor="@color/colorLightText"
+            app:cornerRadius="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:fontFamily="@font/noto_sans"
-            android:padding="4dp"
             android:text="Cancel"
             android:textAllCaps="false"
             android:textColor="@color/primary_text"
-            android:textSize="12sp"
+            android:textSize="@dimen/_8ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/delete_yes_btn" />
 

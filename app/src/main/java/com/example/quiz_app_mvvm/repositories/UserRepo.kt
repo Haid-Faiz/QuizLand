@@ -1,6 +1,7 @@
 package com.example.quiz_app_mvvm.repositories
 
 import com.example.quiz_app_mvvm.model.User
+import com.example.quiz_app_mvvm.util.Constants.USERS_COLLECTION
 import com.example.quiz_app_mvvm.util.Resource
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
@@ -10,8 +11,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class UserRepo : BaseRepo() {
-    val db = FirebaseFirestore.getInstance()
-    private val collection = db.collection("Users")
+
+    private val db = FirebaseFirestore.getInstance()
+    private val collection = db.collection(USERS_COLLECTION)
 
     suspend fun addUser(user: User): Resource<Void> = safeApiCall {
         collection.document(user.userID).set(user)

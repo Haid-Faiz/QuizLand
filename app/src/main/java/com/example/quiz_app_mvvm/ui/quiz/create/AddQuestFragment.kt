@@ -2,7 +2,6 @@ package com.example.quiz_app_mvvm.ui.quiz.create
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,19 +10,20 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.util.DialogsUtil
-import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentAddQuestBinding
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.Resource
+import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 
-class AddQuestFragment : Fragment(), QuizRepo.UploadedCallBack, CompoundButton.OnCheckedChangeListener {
+class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
 
     private lateinit var _binding: FragmentAddQuestBinding
     private lateinit var quizModel: QuizModel
@@ -32,6 +32,7 @@ class AddQuestFragment : Fragment(), QuizRepo.UploadedCallBack, CompoundButton.O
     private var questionsList = ArrayList<QuestionsModel>()
     private lateinit var popUpAnim: Animation
     private lateinit var popDownAnim: Animation
+    private val quizViewModel : QuizViewModel by activityViewModels()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -44,15 +45,12 @@ class AddQuestFragment : Fragment(), QuizRepo.UploadedCallBack, CompoundButton.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("bn2", "onViewCreated: called")
-
         navController = Navigation.findNavController(view)
         _binding.questNum.text = currentQuestNum.toString()
         popUpAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pop_in)
         popDownAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pop_out)
-
-        val quizListViewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
-        quizModel = quizListViewModel.getQuizData()
+//        val quizViewModel = ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
+        quizModel = quizViewModel.getQuizData()
 
         if (currentQuestNum == quizModel.questions)
             _binding.nextQuestionBtn.text = "Submit quiz"
@@ -148,14 +146,22 @@ class AddQuestFragment : Fragment(), QuizRepo.UploadedCallBack, CompoundButton.O
                     _binding.enterOptionFourth.error = "Required"
             }
         }
+
+        quizViewModel.isQuizCreated.observe(viewLifecycleOwner) {
+            when(it) {
+                is Resource.Error -> TODO()
+                is Resource.Loading -> TODO()
+                is Resource.Success -> showSnackBar(message = "Your quiz is Successfully uploaded")
+            }
+        }
     }
 
     private fun submitQuiz(quizModel: QuizModel) {
         closeKeyboard()
         // switch bottom bar to account
         DialogsUtil.showLoadingDialog(requireContext())
-        val quizDao = QuizRepo(this)
-        quizDao.createQuiz(quizModel, questionsList)
+//        quizDao.createQuiz(quizModel, questionsList)
+        quizViewModel.createQuiz(quizModel, questionsList)
     }
 
     private fun closeKeyboard() {
@@ -165,19 +171,6 @@ class AddQuestFragment : Fragment(), QuizRepo.UploadedCallBack, CompoundButton.O
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
-
-    override fun isUploaded(isAdded: Boolean, docID: String) {
-        DialogsUtil.dismissDialog()
-        if (isAdded) {
-            Snackbar.make(_binding.root, "Your quiz is Successfully uploaded", Snackbar.LENGTH_LONG).show()
-            DialogsUtil.showShareIDDialog(requireContext(), docID, activity)
-            navController.navigate(R.id.action_addQuestFragment_to_createdQuizesFragment)
-        } else {
-            Snackbar.make(_binding.root, "Something went wrong...", Snackbar.LENGTH_LONG).show()
-        }
-    }
-
-    override fun isDeleted(isDeleted: Boolean) {}
 
     private fun resetOption() {
         _binding.enterQuestion.text.clear()

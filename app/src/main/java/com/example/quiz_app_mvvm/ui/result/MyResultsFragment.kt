@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -12,13 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.databinding.FragmentMyResultsBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.util.DialogsUtil
-import com.example.quiz_app_mvvm.ui.quiz.QuizListViewModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.Resource
+import com.example.quiz_app_mvvm.util.showSnackBar
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.ObservableSnapshotArray
 
 class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
 
     private lateinit var _binding: FragmentMyResultsBinding
-//    private val viewModel: QuizListViewModel by viewModels()
+    private val quizViewModel: QuizViewModel by viewModels()
     private lateinit var myResultsAdapter: MyResultsAdapter
     private lateinit var observableSnapshotArray: ObservableSnapshotArray<MyResult>
     private lateinit var navController: NavController
@@ -45,20 +50,29 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
     override fun onStart() {
         super.onStart()
 
-        val viewModel = ViewModelProvider(requireActivity()).get(QuizListViewModel::class.java)
-        viewModel.getMyResults()
-        viewModel.myResultOptions.observe(viewLifecycleOwner, {
+        quizViewModel.getMyResults()
+        quizViewModel.resultList.observe(viewLifecycleOwner) {
 
-            observableSnapshotArray = it.snapshots
-            // invisible progress bar here
-            myResultsAdapter = MyResultsAdapter(it, this) { itemCount: Int ->
-                onListItemChanged(itemCount)
+            when (it) {
+                is Resource.Error -> showSnackBar(message = it.message ?: "Something went wrong")
+                is Resource.Loading -> {
+                    _binding.myResultsProgressBar.isVisible = true
+                    _binding.myResultRecyclerview.isVisible = false
+                }
+                is Resource.Success -> {
+                    val options = FirestoreRecyclerOptions.Builder<MyResult>()
+                        .setQuery(it.data?.query!!, MyResult::class.java)
+                        .build()
+
+                    observableSnapshotArray = options.snapshots
+                    myResultsAdapter = MyResultsAdapter(options, this) { itemCount: Int ->
+                        onListItemChanged(itemCount)
+                    }
+                    myResultsAdapter.startListening()
+                    _binding.myResultRecyclerview.adapter = myResultsAdapter
+                }
             }
-            myResultsAdapter.startListening()
-            _binding.myResultRecyclerview.adapter = myResultsAdapter
-            _binding.myResultRecyclerview.visibility= View.VISIBLE
-            _binding.myResultsProgressBar.visibility = View.INVISIBLE
-        })
+        }
     }
 
     private fun onListItemChanged(itemCount: Int) {

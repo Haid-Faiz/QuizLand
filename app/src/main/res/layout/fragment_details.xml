@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout>
 
     <data>
-
         <variable
             name="quiz"
             type="com.example.quiz_app_mvvm.model.QuizModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -36,7 +33,7 @@
                 <ImageView
                     android:id="@+id/details_image"
                     android:layout_width="0dp"
-                    android:layout_height="216dp"
+                    android:layout_height="@dimen/_168sdp"
                     android:quizImageUrl="@{quiz.imageUrl}"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -46,9 +43,9 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="@dimen/_42sdp"
                     android:background="@drawable/image_cover_details"
-                    android:translationZ="10dp"
+                    android:translationZ="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="@id/details_image"
                     app:layout_constraintEnd_toEndOf="@id/details_image"
                     app:layout_constraintStart_toStartOf="@id/details_image" />
@@ -57,9 +54,7 @@
                     android:id="@+id/details_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_margin="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans_bold"
                     android:text="@{quiz.name}"
                     android:textColor="@color/primary_text"
@@ -74,28 +69,27 @@
                     android:id="@+id/details_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{quiz.description}"
                     android:textColor="@color/primary_text"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_title"
-                    app:lineHeight="26dp"
                     tools:text="You should test your knowledge of android by this quiz." />
 
                 <TextView
                     android:id="@+id/details_quiz_created_by_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Quiz created by"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_description" />
 
@@ -103,11 +97,11 @@
                     android:id="@+id/details_quiz_created_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{quiz.createdBy}"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/details_quiz_created_by_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/details_quiz_created_by_text"
@@ -117,12 +111,11 @@
                     android:id="@+id/details_quiz_start_time_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_margin="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Quiz Start Time"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_quiz_created_by_text" />
 
@@ -130,11 +123,11 @@
                     android:id="@+id/details_quiz_start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     android:fontFamily="@font/noto_sans"
                     android:dateFormatter="@{quiz.quizStartDate}"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/details_quiz_start_time_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/details_quiz_start_time_text"
@@ -144,12 +137,11 @@
                     android:id="@+id/details_quiz_duration_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Quiz Duration"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_quiz_start_time_text" />
 
@@ -157,11 +149,11 @@
                     android:id="@+id/details_quiz_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{String.valueOf(quiz.quizDurationHour) + ` hour ` + String.valueOf(quiz.quizDurationMin) + ` min`}"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/details_quiz_duration_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/details_quiz_duration_text"
@@ -171,12 +163,11 @@
                     android:id="@+id/details_difficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_margin="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Difficulty"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_quiz_duration_text" />
 
@@ -184,11 +175,11 @@
                     android:id="@+id/details_difficulty_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{quiz.level}"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/details_difficulty"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/details_difficulty"
@@ -198,24 +189,23 @@
                     android:id="@+id/details_questions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_margin="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Total questions"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="@+id/details_difficulty"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_difficulty" />
 
                 <TextView
                     android:id="@+id/details_correct_ans_marks_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_margin="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Marks for correct answer"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_questions" />
 
@@ -223,11 +213,11 @@
                     android:id="@+id/details_correct_ans_marks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{String.valueOf(quiz.correctAnsMarks)}"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/details_correct_ans_marks_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/details_correct_ans_marks_text"
@@ -238,13 +228,11 @@
                     android:id="@+id/details_wrong_ans_marks_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_margin="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Marks for wrong answer"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_correct_ans_marks_text" />
@@ -253,30 +241,15 @@
                     android:id="@+id/details_wrong_ans_marks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{String.valueOf(quiz.wrongAnsMarks)}"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/details_wrong_ans_marks_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/details_wrong_ans_marks_text"
                     tools:text="-1" />
-
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/details_score"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="16dp"-->
-                <!--                    android:layout_marginBottom="16dp"-->
-                <!--                    android:fontFamily="@font/work_sans"-->
-                <!--                    android:text="Your last score"-->
-                <!--                    android:textColor="@color/colorLightText"-->
-                <!--                    android:textSize="16sp"-->
-                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                    app:layout_constraintStart_toStartOf="@+id/details_wrong_ans_marks_text"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@+id/details_wrong_ans_marks_text" />-->
 
                 <TextView
                     android:id="@+id/details_question_text"
@@ -285,9 +258,10 @@
                     android:fontFamily="@font/noto_sans"
                     android:text="@{String.valueOf(quiz.questions)}"
                     android:textColor="@color/colorLightText"
-                    android:textSize="16sp"
+                    android:layout_margin="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/details_questions"
-                    app:layout_constraintEnd_toEndOf="@+id/details_difficulty_text"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/details_questions"
                     tools:text="30" />
 
@@ -299,8 +273,8 @@
             android:id="@+id/details_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_28sdp"
             android:background="@drawable/back_arrow_btn_bg"
             android:src="@drawable/ic_baseline_arrow_back_24"
             app:layout_constraintStart_toStartOf="parent"
@@ -310,15 +284,13 @@
             android:id="@+id/details_start_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cornerRadius="4dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="14dp"
+            app:cornerRadius="@dimen/_3sdp"
             android:fontFamily="@font/noto_sans"
             android:text="Start Quiz"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:layout_margin="@dimen/_12sdp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
