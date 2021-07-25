@@ -7,7 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.quiz.create.CreateQuizFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -31,7 +30,7 @@
             android:fontFamily="@font/work_sans_semibold"
             android:text="Create quiz"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="@id/add_question_btn"
             app:layout_constraintStart_toEndOf="@id/discard_quiz_btn"
             app:layout_constraintTop_toTopOf="@id/add_question_btn" />
@@ -41,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:fontFamily="@font/noto_sans"
             android:text="Add questions"
             android:textAllCaps="false"
@@ -357,7 +356,7 @@
             android:fontFamily="@font/noto_sans"
             android:text="hour"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_8sdp"
+            android:textSize="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="@+id/quiz_duration_hour_picker"
             app:layout_constraintStart_toStartOf="@+id/quiz_duration_hour_picker"
             app:layout_constraintTop_toBottomOf="@id/select_duration_hint" />
@@ -378,7 +377,7 @@
             android:fontFamily="@font/noto_sans"
             android:text="minute"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_8sdp"
+            android:textSize="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="@+id/select_hour_hint"
             app:layout_constraintEnd_toEndOf="@+id/quiz_duration_min_picker"
             app:layout_constraintStart_toStartOf="@+id/quiz_duration_min_picker"

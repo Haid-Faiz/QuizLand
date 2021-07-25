@@ -3,7 +3,7 @@
     android:shareInterpolator="@android:interpolator/decelerate_cubic">
 
     <translate
-        android:duration="500"
+        android:duration="@android:integer/config_mediumAnimTime"
         android:fromXDelta="0%"
         android:fromYDelta="100%"
         android:toXDelta="0%"

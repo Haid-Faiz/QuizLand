@@ -24,11 +24,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_24sdp"
                 android:fontFamily="@font/work_sans_semibold"
                 android:text="My Account"
                 android:textColor="@color/primary_text"
-                android:textSize="@dimen/_18ssp"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +36,7 @@
                 android:id="@+id/user_image"
                 android:layout_width="@dimen/_78sdp"
                 android:layout_height="@dimen/_78sdp"
-                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:quizCircularImageUrl="@{user.userImageUrl}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_baseline_account_circle_24"
@@ -145,7 +145,7 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
                 app:layout_constraintBottom_toBottomOf="@id/developer_contact_button"
@@ -153,7 +153,7 @@
                 app:layout_constraintTop_toTopOf="@id/developer_contact_button"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/linkedin_anim_grey" />
+                app:lottie_rawRes="@raw/linkedin_anim" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/logout_button"

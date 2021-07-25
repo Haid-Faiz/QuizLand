@@ -10,10 +10,11 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel : ViewModel() {
-
-    private val userRepo: UserRepo = UserRepo()
+class AuthViewModel @Inject constructor(
+    private val userRepo: UserRepo
+) : ViewModel() {
 
     private var _userAuthResult: MutableLiveData<Resource<AuthResult>> = MutableLiveData()
     val userAuthResult = _userAuthResult

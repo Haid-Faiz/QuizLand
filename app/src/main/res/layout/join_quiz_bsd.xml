@@ -13,7 +13,7 @@
         android:layout_width="@dimen/_28sdp"
         android:layout_height="@dimen/_28sdp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/_12sdp"
+        android:layout_margin="@dimen/_16sdp"
         android:src="@drawable/ic_baseline_cancel_24" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,8 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
             app:layout_constraintTop_toBottomOf="@id/join_quiz_text"
             android:background="@drawable/line_separator_bg"/>
 

@@ -19,8 +19,9 @@ import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.ObservableSnapshotArray
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AdminResultFragment : Fragment() {
 
     private lateinit var navController: NavController
@@ -43,16 +44,10 @@ class AdminResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(view)
-
         quizData = quizViewModel.getQuizData()
         _binding.quizData = quizData
-        _binding.adminResultDiscardBtn.setOnClickListener {
-            navController.popBackStack()
-        }
-
-        _binding.participantsRankListRecyclerview.layoutManager =
-            LinearLayoutManager(requireContext())
-        _binding.participantsRankListRecyclerview.setHasFixedSize(true)
+        _binding.adminResultDiscardBtn.setOnClickListener { navController.popBackStack() }
+        _binding.rankListRecyclerview.setHasFixedSize(true)
     }
 
     override fun onStart() {
@@ -60,12 +55,15 @@ class AdminResultFragment : Fragment() {
 
         quizViewModel.getPublicResults(quizID = quizData.quiz_id)
         quizViewModel.resultList.observe(viewLifecycleOwner) {
-
             when (it) {
-                is Resource.Error -> showSnackBar(message = it.message ?: "Something went wrong")
+                is Resource.Error -> {
+                    _binding.publicResultsProgressBar.isVisible = false
+                    _binding.rankListRecyclerview.isVisible = false
+                    showSnackBar(message = it.message!!)
+                }
                 is Resource.Loading -> {
                     _binding.publicResultsProgressBar.isVisible = true
-                    _binding.participantsRankListRecyclerview.isVisible = false
+                    _binding.rankListRecyclerview.isVisible = false
                 }
                 is Resource.Success -> {
                     val options = FirestoreRecyclerOptions.Builder<MyResult>()
@@ -83,8 +81,9 @@ class AdminResultFragment : Fragment() {
                             onListItemChanged(itemCount)
                         })
                     publicResultsAdapter.startListening()
-                    _binding.participantsRankListRecyclerview.adapter =
-                        publicResultsAdapter
+                    _binding.rankListRecyclerview.adapter = publicResultsAdapter
+                    _binding.publicResultsProgressBar.isVisible = false
+                    _binding.rankListRecyclerview.isVisible = true
                 }
             }
         }
@@ -92,11 +91,11 @@ class AdminResultFragment : Fragment() {
 
     private fun onListItemChanged(itemCount: Int) {
         if (itemCount == 0) {
-            _binding.noOneParticipatedText.visibility = View.VISIBLE
-            _binding.participantsRankListRecyclerview.visibility = View.INVISIBLE
+            _binding.noOneParticipatedText.isVisible = true
+            _binding.rankListRecyclerview.isVisible = false
         } else {
-            _binding.noOneParticipatedText.visibility = View.INVISIBLE
-            _binding.participantsRankListRecyclerview.visibility = View.VISIBLE
+            _binding.noOneParticipatedText.isVisible = false
+            _binding.rankListRecyclerview.isVisible = true
         }
     }
 

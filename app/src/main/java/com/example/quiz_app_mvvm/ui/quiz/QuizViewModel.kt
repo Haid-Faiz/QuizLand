@@ -11,26 +11,22 @@ import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.util.Resource
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.ArrayList
+import javax.inject.Inject
 
-class QuizViewModel : ViewModel() {
+@HiltViewModel
+class QuizViewModel @Inject constructor(
+    private val quizRepo: QuizRepo
+) : ViewModel() {
 
     private var quizModel = QuizModel()
     private var myResult = MyResult()
-    private var quizRepo = QuizRepo()
 
     // QuerySnapshot
     private var _questions: MutableLiveData<Resource<QuerySnapshot>> = MutableLiveData()
     var questions: LiveData<Resource<QuerySnapshot>> = _questions
-
-    // is Quiz Created
-    private var _isQuizCreated: MutableLiveData<Resource<Void>> = MutableLiveData()
-    var isQuizCreated: LiveData<Resource<Void>> = _isQuizCreated
-
-    // is Created Quiz Deleted
-    private var _isCreatedQuizDeleted: MutableLiveData<Resource<Void>> = MutableLiveData()
-    var isCreatedQuizDeleted: LiveData<Resource<Void>> = _isCreatedQuizDeleted
 
     // QuerySnapshot
     private var _quizList: MutableLiveData<Resource<QuerySnapshot>> = MutableLiveData()
@@ -59,17 +55,19 @@ class QuizViewModel : ViewModel() {
     }
 
     suspend fun unEnrolQuiz(quizID: String): Resource<Void> {
-       return quizRepo.unEnrolQuiz(quizID)
+        return quizRepo.unEnrolQuiz(quizID)
     }
 
 
-    fun createQuiz(quizModel: QuizModel, questionsList: ArrayList<QuestionsModel>) =
-        viewModelScope.launch {
-            _isQuizCreated.postValue(quizRepo.createQuiz(quizModel, questionsList))
-        }
+    suspend fun createQuiz(
+        quizModel: QuizModel,
+        questionsList: ArrayList<QuestionsModel>
+    ): Resource<Void> {
+        return quizRepo.createQuiz(quizModel, questionsList)
+    }
 
-    fun deleteCreatedQuiz(quizId: String) = viewModelScope.launch {
-        _isCreatedQuizDeleted.postValue(quizRepo.deleteCreatedQuiz(quizId))
+    suspend fun deleteCreatedQuiz(quizId: String): Resource<Void> {
+        return quizRepo.deleteCreatedQuiz(quizId)
     }
 
     fun getMyCreatedQuizzes() = viewModelScope.launch {
@@ -91,6 +89,7 @@ class QuizViewModel : ViewModel() {
 
     fun getPublicResults(quizID: String) = viewModelScope.launch {
         _resultList.postValue(Resource.Loading())
+//        _resultList.value = null
         _resultList.postValue(quizRepo.getPublicResults(quizID))
     }
 

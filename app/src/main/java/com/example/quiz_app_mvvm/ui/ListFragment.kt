@@ -9,6 +9,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 class ListFragment : Fragment() {
 

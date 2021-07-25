@@ -11,7 +11,6 @@ import com.example.quiz_app_mvvm.model.QuizModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
-
 class QuizListAdapter(
     options: FirestoreRecyclerOptions<QuizModel>,
     private val onQuizListItemClicked: OnQuizListItemClicked,

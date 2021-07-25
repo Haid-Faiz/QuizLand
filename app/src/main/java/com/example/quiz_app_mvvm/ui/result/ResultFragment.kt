@@ -13,7 +13,9 @@ import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentResultBinding
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResultFragment : Fragment() {
 
     private lateinit var navController: NavController

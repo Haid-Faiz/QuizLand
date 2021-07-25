@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,8 +21,9 @@ import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.ObservableSnapshotArray
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizItemClicked {
 
     private val quizViewModel: QuizViewModel by activityViewModels()
@@ -42,9 +44,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(view)
-        binding.createdQuizBackBtn.setOnClickListener {
-            navController.popBackStack()
-        }
+        binding.createdQuizBackBtn.setOnClickListener { navController.popBackStack() }
 //        fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
 //        fadeOutAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         binding.createdQuizRecyclerview.layoutManager = LinearLayoutManager(requireContext())
@@ -59,10 +59,10 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
             when (it) {
                 is Resource.Error -> showSnackBar(message = it.message ?: "Something went wrong")
-                is Resource.Loading -> {
-                    binding.createdProgressBar.isVisible = true
-                    binding.createdQuizRecyclerview.isVisible = false
-                }
+//                is Resource.Loading -> {
+//                    binding.createdProgressBar.isVisible = true
+//                    binding.createdQuizRecyclerview.isVisible = false
+//                }
                 is Resource.Success -> {
                     val options = FirestoreRecyclerOptions.Builder<QuizModel>()
                         .setQuery(it.data?.query!!, QuizModel::class.java)
@@ -75,21 +75,11 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
                 }
             }
         }
-
-        quizViewModel.isCreatedQuizDeleted.observe(viewLifecycleOwner) {
-            when(it) {
-                is Resource.Error -> TODO()
-                is Resource.Loading -> TODO()
-                is Resource.Success -> showSnackBar(message = "Successfully Deleted")
-            }
-        }
     }
 
     override fun onListItemChanged(itemCount: Int) {
-
         binding.createdProgressBar.isVisible = false
         binding.createdQuizRecyclerview.isVisible = true
-
         if (itemCount == 0) {
             binding.emptyListView.isVisible = true
             binding.createdQuizRecyclerview.isVisible = false
@@ -113,12 +103,19 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
     override fun onDeleteClicked(position: Int) {
         DialogsUtil.showDeleteDialog(requireContext()) {
             // delete the quiz from MyCreated collection and from QuizList collection
-            quizViewModel.deleteCreatedQuiz(arr[position].quiz_id)
+            lifecycleScope.launchWhenCreated {
+                quizViewModel.deleteCreatedQuiz(arr[position].quiz_id).let {
+                    when (it) {
+                        is Resource.Error -> showSnackBar(message = "Something went wrong")
+                        is Resource.Loading -> TODO()
+                        is Resource.Success -> showSnackBar(message = "Successfully Deleted")
+                    }
+                }
+            }
         }
     }
 
     override fun onShareQuizClicked(position: Int) {
         DialogsUtil.showShareIDDialog(requireContext(), arr[position].quiz_id, requireActivity())
     }
-
 }

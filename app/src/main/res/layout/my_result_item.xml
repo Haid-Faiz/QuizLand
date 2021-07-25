@@ -54,7 +54,7 @@
                 tools:text="9%"
                 android:formatFloat="@{myResult.scoredPercent}"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/result_quiz_progress"
                 app:layout_constraintEnd_toEndOf="@+id/result_quiz_progress"
                 app:layout_constraintStart_toStartOf="@+id/result_quiz_progress"

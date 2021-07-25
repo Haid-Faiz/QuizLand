@@ -28,7 +28,7 @@
         android:fontFamily="@font/work_sans_semibold"
         android:text="My created quiz"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/_18ssp"
+        android:textSize="@dimen/_16ssp"
         app:layout_constraintStart_toEndOf="@+id/created_quiz_back_btn"
         app:layout_constraintTop_toTopOf="parent" />
 

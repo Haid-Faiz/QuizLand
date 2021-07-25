@@ -19,7 +19,9 @@ import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.ObservableSnapshotArray
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
 
     private lateinit var _binding: FragmentMyResultsBinding
@@ -28,8 +30,10 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
     private lateinit var observableSnapshotArray: ObservableSnapshotArray<MyResult>
     private lateinit var navController: NavController
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMyResultsBinding.inflate(inflater, container, false)
         return _binding.root
@@ -38,10 +42,7 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-
-        _binding.myResultsBackBtn.setOnClickListener {
-            navController.popBackStack()
-        }
+        _binding.myResultsBackBtn.setOnClickListener { navController.popBackStack() }
 
         _binding.myResultRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         _binding.myResultRecyclerview.setHasFixedSize(true)
@@ -54,22 +55,23 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
         quizViewModel.resultList.observe(viewLifecycleOwner) {
 
             when (it) {
-                is Resource.Error -> showSnackBar(message = it.message ?: "Something went wrong")
-                is Resource.Loading -> {
-                    _binding.myResultsProgressBar.isVisible = true
-                    _binding.myResultRecyclerview.isVisible = false
-                }
+                is Resource.Error -> showSnackBar(message = it.message!!)
+//                is Resource.Loading -> {
+//                    _binding.myResultsProgressBar.isVisible = true
+//                    _binding.myResultRecyclerview.isVisible = false
+//                }
                 is Resource.Success -> {
                     val options = FirestoreRecyclerOptions.Builder<MyResult>()
                         .setQuery(it.data?.query!!, MyResult::class.java)
                         .build()
 
                     observableSnapshotArray = options.snapshots
-                    myResultsAdapter = MyResultsAdapter(options, this) { itemCount: Int ->
+                    myResultsAdapter = MyResultsAdapter(options, this) { itemCount ->
                         onListItemChanged(itemCount)
                     }
                     myResultsAdapter.startListening()
                     _binding.myResultRecyclerview.adapter = myResultsAdapter
+                    _binding.myResultsProgressBar.isVisible = false
                 }
             }
         }
@@ -77,11 +79,11 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
 
     private fun onListItemChanged(itemCount: Int) {
         if (itemCount == 0) {
-            _binding.emptyResultListView.visibility = View.VISIBLE
-            _binding.myResultRecyclerview.visibility = View.INVISIBLE
+            _binding.emptyResultListView.isVisible = true
+            _binding.myResultRecyclerview.isVisible = false
         } else {
-            _binding.emptyResultListView.visibility = View.INVISIBLE
-            _binding.myResultRecyclerview.visibility = View.VISIBLE
+            _binding.emptyResultListView.isVisible = false
+            _binding.myResultRecyclerview.isVisible = true
         }
     }
 

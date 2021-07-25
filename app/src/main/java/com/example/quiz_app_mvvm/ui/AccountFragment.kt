@@ -18,9 +18,14 @@ import com.example.quiz_app_mvvm.util.Constants.MY_LINKED_PROFILE
 import com.example.quiz_app_mvvm.util.Constants.QUIZ_LAND_SHARE_MSG
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AccountFragment : Fragment() {
 
+    @Inject
+    lateinit var user: User
     private lateinit var _binding: FragmentAccountBinding
     private lateinit var navController: NavController
     private lateinit var clickListener: ClickListeners
@@ -43,11 +48,7 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(requireActivity(), R.id.ls_frag_host)
-
-        Firebase.auth.currentUser?.let {
-            val user = User(it.uid, it.displayName, it.photoUrl.toString())
-            _binding.user = user
-        }
+        _binding.user = user
 
         _binding.logoutButton.setOnClickListener {
             Firebase.auth.signOut()

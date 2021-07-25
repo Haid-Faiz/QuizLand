@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
@@ -22,7 +23,9 @@ import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
 
     private lateinit var _binding: FragmentAddQuestBinding
@@ -32,11 +35,13 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
     private var questionsList = ArrayList<QuestionsModel>()
     private lateinit var popUpAnim: Animation
     private lateinit var popDownAnim: Animation
-    private val quizViewModel : QuizViewModel by activityViewModels()
+    private val quizViewModel: QuizViewModel by activityViewModels()
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAddQuestBinding.inflate(inflater, container, false)
         return _binding.root
@@ -60,11 +65,7 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
         _binding.switch2.setOnCheckedChangeListener(this)
         _binding.switch3.setOnCheckedChangeListener(this)
         _binding.switch4.setOnCheckedChangeListener(this)
-
-        _binding.discardQestionBtn.setOnClickListener {
-            navController.popBackStack()
-        }
-
+        _binding.discardQestionBtn.setOnClickListener { navController.popBackStack() }
         _binding.nextQuestionBtn.setOnClickListener {
             val question = _binding.enterQuestion.text.toString().trim()
             val optionOne = _binding.enterOptionOne.text.toString().trim()
@@ -94,15 +95,16 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
             }
 
             if (question.isNotEmpty() && isAnswerMarked && optionOne.isNotEmpty() && optionTwo.isNotEmpty()
-                    && optionThree.isNotEmpty() && optionFourth.isNotEmpty()) {
+                && optionThree.isNotEmpty() && optionFourth.isNotEmpty()
+            ) {
 
                 val questionsModel = QuestionsModel(
-                        question = question,
-                        answer = answer,
-                        option_a = optionOne,
-                        option_b = optionTwo,
-                        option_c = optionThree,
-                        option_d = optionFourth,
+                    question = question,
+                    answer = answer,
+                    option_a = optionOne,
+                    option_b = optionTwo,
+                    option_c = optionThree,
+                    option_d = optionFourth,
                 )
                 questionsList.add(questionsModel)
 
@@ -118,7 +120,11 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
             } else {
 
                 if (!isAnswerMarked)
-                    Snackbar.make(_binding.root, "Please mark any option as an answer", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        _binding.root,
+                        "Please mark any option as an answer",
+                        Snackbar.LENGTH_LONG
+                    ).show()
 
                 if (question.isNotEmpty())
                     _binding.enterQuestion.error = null
@@ -146,28 +152,33 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
                     _binding.enterOptionFourth.error = "Required"
             }
         }
-
-        quizViewModel.isQuizCreated.observe(viewLifecycleOwner) {
-            when(it) {
-                is Resource.Error -> TODO()
-                is Resource.Loading -> TODO()
-                is Resource.Success -> showSnackBar(message = "Your quiz is Successfully uploaded")
-            }
-        }
     }
 
     private fun submitQuiz(quizModel: QuizModel) {
         closeKeyboard()
         // switch bottom bar to account
         DialogsUtil.showLoadingDialog(requireContext())
-//        quizDao.createQuiz(quizModel, questionsList)
-        quizViewModel.createQuiz(quizModel, questionsList)
+        lifecycleScope.launchWhenCreated {
+            quizViewModel.createQuiz(quizModel, questionsList).let {
+                when (it) {
+                    is Resource.Error -> showSnackBar("Something went wrong")
+                    is Resource.Loading -> TODO()
+                    is Resource.Success -> {
+                        DialogsUtil.dismissDialog()
+                        showSnackBar(message = "Your quiz is Successfully uploaded")
+//                    DialogsUtil.showShareIDDialog(requireContext(), docID, activity)
+                        navController.navigate(R.id.action_addQuestFragment_to_createdQuizesFragment)
+                    }
+                }
+            }
+        }
     }
 
     private fun closeKeyboard() {
         val currentView: View? = requireActivity().currentFocus
         currentView?.let {
-            val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }

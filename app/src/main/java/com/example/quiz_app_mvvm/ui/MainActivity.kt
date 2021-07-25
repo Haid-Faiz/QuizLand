@@ -7,9 +7,10 @@ import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.ActivityMainBinding
 import com.example.quiz_app_mvvm.util.DialogsUtil
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(),
-    ClickListeners {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), ClickListeners {
 
     private lateinit var navController: NavController
     private lateinit var _binding: ActivityMainBinding
@@ -21,11 +22,6 @@ class MainActivity : AppCompatActivity(),
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
         // we can only use this line if we added layout tag in its xml
         // DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        DialogsUtil.dismissDialog()
     }
 
     override fun oViewQuizClicked(position: Int) {

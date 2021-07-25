@@ -30,23 +30,19 @@ class IntroPagerAdapter(val context: Context) : RecyclerView.Adapter<IntroPagerA
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) = binding.apply {
+            introPageLottie.playAnimation()
+            introPageLottie.repeatCount = LottieDrawable.INFINITE
             when (position) {
                 0 -> {
-                    introPageLottie.setAnimation(R.raw.programmmmmer)
-                    introPageLottie.playAnimation()
-                    introPageLottie.repeatMode = LottieDrawable.RESTART
+                    introPageLottie.setAnimation(R.raw.programmer)
                     introPageText.text = context.getString(R.string.intro_page_one_text)
                 }
                 1 -> {
                     introPageLottie.setAnimation(R.raw.share_anim)
-                    introPageLottie.playAnimation()
-                    introPageLottie.repeatMode = LottieDrawable.RESTART
                     introPageText.text = context.getString(R.string.intro_page_two)
                 }
                 2 -> {
                     introPageLottie.setAnimation(R.raw.rocket)
-                    introPageLottie.playAnimation()
-                    introPageLottie.repeatMode = LottieDrawable.RESTART
                     introPageText.text = context.getString(R.string.intro_page_three)
                 }
             }

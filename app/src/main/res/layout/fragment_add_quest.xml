@@ -29,7 +29,7 @@
             android:fontFamily="@font/work_sans_semibold"
             android:text="Add questions"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="@id/next_question_btn"
             app:layout_constraintStart_toEndOf="@id/discard_qestion_btn"
             app:layout_constraintTop_toTopOf="@id/next_question_btn" />
@@ -130,7 +130,7 @@
             app:layout_constraintStart_toEndOf="@id/enter_first_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_first_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/trying" />
+            app:lottie_rawRes="@raw/correct_option_anim" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch1"
@@ -186,7 +186,7 @@
             app:layout_constraintStart_toEndOf="@id/enter_second_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_second_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/trying" />
+            app:lottie_rawRes="@raw/correct_option_anim" />
 
         <EditText
             android:id="@+id/enter_option_second"
@@ -243,7 +243,7 @@
             app:layout_constraintStart_toEndOf="@id/enter_third_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_third_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/trying" />
+            app:lottie_rawRes="@raw/correct_option_anim" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch3"
@@ -301,7 +301,7 @@
             app:layout_constraintStart_toEndOf="@id/enter_fourth_option_hint"
             app:layout_constraintTop_toTopOf="@id/enter_fourth_option_hint"
             app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/trying" />
+            app:lottie_rawRes="@raw/correct_option_anim" />
 
 
         <com.google.android.material.switchmaterial.SwitchMaterial

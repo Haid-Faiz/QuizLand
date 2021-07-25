@@ -14,13 +14,14 @@
         android:theme="@style/Theme.Quiz_App_MVVM">
 
         <activity
-            android:name="com.example.quiz_app_mvvm.ui.MainActivity">
-<!--            android:windowSoftInputMode="adjustResize"-->
+            android:name="com.example.quiz_app_mvvm.ui.MainActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

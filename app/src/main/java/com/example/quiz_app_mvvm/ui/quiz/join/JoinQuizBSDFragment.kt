@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,7 +13,9 @@ import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class JoinQuizBSDFragment : BottomSheetDialogFragment() {
 
     private lateinit var _binding: JoinQuizBsdBinding
@@ -55,8 +58,16 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
         lifecycleScope.launchWhenCreated {
             quizViewModel.isQuizExist(quizID = uniqueQuizID).let {
                 when (it) {
-                    // is Resource.Error -> DialogsUtil.dismissDialog()
-                    // is Resource.Loading -> DialogsUtil.showLoadingDialog(requireActivity())
+                     is Resource.Error -> {
+                         _binding.apply {
+                             progressJoining.isVisible = false
+                             joinQuizButton.isEnabled = true
+                             joinQuizButton.text = "Join quiz"
+                             enterUniqueQuizId.isEnabled = true
+                             this@JoinQuizBSDFragment.isCancelable = true
+                         }
+                         showSnackBar(it.message!!)
+                     }
                     is Resource.Success -> {
                         if (it.data?.exists()!!) {
                             // Quiz exists... join it
@@ -86,11 +97,10 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
                 this@JoinQuizBSDFragment.isCancelable = true
             }
             when (isJoined) {
-                is Resource.Error -> showSnackBar(
-                    message = isJoined.message ?: "Something went wrong"
-                )
+                is Resource.Error -> showSnackBar(message = isJoined.message!!)
                 // is Resource.Loading -> TODO()
                 is Resource.Success -> {
+                    Toast.makeText(requireContext(), "Joined successfully", Toast.LENGTH_SHORT).show()
                     showSnackBar("Joined successfully")
                     dismiss()
                 }

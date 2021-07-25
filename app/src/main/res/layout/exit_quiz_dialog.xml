@@ -45,7 +45,7 @@
         android:text="Exit"
         android:textAllCaps="false"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/_8ssp"
+        android:textSize="@dimen/_10ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/are_you_sure_text"
         app:layout_constraintTop_toBottomOf="@+id/are_you_sure_text" />
@@ -63,7 +63,7 @@
         android:text="No, Continue"
         android:textAllCaps="false"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/_8ssp"
+        android:textSize="@dimen/_10ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/exit_yes_btn" />
 

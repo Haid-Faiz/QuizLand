@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -25,11 +26,16 @@ import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
+@AndroidEntryPoint
 class QuizFragment : Fragment(), View.OnClickListener {
     // UI elements
+    @Inject
+    lateinit var user: User
     private lateinit var navController: NavController
     private lateinit var quizId: String
     private lateinit var quizName: String
@@ -82,9 +88,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
         )
         quizViewModel.questions.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Error -> {
-                    showSnackBar(it.message!!)
-                }
+                is Resource.Error -> showSnackBar(it.message!!)
                 is Resource.Loading -> TODO()
                 is Resource.Success -> {
                     val questionListModel: QuestionsListModel? = it.data!!.documents[0]
@@ -139,7 +143,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
         _binding.quizOptionThree.isEnabled = true
         _binding.quizOptionFour.isEnabled = true
         // show next button
-        _binding.quizNextBtn.isVisible = false
+        _binding.quizNextBtn.isVisible = true
     }
 
     private fun loadQuestion(questionSerialNum: Int) {
@@ -221,13 +225,6 @@ class QuizFragment : Fragment(), View.OnClickListener {
     private fun submitResult() {
         // show loading dialog
         DialogsUtil.showLoadingDialog(requireContext())
-
-        val quizDao = QuizRepo()
-        val user = User(
-            quizDao.user?.uid!!,
-            quizDao.user.displayName,
-            quizDao.user.photoUrl.toString()
-        )
         // calculate progress
         val totalMarks: Float = randomQueList.size * quizData.correctAnsMarks
         val marksScored: Float =
@@ -262,20 +259,50 @@ class QuizFragment : Fragment(), View.OnClickListener {
     }
 
     private fun resetOptions() {
-        _binding.quizOptionOne.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        _binding.quizOptionTwo.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        _binding.quizOptionThree.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        _binding.quizOptionFour.background = resources.getDrawable(R.drawable.outline_light_btn_bg)
-        _binding.quizOptionOne.setTextColor(resources.getColor(R.color.colorLightText))
-        _binding.quizOptionTwo.setTextColor(resources.getColor(R.color.colorLightText))
-        _binding.quizOptionThree.setTextColor(resources.getColor(R.color.colorLightText))
-        _binding.quizOptionFour.setTextColor(resources.getColor(R.color.colorLightText))
+        _binding.quizOptionOne.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.outline_light_btn_bg)
+        _binding.quizOptionTwo.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.outline_light_btn_bg)
+        _binding.quizOptionThree.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.outline_light_btn_bg)
+        _binding.quizOptionFour.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.outline_light_btn_bg)
+        _binding.quizOptionOne.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorLightText
+            )
+        )
+        _binding.quizOptionTwo.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorLightText
+            )
+        )
+        _binding.quizOptionThree.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorLightText
+            )
+        )
+        _binding.quizOptionFour.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorLightText
+            )
+        )
     }
 
     private fun verifyAnswer(selectedButton: Button) {
         if (canAnswer) {
-            selectedButton.background = resources.getDrawable(R.drawable.new_btn_bg)
-            selectedButton.setTextColor(resources.getColor(R.color.primary_text))
+            selectedButton.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.new_btn_bg)
+            selectedButton.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.primary_text
+                )
+            )
             if (randomQueList[currentQuesNum - 1].answer == selectedButton.text) correctAnswer++ else wrongAnswer++
             canAnswer = false
         }

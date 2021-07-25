@@ -27,7 +27,7 @@
         android:fontFamily="@font/work_sans_semibold"
         android:text="My Results"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/_18sdp"
+        android:textSize="@dimen/_16sdp"
         app:layout_constraintStart_toEndOf="@id/my_results_back_btn"
         app:layout_constraintTop_toTopOf="parent" />
 

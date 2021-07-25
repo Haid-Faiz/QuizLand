@@ -20,15 +20,16 @@ object DialogsUtil {
 
     fun showShareIDDialog(context: Context, docID: String, activity: FragmentActivity?) {
 
-        val shareCustomDialogBinding = ShareCustomDialogBinding.inflate(LayoutInflater.from(context))
+        val binding = ShareCustomDialogBinding.inflate(LayoutInflater.from(context))
+        binding.quizUniqueId.text = docID
 
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setView(shareCustomDialogBinding.root)
+                .setView(binding.root)
                 .setCancelable(true)
                 .create()
         alertDialog?.show()
 
-        shareCustomDialogBinding.copyIdButton.setOnClickListener {
+        binding.copyIdButton.setOnClickListener {
 
             val clipboardManager: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clipData: ClipData = ClipData.newPlainText("UniqueQuizID", docID)
@@ -37,7 +38,7 @@ object DialogsUtil {
             Toast.makeText(context, "ID copied", Toast.LENGTH_SHORT).show()
         }
 
-        shareCustomDialogBinding.shareIdButton.setOnClickListener {
+        binding.shareIdButton.setOnClickListener {
             alertDialog?.dismiss()
             val shareIntent = Intent(Intent.ACTION_SEND).setType("text/plain")
             shareIntent.putExtra(Intent.EXTRA_TEXT, docID)
@@ -135,29 +136,6 @@ object DialogsUtil {
             alertDialog?.dismiss()
         }
     }
-
-//    fun showConnectionErrorDialog(context: Context, isConnected: Boolean) {
-//        val connectionLostDialogBinding = ConnectionLostDialogBinding.inflate(LayoutInflater.from(context))
-//
-//        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-//                .setCancelable(false)
-//                .setView(connectionLostDialogBinding.root)
-//                .create()
-//        alertDialog?.show()
-//    }
-
-//    fun showJoinQuizDialog(context: Context) {
-//        val joinQuizDialogBinding = JoinQuizDilaogBinding.inflate(LayoutInflater.from(context))
-//        alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-//                .setView(joinQuizDialogBinding.root)
-//                .setCancelable(false)
-//                .create()
-//        alertDialog?.show()
-//
-//        joinQuizDialogBinding.cancelJoinBtn.setOnClickListener {
-//            alertDialog?.dismiss()
-//        }
-//    }
 
     fun dismissDialog() {
         alertDialog?.dismiss()

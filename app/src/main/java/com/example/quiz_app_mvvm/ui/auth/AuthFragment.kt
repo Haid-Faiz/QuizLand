@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.quiz_app_mvvm.R
 import androidx.navigation.Navigation
@@ -30,13 +31,15 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.util.*
 
+@AndroidEntryPoint
 class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
 
+    private val authViewModel: AuthViewModel by viewModels()
     private lateinit var timer: Timer
-    private lateinit var authViewModel: AuthViewModel
     private lateinit var navController: NavController
     private lateinit var _binding: FragmentAuthBinding
     private lateinit var startForResult: ActivityResultLauncher<Intent>
@@ -70,20 +73,13 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
         return _binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        authViewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         setUpViewPager()
 
         val user = Firebase.auth.currentUser
-        user?.let {
-            updateUI(user)
-        }
+        user?.let { updateUI(user) }
 
         // Building GSO
         val gso: GoogleSignInOptions =

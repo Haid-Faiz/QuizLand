@@ -22,7 +22,9 @@ import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.ObservableSnapshotArray
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
 
     private val quizViewModel: QuizViewModel by activityViewModels()
@@ -52,7 +54,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
         quizViewModel.quizList.observe(viewLifecycleOwner, {
 
             when (it) {
-                is Resource.Error -> showSnackBar(message = it.message ?: "Something went wrong")
+                is Resource.Error -> showSnackBar(message = it.message!!)
                 is Resource.Loading -> {
                     _binding.joinedPageProgressBar.isVisible = true
                     _binding.joinedPageRecyclerview.isVisible = false

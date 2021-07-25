@@ -1,5 +1,6 @@
 package com.example.quiz_app_mvvm.repositories
 
+import android.content.Context
 import android.net.Uri
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuestionsModel
@@ -15,23 +16,24 @@ import com.example.quiz_app_mvvm.util.Constants.RESULTS_COLLECTION
 import com.example.quiz_app_mvvm.util.Constants.USERS_COLLECTION
 import com.example.quiz_app_mvvm.util.Resource
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class QuizRepo : BaseRepo() {
+class QuizRepo @Inject constructor(
+    private val user: FirebaseUser?,
+    private val db: FirebaseFirestore,
+    private var storageRef: StorageReference,
+    @ApplicationContext private val context: Context
+) : BaseRepo(context) {
 
-    val user = Firebase.auth.currentUser
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val quizListCollection: CollectionReference = db.collection(QUIZ_LIST_COLLECTION)
     private val userCollection = db.collection(USERS_COLLECTION)
     private val resultCollection = db.collection(RESULTS_COLLECTION)
-    // Firebase Storage
-    private var storageRef: StorageReference = FirebaseStorage.getInstance().reference
 
 
     suspend fun fetchQuestions(userId: String, quizId: String): Resource<QuerySnapshot> =
