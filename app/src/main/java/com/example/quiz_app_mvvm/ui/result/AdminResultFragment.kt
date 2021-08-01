@@ -42,17 +42,18 @@ class AdminResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         navController = Navigation.findNavController(view)
         quizData = quizViewModel.getQuizData()
         _binding.quizData = quizData
         _binding.adminResultDiscardBtn.setOnClickListener { navController.popBackStack() }
         _binding.rankListRecyclerview.setHasFixedSize(true)
+        _binding.retryButton.setOnClickListener {
+            quizViewModel.getPublicResults(quizID = quizData.quiz_id)
+        }
     }
 
     override fun onStart() {
         super.onStart()
-
         quizViewModel.getPublicResults(quizID = quizData.quiz_id)
         quizViewModel.resultList.observe(viewLifecycleOwner) {
             when (it) {
@@ -60,12 +61,17 @@ class AdminResultFragment : Fragment() {
                     _binding.publicResultsProgressBar.isVisible = false
                     _binding.rankListRecyclerview.isVisible = false
                     showSnackBar(message = it.message!!)
+                    _binding.statusBox.isVisible = true
                 }
                 is Resource.Loading -> {
                     _binding.publicResultsProgressBar.isVisible = true
                     _binding.rankListRecyclerview.isVisible = false
+                    _binding.statusBox.isVisible = false
                 }
                 is Resource.Success -> {
+                    _binding.publicResultsProgressBar.isVisible = false
+                    _binding.rankListRecyclerview.isVisible = true
+                    _binding.statusBox.isVisible = false
                     val options = FirestoreRecyclerOptions.Builder<MyResult>()
                         .setQuery(it.data?.query!!, MyResult::class.java)
                         .build()
@@ -82,8 +88,6 @@ class AdminResultFragment : Fragment() {
                         })
                     publicResultsAdapter.startListening()
                     _binding.rankListRecyclerview.adapter = publicResultsAdapter
-                    _binding.publicResultsProgressBar.isVisible = false
-                    _binding.rankListRecyclerview.isVisible = true
                 }
             }
         }
@@ -93,10 +97,7 @@ class AdminResultFragment : Fragment() {
         if (itemCount == 0) {
             _binding.noOneParticipatedText.isVisible = true
             _binding.rankListRecyclerview.isVisible = false
-        } else {
-            _binding.noOneParticipatedText.isVisible = false
-            _binding.rankListRecyclerview.isVisible = true
-        }
+        } else _binding.noOneParticipatedText.isVisible = false
     }
 
     override fun onStop() {

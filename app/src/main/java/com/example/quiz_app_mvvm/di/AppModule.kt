@@ -27,9 +27,9 @@ object AppModule {
         )
     }
 
-    @Provides
-    @Singleton
-    fun providesFirebaseUser(): FirebaseUser? = Firebase.auth.currentUser
+//    @Provides
+//    @Singleton
+//    fun providesFirebaseUser(): FirebaseUser = Firebase.auth.currentUser
 
     @Provides
     @Singleton

@@ -43,24 +43,31 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         _binding.myResultsBackBtn.setOnClickListener { navController.popBackStack() }
-
         _binding.myResultRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         _binding.myResultRecyclerview.setHasFixedSize(true)
+        _binding.retryButton.setOnClickListener { quizViewModel.getMyResults() }
     }
 
     override fun onStart() {
         super.onStart()
-
         quizViewModel.getMyResults()
         quizViewModel.resultList.observe(viewLifecycleOwner) {
-
             when (it) {
-                is Resource.Error -> showSnackBar(message = it.message!!)
-//                is Resource.Loading -> {
-//                    _binding.myResultsProgressBar.isVisible = true
-//                    _binding.myResultRecyclerview.isVisible = false
-//                }
+                is Resource.Error -> {
+                    showSnackBar(message = it.message!!)
+                    _binding.statusBox.isVisible = true
+                    _binding.myResultsProgressBar.isVisible = false
+                    _binding.myResultRecyclerview.isVisible = false
+                }
+                is Resource.Loading -> {
+                    _binding.myResultsProgressBar.isVisible = true
+                    _binding.myResultRecyclerview.isVisible = false
+                    _binding.statusBox.isVisible = false
+                }
                 is Resource.Success -> {
+                    _binding.myResultsProgressBar.isVisible = false
+                    _binding.myResultRecyclerview.isVisible = true
+                    _binding.statusBox.isVisible = false
                     val options = FirestoreRecyclerOptions.Builder<MyResult>()
                         .setQuery(it.data?.query!!, MyResult::class.java)
                         .build()
@@ -83,7 +90,6 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
             _binding.myResultRecyclerview.isVisible = false
         } else {
             _binding.emptyResultListView.isVisible = false
-            _binding.myResultRecyclerview.isVisible = true
         }
     }
 

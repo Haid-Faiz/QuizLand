@@ -36,7 +36,6 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View {
         _binding =
             FragmentJoinedQuizzesBinding.inflate(inflater, container, false)
@@ -46,6 +45,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding.joinedPageRecyclerview.setHasFixedSize(true)
+        _binding.retryButton.setOnClickListener { quizViewModel.getParticipatedQuizList() }
     }
 
     override fun onStart() {
@@ -54,12 +54,21 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
         quizViewModel.quizList.observe(viewLifecycleOwner, {
 
             when (it) {
-                is Resource.Error -> showSnackBar(message = it.message!!)
+                is Resource.Error -> {
+                    showSnackBar(message = it.message!!)
+                    _binding.joinedPageProgressBar.isVisible = false
+                    _binding.joinedPageRecyclerview.isVisible = false
+                    _binding.statusBox.isVisible = true
+                }
                 is Resource.Loading -> {
                     _binding.joinedPageProgressBar.isVisible = true
                     _binding.joinedPageRecyclerview.isVisible = false
+                    _binding.statusBox.isVisible = false
                 }
                 is Resource.Success -> {
+                    _binding.joinedPageProgressBar.isVisible = false
+                    _binding.joinedPageRecyclerview.isVisible = true
+                    _binding.statusBox.isVisible = false
                     val options = FirestoreRecyclerOptions.Builder<QuizModel>()
                         .setQuery(it.data?.query!!, QuizModel::class.java)
                         .build()
@@ -75,14 +84,11 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
 
     override fun onListItemChanged(itemCount: Int) {
         _binding.apply {
-            joinedPageProgressBar.isVisible = false
-            joinedPageRecyclerview.isVisible = true
             if (itemCount == 0) {
                 joinedQuizListEmptyBottle.isVisible = true
                 joinedPageRecyclerview.isVisible = false
             } else {
                 joinedQuizListEmptyBottle.isVisible = false
-                joinedPageRecyclerview.isVisible = true
             }
         }
     }

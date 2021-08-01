@@ -17,7 +17,9 @@ import com.example.quiz_app_mvvm.util.Constants.USERS_COLLECTION
 import com.example.quiz_app_mvvm.util.Resource
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,12 +27,12 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class QuizRepo @Inject constructor(
-    private val user: FirebaseUser?,
-    private val db: FirebaseFirestore,
+    db: FirebaseFirestore,
     private var storageRef: StorageReference,
     @ApplicationContext private val context: Context
 ) : BaseRepo(context) {
 
+    private val user: FirebaseUser = Firebase.auth.currentUser!!
     private val quizListCollection: CollectionReference = db.collection(QUIZ_LIST_COLLECTION)
     private val userCollection = db.collection(USERS_COLLECTION)
     private val resultCollection = db.collection(RESULTS_COLLECTION)

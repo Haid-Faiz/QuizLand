@@ -15,8 +15,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class UserRepo @Inject constructor(
-    private val user: FirebaseUser?,
-    private val db: FirebaseFirestore,
+    db: FirebaseFirestore,
     @ApplicationContext private val context: Context
 ) : BaseRepo(context) {
 

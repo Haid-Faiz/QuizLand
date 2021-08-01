@@ -61,9 +61,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         navController = Navigation.findNavController(view)
-
         requireActivity().onBackPressedDispatcher.addCallback(this@QuizFragment) {
             DialogsUtil.showExitQuizDialog(
                 requireContext(),
@@ -123,10 +121,8 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
     private fun loadUI() {
         _binding.quizTitle.text = quizName
-        // Enable options
         enableOptions()
-        loadQuestion(1)          // question no. 1
-        // start timer
+        loadQuestion(1)    // question no. 1
         startTimer()
     }
 
@@ -295,14 +291,8 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
     private fun verifyAnswer(selectedButton: Button) {
         if (canAnswer) {
-            selectedButton.background =
-                ContextCompat.getDrawable(requireContext(), R.drawable.new_btn_bg)
-            selectedButton.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.primary_text
-                )
-            )
+            selectedButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.new_btn_bg)
+            selectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.primary_text))
             if (randomQueList[currentQuesNum - 1].answer == selectedButton.text) correctAnswer++ else wrongAnswer++
             canAnswer = false
         }

@@ -49,21 +49,32 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 //        fadeOutAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         binding.createdQuizRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         binding.createdQuizRecyclerview.setHasFixedSize(true)
+        binding.retryButton.setOnClickListener {
+            quizViewModel.getMyCreatedQuizzes()
+        }
     }
 
     override fun onStart() {
         super.onStart()
-
         quizViewModel.getMyCreatedQuizzes()
         quizViewModel.quizList.observe(viewLifecycleOwner) {
 
             when (it) {
-                is Resource.Error -> showSnackBar(message = it.message ?: "Something went wrong")
-//                is Resource.Loading -> {
-//                    binding.createdProgressBar.isVisible = true
-//                    binding.createdQuizRecyclerview.isVisible = false
-//                }
+                is Resource.Error -> {
+                    showSnackBar(message = it.message!!)
+                    binding.statusBox.isVisible = true
+                    binding.createdProgressBar.isVisible = false
+                    binding.createdQuizRecyclerview.isVisible = false
+                }
+                is Resource.Loading -> {
+                    binding.createdProgressBar.isVisible = true
+                    binding.createdQuizRecyclerview.isVisible = false
+                    binding.statusBox.isVisible = false
+                }
                 is Resource.Success -> {
+                    binding.statusBox.isVisible = false
+                    binding.createdProgressBar.isVisible = false
+                    binding.createdQuizRecyclerview.isVisible = true
                     val options = FirestoreRecyclerOptions.Builder<QuizModel>()
                         .setQuery(it.data?.query!!, QuizModel::class.java)
                         .build()

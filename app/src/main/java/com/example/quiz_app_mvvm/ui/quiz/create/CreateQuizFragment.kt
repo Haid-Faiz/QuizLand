@@ -1,13 +1,14 @@
 package com.example.quiz_app_mvvm.ui.quiz.create
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +16,21 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import coil.load
 import com.bumptech.glide.Glide
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreateQuizBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.Calendar
 
 @AndroidEntryPoint
 class CreateQuizFragment : Fragment() {
@@ -43,6 +45,7 @@ class CreateQuizFragment : Fragment() {
     private lateinit var pickedDate: QuizModel.MyDate
     private var isClicked: Boolean = false
     private lateinit var startActivityForResult: ActivityResultLauncher<Intent>
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +58,19 @@ class CreateQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                // if permission is first time allowed, then this will get called
+                val galleryIntent = Intent(
+                    Intent.ACTION_PICK,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                )
+                startActivityForResult.launch(galleryIntent)
+            }
+        }
 
         isClicked = false
         navController = Navigation.findNavController(view)
@@ -84,7 +100,6 @@ class CreateQuizFragment : Fragment() {
         }
 
         _binding.addQuestionBtn.setOnClickListener {
-
             // taking inputs from user
             val quizName = _binding.enterQuizName.text.toString().trim()
             val quizDesc = _binding.enterQuizDescription.text.toString().trim()
@@ -203,11 +218,39 @@ class CreateQuizFragment : Fragment() {
         }
 
         _binding.addQuizImage.setOnClickListener {
+            // first check permission is accepted or not
+            requestPermissions()
+        }
+    }
+
+    private fun requestPermissions() = when {
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED -> {
+            // if permission is already granted, then this condition will run
             val galleryIntent = Intent(
                 Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             )
             startActivityForResult.launch(galleryIntent)
+        }
+
+        ActivityCompat.shouldShowRequestPermissionRationale(
+            requireActivity(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) -> {
+            // additional msg, dialog, rationale should be displayed
+            showSnackBar(
+                "Please allow permission to access photos",
+                action = { requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE) },
+                actionMsg = "Allow"
+            )
+        }
+
+        else -> {
+            // permission hasn't been asked yet. So, request the permission
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 
@@ -257,14 +300,12 @@ class CreateQuizFragment : Fragment() {
                 pickedDate.quizStartTimeMin = min
                 isClicked = true
 
-                Log.d("pickTimeHour", "pickTime Hour : $hour")
-
                 _binding.quizStartTime.text =
                     "${pickedDate.quizStartTimeHour}:${pickedDate.quizStartTimeMin}, ${pickedDate.date}/${pickedDate.month}/${pickedDate.year}"
             },
             currentHour,
             currentMin,
-            false    // here we can also set that... in which format we want the time
+            false    // here we can also set view type of timepicker that... in which format we want time picker
         ).show()
     }
 }

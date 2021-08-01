@@ -50,8 +50,8 @@ class QuizViewModel @Inject constructor(
     }
 
     fun getParticipatedQuizList() = viewModelScope.launch {
-        val quizOptions: Resource<QuerySnapshot> = quizRepo.getParticipateQuizList()
-        _quizList.postValue(quizOptions)
+        _quizList.postValue(Resource.Loading())
+        _quizList.postValue(quizRepo.getParticipateQuizList())
     }
 
     suspend fun unEnrolQuiz(quizID: String): Resource<Void> {
@@ -71,6 +71,7 @@ class QuizViewModel @Inject constructor(
     }
 
     fun getMyCreatedQuizzes() = viewModelScope.launch {
+        _quizList.postValue(Resource.Loading())
         _quizList.postValue(quizRepo.getMyCreatedQuizzes())
     }
 
@@ -89,7 +90,6 @@ class QuizViewModel @Inject constructor(
 
     fun getPublicResults(quizID: String) = viewModelScope.launch {
         _resultList.postValue(Resource.Loading())
-//        _resultList.value = null
         _resultList.postValue(quizRepo.getPublicResults(quizID))
     }
 

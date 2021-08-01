@@ -25,7 +25,7 @@
                 android:layout_marginStart="@dimen/_6sdp"
                 android:padding="@dimen/_4sdp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/cross"
+                android:src="@drawable/ic_baseline_arrow_back_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/all_result_text"
                 app:layout_constraintBottom_toBottomOf="@id/all_result_text"/>
@@ -309,6 +309,60 @@
                 app:layout_constraintStart_toStartOf="@id/rank_list_recyclerview"
                 app:layout_constraintEnd_toEndOf="@id/rank_list_recyclerview" />
 
+            <LinearLayout
+                android:id="@+id/status_box"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_106sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/participants_rank_list">
+
+                <ImageView
+                    android:id="@+id/status_msg_img"
+                    android:layout_width="@dimen/_108sdp"
+                    android:layout_height="@dimen/_108sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_42sdp"
+                    android:layout_marginEnd="@dimen/_42sdp"
+                    android:src="@drawable/ic_connection_error" />
+
+
+                <TextView
+                    android:id="@+id/status_message_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center_horizontal"
+                    android:text="Oops..! Connection error"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/retry_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:backgroundTint="@color/primary_text"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/noto_sans"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Retry" />
+
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/public_results_progress_bar"

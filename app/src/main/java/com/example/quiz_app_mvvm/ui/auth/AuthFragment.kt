@@ -142,8 +142,8 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
             override fun run() {
                 handler.post(Runnable {
                     var c = _binding.startViewpager.currentItem
-                    if (c == 2) _binding.startViewpager.currentItem =
-                        0 else _binding.startViewpager.currentItem = ++c
+                    if (c == 2) _binding.startViewpager.currentItem = 0
+                    else _binding.startViewpager.currentItem = ++c
                 })
             }
         }, 3000, 3000)

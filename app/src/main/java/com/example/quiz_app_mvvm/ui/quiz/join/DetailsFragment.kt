@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.quiz_app_mvvm.databinding.FragmentDetailsBinding
 import com.example.quiz_app_mvvm.model.QuizModel
+import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -60,64 +61,40 @@ class DetailsFragment : Fragment() {
 
         _binding.detailsStartBtn.setOnClickListener {
             // checking if user has already participated or not
-            if (!quizData.participated) {
+            if (quizData.participated) showSnackBar("You have already given this quiz") else {
 
-                // check if it is quiz time or not
-                val calendar = Calendar.getInstance()
-                val currentYear: Int = calendar.get(Calendar.YEAR)
-                val currentMonth: Int = calendar.get(Calendar.MONTH)
-                val currentDay: Int = calendar.get(Calendar.DAY_OF_MONTH)
-                val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
-                val currentMin = calendar.get(Calendar.MINUTE)
+                val pickedCalendar = Calendar.getInstance()
+                val year: Int = quizData.quizStartDate?.year!!
+                val month: Int = quizData.quizStartDate?.month!!
+                val date: Int = quizData.quizStartDate?.date!!
+                val hourOfDay: Int = quizData.quizStartDate?.quizStartTimeHour!!
+                val minute: Int = quizData.quizStartDate?.quizStartTimeMin!!
+                pickedCalendar.set(year, month, date, hourOfDay, minute)
+                val quizStartDate = Date(pickedCalendar.timeInMillis)
+                //-----------------------------------------------------------------
 
-                val currentMinutesOfDay = currentHour * 60 + currentMin
-                val startMinutes =
-                    quizData.quizStartDate!!.quizStartTimeHour * 60 + quizData.quizStartDate!!.quizStartTimeMin
-                val endMinutes =
-                    startMinutes + quizData.quizDurationHour * 60 + quizData.quizDurationMin
-                if (
-                    quizData.quizStartDate?.year == currentYear
-                    && quizData.quizStartDate?.month == currentMonth
-                    && quizData.quizStartDate?.date == currentDay
-                    && currentMinutesOfDay in startMinutes until endMinutes
-                ) {
-                    val action =
-                        DetailsFragmentDirections.actionDetailsFragmentToQuizFragment()
+                pickedCalendar.add(Calendar.HOUR_OF_DAY, quizData.quizDurationHour)
+                pickedCalendar.add(Calendar.MINUTE, quizData.quizDurationMin)
+
+                val quizEndDate = Date(pickedCalendar.timeInMillis)
+                val currentDate = Date(System.currentTimeMillis())
+                // quiz has not yet been started
+                // quiz is over
+                // running
+
+                if (currentDate.before(quizStartDate)) showSnackBar("This quiz isn't yet started !")
+                else if (currentDate.after(quizEndDate)) showSnackBar("This quiz is over now !")
+                else {
+                    // user can join the quiz in this time block
+                    val action = DetailsFragmentDirections.actionDetailsFragmentToQuizFragment()
                     //   action.setPosition(position);
                     action.quizDocumentID = quizId
                     action.quizName = quizName
                     //    action.setQuizModel(quizModel);
                     action.totalQuestions = totalQuestions
                     navController.navigate(action)
-                } else if (currentMinutesOfDay < startMinutes)
-                    Snackbar.make(
-                        _binding.root,
-                        "This quiz has not been started yet !",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                else Snackbar.make(
-                    _binding.root,
-                    "Oops..! This quiz has been ended",
-                    Snackbar.LENGTH_LONG
-                ).show()
-
-            } else Snackbar.make(
-                _binding.root,
-                "You have already given this quiz",
-                Snackbar.LENGTH_LONG
-            ).show()
+                }
+            }
         }
     }
-
-//    private fun canJoinQuiz() {
-//        val pickedCalendar = Calendar.getInstance()
-//        val year: Int = quizData.quizStartDate?.year!!
-//        val month: Int = quizData.quizStartDate?.month!!
-//        val date: Int = quizData.quizStartDate?.date!!
-//        val hourOfDay: Int = quizData.quizStartDate?.quizStartTimeHour!!
-//        val minute: Int = quizData.quizStartDate?.quizStartTimeMin!!
-//        pickedCalendar.set(year, month, date, hourOfDay, minute)
-//        val date1 = Date(45L)
-//        val date2 = Date(45L)
-//    }
 }
