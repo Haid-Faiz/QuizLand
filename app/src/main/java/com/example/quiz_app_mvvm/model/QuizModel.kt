@@ -7,7 +7,8 @@ import com.bumptech.glide.Glide
 import com.example.quiz_app_mvvm.R
 import com.google.firebase.firestore.DocumentId
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 data class QuizModel(
     @DocumentId
@@ -59,7 +60,6 @@ data class QuizModel(
             val formattedDate: String = simpleDateFormat.format(cal.time)
             textView.text = formattedDate
         }
-
     }
 
     class MyDate(

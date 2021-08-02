@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.ActivityMainBinding
-import com.example.quiz_app_mvvm.util.DialogsUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

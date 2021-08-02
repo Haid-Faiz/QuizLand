@@ -6,8 +6,6 @@ import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.repositories.UserRepo
 import com.example.quiz_app_mvvm.ui.auth.AuthViewModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
-import javax.inject.Inject
-
 
 class ViewModelFactory constructor(
     private val userRepo: UserRepo,

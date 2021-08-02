@@ -1,22 +1,21 @@
 package com.example.quiz_app_mvvm.ui.quiz.join
 
-import androidx.navigation.NavController
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.navigation.Navigation
-import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.quiz_app_mvvm.databinding.FragmentDetailsBinding
 import com.example.quiz_app_mvvm.model.QuizModel
+import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import com.example.quiz_app_mvvm.util.showSnackBar
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
@@ -31,7 +30,8 @@ class DetailsFragment : Fragment() {
     private lateinit var _binding: FragmentDetailsBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -71,7 +71,7 @@ class DetailsFragment : Fragment() {
                 val minute: Int = quizData.quizStartDate?.quizStartTimeMin!!
                 pickedCalendar.set(year, month, date, hourOfDay, minute)
                 val quizStartDate = Date(pickedCalendar.timeInMillis)
-                //-----------------------------------------------------------------
+                // -----------------------------------------------------------------
 
                 pickedCalendar.add(Calendar.HOUR_OF_DAY, quizData.quizDurationHour)
                 pickedCalendar.add(Calendar.MINUTE, quizData.quizDurationMin)

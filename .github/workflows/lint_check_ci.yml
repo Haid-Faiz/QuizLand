@@ -1,0 +1,14 @@
+name: Lint
+
+on: push
+
+jobs:
+  lint_check_job:
+    name: Lint Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ktlint Check
+        run: ./gradlew ktlintCheck

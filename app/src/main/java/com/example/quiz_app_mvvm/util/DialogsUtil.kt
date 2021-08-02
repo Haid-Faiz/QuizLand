@@ -11,7 +11,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import com.androchef.happytimer.countdowntimer.NormalCountDownView
 import com.example.quiz_app_mvvm.R
-import com.example.quiz_app_mvvm.databinding.*
+import com.example.quiz_app_mvvm.databinding.DeleteDialogBinding
+import com.example.quiz_app_mvvm.databinding.ExitQuizDialogBinding
+import com.example.quiz_app_mvvm.databinding.LoadingDialogBinding
+import com.example.quiz_app_mvvm.databinding.MyResultDetailsBinding
+import com.example.quiz_app_mvvm.databinding.ParticipantResultDetailsBinding
+import com.example.quiz_app_mvvm.databinding.ShareCustomDialogBinding
+import com.example.quiz_app_mvvm.databinding.TimeUpDialogBinding
 import com.example.quiz_app_mvvm.model.MyResult
 
 object DialogsUtil {
@@ -24,9 +30,9 @@ object DialogsUtil {
         binding.quizUniqueId.text = docID
 
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setView(binding.root)
-                .setCancelable(true)
-                .create()
+            .setView(binding.root)
+            .setCancelable(true)
+            .create()
         alertDialog?.show()
 
         binding.copyIdButton.setOnClickListener {
@@ -50,9 +56,9 @@ object DialogsUtil {
     fun showDeleteDialog(context: Context, function: () -> Unit) {
         val deleteDialogBinding = DeleteDialogBinding.inflate(LayoutInflater.from(context))
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setView(deleteDialogBinding.root)
-                .setCancelable(false)
-                .create()
+            .setView(deleteDialogBinding.root)
+            .setCancelable(false)
+            .create()
         alertDialog?.show()
 
         deleteDialogBinding.dontDeleteBtn.setOnClickListener {
@@ -63,16 +69,15 @@ object DialogsUtil {
             function()
             alertDialog?.dismiss()
         }
-
     }
 
     fun showExitQuizDialog(context: Context, navController: NavController, normalCountDownView: NormalCountDownView) {
 
         val exitQuizDialogBinding = ExitQuizDialogBinding.inflate(LayoutInflater.from(context))
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setView(exitQuizDialogBinding.root)
-                .setCancelable(false)
-                .create()
+            .setView(exitQuizDialogBinding.root)
+            .setCancelable(false)
+            .create()
         alertDialog?.show()
         exitQuizDialogBinding.exitYesBtn.setOnClickListener {
             normalCountDownView.stopTimer()
@@ -80,15 +85,14 @@ object DialogsUtil {
             alertDialog?.dismiss()
         }
         exitQuizDialogBinding.continueBtn.setOnClickListener { alertDialog?.dismiss() }
-
     }
 
     fun showLoadingDialog(context: Context) {
         val loadingDialogBinding = LoadingDialogBinding.inflate(LayoutInflater.from(context))
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setCancelable(false)
-                .setView(loadingDialogBinding.root)
-                .create()
+            .setCancelable(false)
+            .setView(loadingDialogBinding.root)
+            .create()
         // start progress here
         alertDialog?.show()
     }
@@ -98,9 +102,9 @@ object DialogsUtil {
         // setting result data through Data Binding
         myResultDetailsBinding.myResult = myResult
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setCancelable(true)
-                .setView(myResultDetailsBinding.root)
-                .create()
+            .setCancelable(true)
+            .setView(myResultDetailsBinding.root)
+            .create()
         alertDialog?.show()
 
         myResultDetailsBinding.detailResultOkBtn.setOnClickListener {
@@ -113,9 +117,9 @@ object DialogsUtil {
         // setting result data through data binding
         participantResultDetailsBinding.myResult = result
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setCancelable(true)
-                .setView(participantResultDetailsBinding.root)
-                .create()
+            .setCancelable(true)
+            .setView(participantResultDetailsBinding.root)
+            .create()
         alertDialog?.show()
 
         participantResultDetailsBinding.participantDetailResultOkBtn.setOnClickListener {
@@ -126,9 +130,9 @@ object DialogsUtil {
     fun showTimeUpDialog(context: Context, function: () -> Unit) {
         val timeUpDialogBinding = TimeUpDialogBinding.inflate(LayoutInflater.from(context))
         alertDialog = AlertDialog.Builder(context, R.style.DialogStyle)
-                .setView(timeUpDialogBinding.root)
-                .setCancelable(false)
-                .create()
+            .setView(timeUpDialogBinding.root)
+            .setCancelable(false)
+            .create()
         alertDialog?.show()
 
         timeUpDialogBinding.timeUpGotoResultBtn.setOnClickListener {

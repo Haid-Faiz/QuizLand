@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -15,7 +15,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.androchef.happytimer.countdowntimer.HappyTimer
 import com.example.quiz_app_mvvm.R
-import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.databinding.FragmentQuizBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuestionsModel
@@ -27,7 +26,8 @@ import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.Calendar
+import java.util.Random
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -113,7 +113,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
     private fun pickQuestion(questionList: ArrayList<QuestionsModel>?) {
         for (i in questionList?.indices!!) {
-            val randomNum = Random().nextInt(questionList.size)   //getRandomNum(questionList.size)
+            val randomNum = Random().nextInt(questionList.size) // getRandomNum(questionList.size)
             randomQueList.add(questionList[randomNum])
             questionList.removeAt(randomNum)
         }
@@ -122,7 +122,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
     private fun loadUI() {
         _binding.quizTitle.text = quizName
         enableOptions()
-        loadQuestion(1)    // question no. 1
+        loadQuestion(1) // question no. 1
         startTimer()
     }
 
@@ -144,7 +144,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
 
     private fun loadQuestion(questionSerialNum: Int) {
         _binding.quizQuestionNum.text =
-            "Q.No. ${questionSerialNum.toString()} out of ${randomQueList.size}"
+            "Q.No. $questionSerialNum out of ${randomQueList.size}"
         // load question text
         _binding.quizQuestion.text = randomQueList[questionSerialNum - 1].question
         // load option button
@@ -201,7 +201,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
             R.id.quiz_next_btn -> {
                 if (currentQuesNum == randomQueList.size) {
                     // submit results
-                    _binding.normalCountDownView.stopTimer()    // Saved memory leak
+                    _binding.normalCountDownView.stopTimer() // Saved memory leak
                     submitResult()
                     navController.navigate(R.id.action_quizFragment_to_resultFragment)
                 } else {
@@ -224,7 +224,7 @@ class QuizFragment : Fragment(), View.OnClickListener {
         // calculate progress
         val totalMarks: Float = randomQueList.size * quizData.correctAnsMarks
         val marksScored: Float =
-            (correctAnswer * quizData.correctAnsMarks) - (wrongAnswer * (-quizData.wrongAnsMarks))  /////// negative marking lgani hai abhi
+            (correctAnswer * quizData.correctAnsMarks) - (wrongAnswer * (-quizData.wrongAnsMarks)) // ///// negative marking lgani hai abhi
         val marksPercent: Float = (marksScored / totalMarks) * 100
 
         val myResult = MyResult(

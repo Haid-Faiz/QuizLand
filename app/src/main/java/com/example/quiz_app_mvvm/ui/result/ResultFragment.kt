@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
@@ -20,10 +19,13 @@ class ResultFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var _binding: FragmentResultBinding
-    private val quizViewModel : QuizViewModel by activityViewModels()
+    private val quizViewModel: QuizViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentResultBinding.inflate(layoutInflater, container, false)
         return _binding.root
@@ -47,7 +49,7 @@ class ResultFragment : Fragment() {
         _binding.resultCorrectText.text = result.correctAns.toString()
         _binding.resultWrongText.text = result.wrongAns.toString()
         _binding.resultMissedText.text = result.missedAns.toString()
-        _binding.resultPercent.text = "${String.format("%.1f", result.scoredPercent)}%"              //percent.toString() + "%"
+        _binding.resultPercent.text = "${String.format("%.1f", result.scoredPercent)}%" // percent.toString() + "%"
         _binding.resultProgress.progress = result.scoredPercent.toInt()
     }
 

@@ -1,20 +1,19 @@
 package com.example.quiz_app_mvvm.ui.result
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.databinding.FragmentAdminResultBinding
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -32,7 +31,8 @@ class AdminResultFragment : Fragment() {
     private lateinit var arr: ObservableSnapshotArray<MyResult>
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -77,7 +77,8 @@ class AdminResultFragment : Fragment() {
                         .build()
 
                     arr = options.snapshots
-                    publicResultsAdapter = PublicResultsAdapter(options = options,
+                    publicResultsAdapter = PublicResultsAdapter(
+                        options = options,
                         clickListenerFunction = { myResult: MyResult ->
                             DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
                         },
@@ -85,7 +86,8 @@ class AdminResultFragment : Fragment() {
                             _binding.adminResultTotalParticipants.text =
                                 itemCount.toString()
                             onListItemChanged(itemCount)
-                        })
+                        }
+                    )
                     publicResultsAdapter.startListening()
                     _binding.rankListRecyclerview.adapter = publicResultsAdapter
                 }

@@ -15,11 +15,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.quiz_app_mvvm.R
-import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.databinding.FragmentAddQuestBinding
 import com.example.quiz_app_mvvm.model.QuestionsModel
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.snackbar.Snackbar
@@ -37,9 +37,9 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
     private lateinit var popDownAnim: Animation
     private val quizViewModel: QuizViewModel by activityViewModels()
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -94,8 +94,8 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
                 else -> false
             }
 
-            if (question.isNotEmpty() && isAnswerMarked && optionOne.isNotEmpty() && optionTwo.isNotEmpty()
-                && optionThree.isNotEmpty() && optionFourth.isNotEmpty()
+            if (question.isNotEmpty() && isAnswerMarked && optionOne.isNotEmpty() && optionTwo.isNotEmpty() &&
+                optionThree.isNotEmpty() && optionFourth.isNotEmpty()
             ) {
 
                 val questionsModel = QuestionsModel(
@@ -116,7 +116,6 @@ class AddQuestFragment : Fragment(), CompoundButton.OnCheckedChangeListener {
                     if (currentQuestNum == quizModel.questions)
                         _binding.nextQuestionBtn.text = "Submit quiz"
                 }
-
             } else {
 
                 if (!isAnswerMarked)

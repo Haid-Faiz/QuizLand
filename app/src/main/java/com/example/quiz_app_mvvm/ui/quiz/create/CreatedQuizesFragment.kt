@@ -1,11 +1,11 @@
 package com.example.quiz_app_mvvm.ui.quiz.create
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreatedQuizesBinding
 import com.example.quiz_app_mvvm.model.QuizModel
-import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter
-import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.DialogsUtil
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -33,7 +32,8 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
     private lateinit var arr: ObservableSnapshotArray<QuizModel>
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreatedQuizesBinding.inflate(inflater, container, false)

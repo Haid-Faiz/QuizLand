@@ -13,6 +13,5 @@ object Constants {
     const val MY_LINKED_PROFILE = "https://www.linkedin.com/in/faizan-haider-3a4220193"
     const val LINKED_ANDROID_APP_PACKAGE = "com.linkedin.android"
     const val QUIZ_LAND_SHARE_MSG = "Hey, Do you want to get rid of all quiz headaches ?" +
-            "\nIf yes.. then QuizLand is the solution. \n Download now: AppUrl"
-
+        "\nIf yes.. then QuizLand is the solution. \n Download now: AppUrl"
 }

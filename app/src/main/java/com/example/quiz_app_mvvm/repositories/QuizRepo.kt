@@ -18,7 +18,11 @@ import com.example.quiz_app_mvvm.util.Resource
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -36,7 +40,6 @@ class QuizRepo @Inject constructor(
     private val quizListCollection: CollectionReference = db.collection(QUIZ_LIST_COLLECTION)
     private val userCollection = db.collection(USERS_COLLECTION)
     private val resultCollection = db.collection(RESULTS_COLLECTION)
-
 
     suspend fun fetchQuestions(userId: String, quizId: String): Resource<QuerySnapshot> =
         safeApiCall {
@@ -137,7 +140,6 @@ class QuizRepo @Inject constructor(
                 .set(map)
             task
         }
-
 
     suspend fun getParticipateQuizList(): Resource<QuerySnapshot> = safeApiCall {
         val queryOfParticipatedQuiz: Task<QuerySnapshot> = userCollection
@@ -285,7 +287,7 @@ class QuizRepo @Inject constructor(
         safeApiCall {
             // adding questions list to public collection
             val hashMap = HashMap<String, ArrayList<QuestionsModel>>()
-            hashMap["questionsList"] = questionsList      // Kotlin style
+            hashMap["questionsList"] = questionsList // Kotlin style
             quizListCollection
                 .document(docID)
                 .collection(QUESTIONS_COLLECTION)
@@ -382,7 +384,7 @@ class QuizRepo @Inject constructor(
         query
     }
 
-    //------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------
 
     suspend fun deleteCreatedQuiz(quizID: String): Resource<Void> {
 

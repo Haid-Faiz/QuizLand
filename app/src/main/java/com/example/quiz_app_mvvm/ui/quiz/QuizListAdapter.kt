@@ -17,7 +17,6 @@ class QuizListAdapter(
 //        private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<QuizModel, QuizListAdapter.ViewHolder>(options) {
 
-
     override fun onDataChanged() {
         super.onDataChanged()
 //        f.invoke(itemCount)   // f(getItemCount())  we can also invoke it like this

@@ -1,7 +1,6 @@
 package com.example.quiz_app_mvvm.di
 
 import com.example.quiz_app_mvvm.model.User
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase

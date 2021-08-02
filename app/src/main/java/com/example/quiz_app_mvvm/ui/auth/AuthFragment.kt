@@ -2,13 +2,12 @@ package com.example.quiz_app_mvvm.ui.auth
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import androidx.navigation.NavController
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -16,9 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.quiz_app_mvvm.R
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentAuthBinding
 import com.example.quiz_app_mvvm.model.User
 import com.example.quiz_app_mvvm.util.Resource
@@ -28,12 +27,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.*
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import java.util.*
+import java.util.Timer
+import java.util.TimerTask
 
 @AndroidEntryPoint
 class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
@@ -65,7 +67,8 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -135,18 +138,23 @@ class AuthFragment : Fragment(), FirebaseAuth.AuthStateListener {
     }
 
     private fun handleViewPagerAutoSlide() {
-        timer = Timer()  // This will create a new Thread
+        timer = Timer() // This will create a new Thread
         val handler = Handler(Looper.getMainLooper())
 
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                handler.post(Runnable {
-                    var c = _binding.startViewpager.currentItem
-                    if (c == 2) _binding.startViewpager.currentItem = 0
-                    else _binding.startViewpager.currentItem = ++c
-                })
-            }
-        }, 3000, 3000)
+        timer.schedule(
+            object : TimerTask() {
+                override fun run() {
+                    handler.post(
+                        Runnable {
+                            var c = _binding.startViewpager.currentItem
+                            if (c == 2) _binding.startViewpager.currentItem = 0
+                            else _binding.startViewpager.currentItem = ++c
+                        }
+                    )
+                }
+            },
+            3000, 3000
+        )
     }
 
     private fun updateUI(firebaseUser: FirebaseUser?, isNewUser: Boolean = false) {

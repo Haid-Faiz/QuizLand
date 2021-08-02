@@ -7,7 +7,6 @@ import com.example.quiz_app_mvvm.util.Resource
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -25,7 +24,7 @@ class UserRepo @Inject constructor(
         collection.document(user.userID).set(user)
     }
 
-    //--------------------------------------------------------------
+    // --------------------------------------------------------------
 
     suspend fun firebaseSignInWithGoogle(authCredential: AuthCredential): Resource<AuthResult> {
         return safeApiCall {

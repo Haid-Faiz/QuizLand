@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.quiz_app_mvvm.R
-import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter
-import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter.OnQuizListItemClicked
 import com.example.quiz_app_mvvm.databinding.FragmentJoinedQuizzesBinding
 import com.example.quiz_app_mvvm.databinding.TransparentDialogBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.ClickListeners
+import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter
+import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter.OnQuizListItemClicked
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
@@ -34,7 +34,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     private lateinit var clickListeners: ClickListeners
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding =
@@ -51,35 +52,38 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     override fun onStart() {
         super.onStart()
         quizViewModel.getParticipatedQuizList()
-        quizViewModel.quizList.observe(viewLifecycleOwner, {
+        quizViewModel.quizList.observe(
+            viewLifecycleOwner,
+            {
 
-            when (it) {
-                is Resource.Error -> {
-                    showSnackBar(message = it.message!!)
-                    _binding.joinedPageProgressBar.isVisible = false
-                    _binding.joinedPageRecyclerview.isVisible = false
-                    _binding.statusBox.isVisible = true
-                }
-                is Resource.Loading -> {
-                    _binding.joinedPageProgressBar.isVisible = true
-                    _binding.joinedPageRecyclerview.isVisible = false
-                    _binding.statusBox.isVisible = false
-                }
-                is Resource.Success -> {
-                    _binding.joinedPageProgressBar.isVisible = false
-                    _binding.joinedPageRecyclerview.isVisible = true
-                    _binding.statusBox.isVisible = false
-                    val options = FirestoreRecyclerOptions.Builder<QuizModel>()
-                        .setQuery(it.data?.query!!, QuizModel::class.java)
-                        .build()
+                when (it) {
+                    is Resource.Error -> {
+                        showSnackBar(message = it.message!!)
+                        _binding.joinedPageProgressBar.isVisible = false
+                        _binding.joinedPageRecyclerview.isVisible = false
+                        _binding.statusBox.isVisible = true
+                    }
+                    is Resource.Loading -> {
+                        _binding.joinedPageProgressBar.isVisible = true
+                        _binding.joinedPageRecyclerview.isVisible = false
+                        _binding.statusBox.isVisible = false
+                    }
+                    is Resource.Success -> {
+                        _binding.joinedPageProgressBar.isVisible = false
+                        _binding.joinedPageRecyclerview.isVisible = true
+                        _binding.statusBox.isVisible = false
+                        val options = FirestoreRecyclerOptions.Builder<QuizModel>()
+                            .setQuery(it.data?.query!!, QuizModel::class.java)
+                            .build()
 
-                    arr = options.snapshots
-                    quizListAdapter = QuizListAdapter(options, this)
-                    _binding.joinedPageRecyclerview.adapter = quizListAdapter
-                    quizListAdapter?.startListening()
+                        arr = options.snapshots
+                        quizListAdapter = QuizListAdapter(options, this)
+                        _binding.joinedPageRecyclerview.adapter = quizListAdapter
+                        quizListAdapter?.startListening()
+                    }
                 }
             }
-        })
+        )
     }
 
     override fun onListItemChanged(itemCount: Int) {

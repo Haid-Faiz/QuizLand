@@ -48,7 +48,8 @@ class CreateQuizFragment : Fragment() {
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -109,12 +110,12 @@ class CreateQuizFragment : Fragment() {
             val quizCreatedBy = _binding.enterQuizCreatedBy.text.toString().trim()
 
             val isQuizDurationSet = _binding.quizDurationMinPicker.value != 0 ||
-                    _binding.quizDurationHourPicker.value != 0
+                _binding.quizDurationHourPicker.value != 0
 
-            if (quizName.isNotEmpty() && quizDesc.isNotEmpty() && difficultyLevel.isNotEmpty()
-                && totalQuestNumString.isNotEmpty() && quizCreatedBy.isNotEmpty() &&
-                correctAnsMarks.isNotEmpty() && wrongAnsMarks.isNotEmpty()
-                && isClicked && isQuizDurationSet && wrongAnsMarks.toFloat() <= 0
+            if (quizName.isNotEmpty() && quizDesc.isNotEmpty() && difficultyLevel.isNotEmpty() &&
+                totalQuestNumString.isNotEmpty() && quizCreatedBy.isNotEmpty() &&
+                correctAnsMarks.isNotEmpty() && wrongAnsMarks.isNotEmpty() &&
+                isClicked && isQuizDurationSet && wrongAnsMarks.toFloat() <= 0
             ) {
 
                 // creating quiz object
@@ -135,9 +136,8 @@ class CreateQuizFragment : Fragment() {
                 )
 
                 closeKeyBoard()
-                quizViewModel.setQuizData(quizModel)    // sending data to next fragment with help of viewmodel
+                quizViewModel.setQuizData(quizModel) // sending data to next fragment with help of viewmodel
                 navController.navigate(R.id.action_createQuizFragment_to_addQuestFragment)
-
             } else {
                 if (isClicked)
                     _binding.quizStartTime.error = null
@@ -276,8 +276,9 @@ class CreateQuizFragment : Fragment() {
                 pickedDate.month = month
                 pickedDate.date = date
                 pickTime()
-            }, currentYear, currentMonth, currentDay
-        ).show()  // months are zero based >>>> January -> 0
+            },
+            currentYear, currentMonth, currentDay
+        ).show() // months are zero based >>>> January -> 0
 
 //        val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
 //            // get the values here
@@ -288,7 +289,7 @@ class CreateQuizFragment : Fragment() {
     private fun pickTime() {
         val calendar = Calendar.getInstance()
         val currentHour =
-            calendar.get(Calendar.HOUR_OF_DAY)  // this will return 24 hours format time
+            calendar.get(Calendar.HOUR_OF_DAY) // this will return 24 hours format time
 //        val currentHour = calendar.get(Calendar.HOUR)   // this will return normal am pm format time
         val currentMin = calendar.get(Calendar.MINUTE)
 
@@ -305,7 +306,7 @@ class CreateQuizFragment : Fragment() {
             },
             currentHour,
             currentMin,
-            false    // here we can also set view type of timepicker that... in which format we want time picker
+            false // here we can also set view type of timepicker that... in which format we want time picker
         ).show()
     }
 }

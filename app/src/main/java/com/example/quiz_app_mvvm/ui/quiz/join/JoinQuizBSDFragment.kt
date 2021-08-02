@@ -58,16 +58,16 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
         lifecycleScope.launchWhenCreated {
             quizViewModel.isQuizExist(quizID = uniqueQuizID).let {
                 when (it) {
-                     is Resource.Error -> {
-                         _binding.apply {
-                             progressJoining.isVisible = false
-                             joinQuizButton.isEnabled = true
-                             joinQuizButton.text = "Join quiz"
-                             enterUniqueQuizId.isEnabled = true
-                             this@JoinQuizBSDFragment.isCancelable = true
-                         }
-                         showSnackBar(it.message!!)
-                     }
+                    is Resource.Error -> {
+                        _binding.apply {
+                            progressJoining.isVisible = false
+                            joinQuizButton.isEnabled = true
+                            joinQuizButton.text = "Join quiz"
+                            enterUniqueQuizId.isEnabled = true
+                            this@JoinQuizBSDFragment.isCancelable = true
+                        }
+                        showSnackBar(it.message!!)
+                    }
                     is Resource.Success -> {
                         if (it.data?.exists()!!) {
                             // Quiz exists... join it

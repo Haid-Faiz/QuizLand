@@ -32,9 +32,8 @@ class CreatedQuizzesAdapter(
         onCreatedQuizItemClicked.onListItemChanged(itemCount)
     }
 
-    class ViewHolder(val createdQuizItemBinding: CreatedQuizItemBinding)
-        : RecyclerView.ViewHolder(createdQuizItemBinding.root)
-
+    class ViewHolder(val createdQuizItemBinding: CreatedQuizItemBinding) :
+        RecyclerView.ViewHolder(createdQuizItemBinding.root)
 
     interface OnCreatedQuizItemClicked {
         fun onGetResultClicked(position: Int)

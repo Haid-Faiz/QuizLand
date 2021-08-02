@@ -1,12 +1,12 @@
 package com.example.quiz_app_mvvm.ui.quiz
 
-import androidx.lifecycle.ViewModel
-import com.example.quiz_app_mvvm.model.QuizModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.quiz_app_mvvm.model.MyResult
 import com.example.quiz_app_mvvm.model.QuestionsModel
+import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.repositories.QuizRepo
 import com.example.quiz_app_mvvm.util.Resource
 import com.google.firebase.firestore.DocumentSnapshot
@@ -36,7 +36,6 @@ class QuizViewModel @Inject constructor(
     private var _resultList: MutableLiveData<Resource<QuerySnapshot>> = MutableLiveData()
     var resultList: LiveData<Resource<QuerySnapshot>> = _resultList
 
-
     fun getQuestions(userId: String, quizID: String) = viewModelScope.launch {
         _questions.postValue(quizRepo.fetchQuestions(userId, quizID))
     }
@@ -57,7 +56,6 @@ class QuizViewModel @Inject constructor(
     suspend fun unEnrolQuiz(quizID: String): Resource<Void> {
         return quizRepo.unEnrolQuiz(quizID)
     }
-
 
     suspend fun createQuiz(
         quizModel: QuizModel,
@@ -92,7 +90,6 @@ class QuizViewModel @Inject constructor(
         _resultList.postValue(Resource.Loading())
         _resultList.postValue(quizRepo.getPublicResults(quizID))
     }
-
 
     // These setter and getter are for data transfer from one fragment to another
     fun setQuizData(quizModel: QuizModel) {
