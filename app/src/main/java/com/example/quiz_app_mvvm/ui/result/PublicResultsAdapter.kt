@@ -10,27 +10,25 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 class PublicResultsAdapter(
     private val options: FirestoreRecyclerOptions<MyResult>,
-    private val clickListenerFunction: (MyResult) -> Unit,
-    private val onItemChanged: (itemCount: Int) -> Unit
+    private val clickListenerFunction: (MyResult) -> Unit
 ) : FirestoreRecyclerAdapter<MyResult, PublicResultsAdapter.ViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val resultsListItemBinding = ResultsListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val resultsListItemBinding =
+            ResultsListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 //        resultsListItemBinding.participantResultListener = participantResultListener
 //        resultsListItemBinding.f = this
         resultsListItemBinding.kf = clickListenerFunction
         return ViewHolder(resultsListItemBinding)
     }
 
-    override fun onDataChanged() {
-        super.onDataChanged()
-        onItemChanged.invoke(itemCount)
-    }
+//    private fun getListItemCount(): Int = itemCount
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: MyResult) {
         holder.resultsListItemBinding.result = model
         holder.resultsListItemBinding.position = position
     }
 
-    class ViewHolder(val resultsListItemBinding: ResultsListItemBinding) : RecyclerView.ViewHolder(resultsListItemBinding.root)
+    class ViewHolder(val resultsListItemBinding: ResultsListItemBinding) :
+        RecyclerView.ViewHolder(resultsListItemBinding.root)
 }

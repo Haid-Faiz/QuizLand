@@ -34,7 +34,7 @@
         tools:listitem="@layout/single_list_item" />
 
     <LinearLayout
-        android:id="@+id/joined_quiz_list_empty_bottle"
+        android:id="@+id/empty_list_status"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_24sdp"

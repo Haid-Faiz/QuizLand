@@ -14,17 +14,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 class QuizListAdapter(
     options: FirestoreRecyclerOptions<QuizModel>,
     private val onQuizListItemClicked: OnQuizListItemClicked,
-//        private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<QuizModel, QuizListAdapter.ViewHolder>(options) {
 
-    override fun onDataChanged() {
-        super.onDataChanged()
-//        f.invoke(itemCount)   // f(getItemCount())  we can also invoke it like this
-        onQuizListItemClicked.onListItemChanged(itemCount)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val singleListItemBinding = SingleListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val singleListItemBinding =
+            SingleListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val viewHolder = ViewHolder(singleListItemBinding)
         singleListItemBinding.onQuizListItemClicked = onQuizListItemClicked
         singleListItemBinding.unenrolMenuButton.setOnClickListener {
@@ -53,11 +47,11 @@ class QuizListAdapter(
         holder.singleListItemBinding.position = position
     }
 
-    class ViewHolder(val singleListItemBinding: SingleListItemBinding) : RecyclerView.ViewHolder(singleListItemBinding.root)
+    class ViewHolder(val singleListItemBinding: SingleListItemBinding) :
+        RecyclerView.ViewHolder(singleListItemBinding.root)
 
     interface OnQuizListItemClicked {
         fun onQuizItemClicked(position: Int)
         fun onUnEnrolClicked(adapterPosition: Int)
-        fun onListItemChanged(itemCount: Int)
     }
 }

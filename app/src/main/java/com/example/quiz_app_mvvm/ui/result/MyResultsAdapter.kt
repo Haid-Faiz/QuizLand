@@ -11,7 +11,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 class MyResultsAdapter(
     options: FirestoreRecyclerOptions<MyResult>,
     private val onMyResultClicked: OnMyResultClicked,
-    private val f: (itemCount: Int) -> Unit
 ) : FirestoreRecyclerAdapter<MyResult, MyResultsAdapter.ViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,11 +19,6 @@ class MyResultsAdapter(
         myResultItemBinding.onMyResultClicked = onMyResultClicked
 //        myResultItemBinding.position = viewHolder.adapterPosition   this is giving wrong positin as -1
         return viewHolder
-    }
-
-    override fun onDataChanged() {
-        super.onDataChanged()
-        f.invoke(itemCount)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: MyResult) {

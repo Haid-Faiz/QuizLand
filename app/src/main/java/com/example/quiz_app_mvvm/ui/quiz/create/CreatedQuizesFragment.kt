@@ -27,7 +27,8 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
     private val quizViewModel: QuizViewModel by activityViewModels()
     private lateinit var createdListAdapter: CreatedQuizzesAdapter
-    private lateinit var binding: FragmentCreatedQuizesBinding
+    private var _binding: FragmentCreatedQuizesBinding? = null
+    private val binding get() = _binding!!
     private lateinit var navController: NavController
     private lateinit var arr: ObservableSnapshotArray<QuizModel>
 
@@ -36,7 +37,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCreatedQuizesBinding.inflate(inflater, container, false)
+        _binding = FragmentCreatedQuizesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -63,6 +64,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
                 is Resource.Error -> {
                     showSnackBar(message = it.message!!)
                     binding.statusBox.isVisible = true
+                    binding.emptyListView.isVisible = false
                     binding.createdProgressBar.isVisible = false
                     binding.createdQuizRecyclerview.isVisible = false
                 }
@@ -70,33 +72,28 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
                     binding.createdProgressBar.isVisible = true
                     binding.createdQuizRecyclerview.isVisible = false
                     binding.statusBox.isVisible = false
+                    binding.emptyListView.isVisible = false
                 }
                 is Resource.Success -> {
                     binding.statusBox.isVisible = false
                     binding.createdProgressBar.isVisible = false
-                    binding.createdQuizRecyclerview.isVisible = true
-                    val options = FirestoreRecyclerOptions.Builder<QuizModel>()
-                        .setQuery(it.data?.query!!, QuizModel::class.java)
-                        .build()
+                    if (it.data!!.isEmpty) {
+                        binding.createdQuizRecyclerview.isVisible = false
+                        binding.emptyListView.isVisible = true
+                    } else {
+                        binding.createdQuizRecyclerview.isVisible = true
+                        binding.emptyListView.isVisible = false
+                        val options = FirestoreRecyclerOptions.Builder<QuizModel>()
+                            .setQuery(it.data.query, QuizModel::class.java)
+                            .build()
 
-                    arr = options.snapshots
-                    createdListAdapter = CreatedQuizzesAdapter(options, this)
-                    createdListAdapter.startListening()
-                    binding.createdQuizRecyclerview.adapter = createdListAdapter
+                        arr = options.snapshots
+                        createdListAdapter = CreatedQuizzesAdapter(options, this)
+                        createdListAdapter.startListening()
+                        binding.createdQuizRecyclerview.adapter = createdListAdapter
+                    }
                 }
             }
-        }
-    }
-
-    override fun onListItemChanged(itemCount: Int) {
-        binding.createdProgressBar.isVisible = false
-        binding.createdQuizRecyclerview.isVisible = true
-        if (itemCount == 0) {
-            binding.emptyListView.isVisible = true
-            binding.createdQuizRecyclerview.isVisible = false
-        } else {
-            binding.emptyListView.isVisible = false
-            binding.createdQuizRecyclerview.isVisible = true
         }
     }
 
@@ -128,5 +125,10 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
     override fun onShareQuizClicked(position: Int) {
         DialogsUtil.showShareIDDialog(requireContext(), arr[position].quiz_id, requireActivity())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

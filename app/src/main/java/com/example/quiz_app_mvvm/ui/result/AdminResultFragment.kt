@@ -1,6 +1,7 @@
 package com.example.quiz_app_mvvm.ui.result
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,9 +26,10 @@ class AdminResultFragment : Fragment() {
 
     private lateinit var navController: NavController
     private val quizViewModel: QuizViewModel by activityViewModels()
-    private lateinit var _binding: FragmentAdminResultBinding
-    private lateinit var quizData: QuizModel
-    private lateinit var publicResultsAdapter: PublicResultsAdapter
+    private var _binding: FragmentAdminResultBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var receivedQuizData: QuizModel
+    private var publicResultsAdapter: PublicResultsAdapter? = null
     private lateinit var arr: ObservableSnapshotArray<MyResult>
 
     override fun onCreateView(
@@ -37,73 +39,79 @@ class AdminResultFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAdminResultBinding.inflate(inflater, container, false)
-        return _binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        quizData = quizViewModel.getQuizData()
-        _binding.quizData = quizData
-        _binding.adminResultDiscardBtn.setOnClickListener { navController.popBackStack() }
-        _binding.rankListRecyclerview.setHasFixedSize(true)
-        _binding.retryButton.setOnClickListener {
-            quizViewModel.getPublicResults(quizID = quizData.quiz_id)
+        receivedQuizData = quizViewModel.getQuizData()
+        binding.apply {
+            quizData = receivedQuizData
+            adminResultDiscardBtn.setOnClickListener { navController.popBackStack() }
+            rankListRecyclerview.setHasFixedSize(true)
+            retryButton.setOnClickListener {
+                quizViewModel.getPublicResults(quizID = receivedQuizData.quiz_id)
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        quizViewModel.getPublicResults(quizID = quizData.quiz_id)
+        quizViewModel.getPublicResults(quizID = receivedQuizData.quiz_id)
         quizViewModel.resultList.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
-                    _binding.publicResultsProgressBar.isVisible = false
-                    _binding.rankListRecyclerview.isVisible = false
+                    binding.publicResultsProgressBar.isVisible = false
+                    binding.rankListRecyclerview.isVisible = false
                     showSnackBar(message = it.message!!)
-                    _binding.statusBox.isVisible = true
+                    binding.statusBox.isVisible = true
+                    binding.noOneParticipatedText.isVisible = false
                 }
                 is Resource.Loading -> {
-                    _binding.publicResultsProgressBar.isVisible = true
-                    _binding.rankListRecyclerview.isVisible = false
-                    _binding.statusBox.isVisible = false
+                    binding.publicResultsProgressBar.isVisible = true
+                    binding.rankListRecyclerview.isVisible = false
+                    binding.statusBox.isVisible = false
+                    binding.noOneParticipatedText.isVisible = false
                 }
                 is Resource.Success -> {
-                    _binding.publicResultsProgressBar.isVisible = false
-                    _binding.rankListRecyclerview.isVisible = true
-                    _binding.statusBox.isVisible = false
-                    val options = FirestoreRecyclerOptions.Builder<MyResult>()
-                        .setQuery(it.data?.query!!, MyResult::class.java)
-                        .build()
+                    binding.publicResultsProgressBar.isVisible = false
+                    binding.statusBox.isVisible = false
+                    Log.d("listSize", "onStart: ${it.data?.size()}")
+                    if (it.data!!.isEmpty) {
+                        binding.rankListRecyclerview.isVisible = false
+                        binding.noOneParticipatedText.isVisible = true
+                    } else {
+                        binding.rankListRecyclerview.isVisible = true
+                        binding.noOneParticipatedText.isVisible = false
+                        binding.adminResultTotalParticipants.text = it.data.size().toString()
 
-                    arr = options.snapshots
-                    publicResultsAdapter = PublicResultsAdapter(
-                        options = options,
-                        clickListenerFunction = { myResult: MyResult ->
-                            DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
-                        },
-                        onItemChanged = { itemCount: Int ->
-                            _binding.adminResultTotalParticipants.text =
-                                itemCount.toString()
-                            onListItemChanged(itemCount)
-                        }
-                    )
-                    publicResultsAdapter.startListening()
-                    _binding.rankListRecyclerview.adapter = publicResultsAdapter
+                        val options = FirestoreRecyclerOptions.Builder<MyResult>()
+                            .setQuery(it.data.query, MyResult::class.java)
+                            .build()
+
+                        arr = options.snapshots
+                        publicResultsAdapter = PublicResultsAdapter(
+                            options = options,
+                            clickListenerFunction = { myResult: MyResult ->
+                                DialogsUtil.showParticipantDetailResult(requireContext(), myResult)
+                            }
+                        )
+                        publicResultsAdapter?.startListening()
+                        binding.rankListRecyclerview.adapter = publicResultsAdapter
+                    }
                 }
             }
         }
     }
 
-    private fun onListItemChanged(itemCount: Int) {
-        if (itemCount == 0) {
-            _binding.noOneParticipatedText.isVisible = true
-            _binding.rankListRecyclerview.isVisible = false
-        } else _binding.noOneParticipatedText.isVisible = false
-    }
-
     override fun onStop() {
         super.onStop()
         publicResultsAdapter?.stopListening()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -29,7 +29,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
 
     private val quizViewModel: QuizViewModel by activityViewModels()
     private var quizListAdapter: QuizListAdapter? = null
-    private lateinit var _binding: FragmentJoinedQuizzesBinding
+    private var _binding: FragmentJoinedQuizzesBinding? = null
+    private val binding get() = _binding!!
     private lateinit var arr: ObservableSnapshotArray<QuizModel>
     private lateinit var clickListeners: ClickListeners
 
@@ -38,63 +39,59 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding =
-            FragmentJoinedQuizzesBinding.inflate(inflater, container, false)
-        return _binding.root
+        _binding = FragmentJoinedQuizzesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding.joinedPageRecyclerview.setHasFixedSize(true)
-        _binding.retryButton.setOnClickListener { quizViewModel.getParticipatedQuizList() }
+        binding.joinedPageRecyclerview.setHasFixedSize(true)
+        binding.retryButton.setOnClickListener { quizViewModel.getParticipatedQuizList() }
     }
 
     override fun onStart() {
         super.onStart()
         quizViewModel.getParticipatedQuizList()
-        quizViewModel.quizList.observe(
-            viewLifecycleOwner,
-            {
+        quizViewModel.quizList.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Error -> {
+                    showSnackBar(message = it.message!!)
+                    binding.joinedPageProgressBar.isVisible = false
+                    binding.joinedPageRecyclerview.isVisible = false
+                    binding.statusBox.isVisible = true
+                    binding.emptyListStatus.isVisible = false
+                }
+                is Resource.Loading -> {
+                    binding.joinedPageProgressBar.isVisible = true
+                    binding.joinedPageRecyclerview.isVisible = false
+                    binding.statusBox.isVisible = false
+                    binding.emptyListStatus.isVisible = false
+                }
+                is Resource.Success -> {
+                    binding.joinedPageProgressBar.isVisible = false
+                    binding.statusBox.isVisible = false
 
-                when (it) {
-                    is Resource.Error -> {
-                        showSnackBar(message = it.message!!)
-                        _binding.joinedPageProgressBar.isVisible = false
-                        _binding.joinedPageRecyclerview.isVisible = false
-                        _binding.statusBox.isVisible = true
-                    }
-                    is Resource.Loading -> {
-                        _binding.joinedPageProgressBar.isVisible = true
-                        _binding.joinedPageRecyclerview.isVisible = false
-                        _binding.statusBox.isVisible = false
-                    }
-                    is Resource.Success -> {
-                        _binding.joinedPageProgressBar.isVisible = false
-                        _binding.joinedPageRecyclerview.isVisible = true
-                        _binding.statusBox.isVisible = false
+                    if (it.data!!.isEmpty) {
+                        binding.joinedPageRecyclerview.isVisible = false
+                        binding.emptyListStatus.isVisible = true
+                    } else {
+                        binding.joinedPageRecyclerview.isVisible = true
+                        binding.emptyListStatus.isVisible = false
+
+
                         val options = FirestoreRecyclerOptions.Builder<QuizModel>()
-                            .setQuery(it.data?.query!!, QuizModel::class.java)
+                            .setQuery(it.data.query, QuizModel::class.java)
                             .build()
 
                         arr = options.snapshots
                         quizListAdapter = QuizListAdapter(options, this)
-                        _binding.joinedPageRecyclerview.adapter = quizListAdapter
+                        binding.joinedPageRecyclerview.adapter = quizListAdapter
                         quizListAdapter?.startListening()
                     }
                 }
             }
-        )
-    }
-
-    override fun onListItemChanged(itemCount: Int) {
-        _binding.apply {
-            if (itemCount == 0) {
-                joinedQuizListEmptyBottle.isVisible = true
-                joinedPageRecyclerview.isVisible = false
-            } else {
-                joinedQuizListEmptyBottle.isVisible = false
-            }
         }
+
     }
 
     override fun onAttach(context: Context) {
@@ -114,7 +111,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
             .setCancelable(false)
             .create()
         dialog.show()
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             quizViewModel.unEnrolQuiz(arr[adapterPosition].quiz_id).let {
                 dialog.dismiss()
                 when (it) {
@@ -129,5 +126,10 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     override fun onStop() {
         super.onStop()
         quizListAdapter?.stopListening()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

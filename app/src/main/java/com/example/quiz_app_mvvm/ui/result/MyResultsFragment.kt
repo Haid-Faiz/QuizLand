@@ -23,9 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
 
-    private lateinit var _binding: FragmentMyResultsBinding
+    private var _binding: FragmentMyResultsBinding? = null
+    private val binding get() = _binding!!
     private val quizViewModel: QuizViewModel by viewModels()
-    private lateinit var myResultsAdapter: MyResultsAdapter
+    private var myResultsAdapter: MyResultsAdapter? = null
     private lateinit var observableSnapshotArray: ObservableSnapshotArray<MyResult>
     private lateinit var navController: NavController
 
@@ -36,16 +37,15 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMyResultsBinding.inflate(inflater, container, false)
-        return _binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        _binding.myResultsBackBtn.setOnClickListener { navController.popBackStack() }
-        _binding.myResultRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        _binding.myResultRecyclerview.setHasFixedSize(true)
-        _binding.retryButton.setOnClickListener { quizViewModel.getMyResults() }
+        binding.myResultsBackBtn.setOnClickListener { navController.popBackStack() }
+        binding.myResultRecyclerview.setHasFixedSize(true)
+        binding.retryButton.setOnClickListener { quizViewModel.getMyResults() }
     }
 
     override fun onStart() {
@@ -55,47 +55,51 @@ class MyResultsFragment : Fragment(), MyResultsAdapter.OnMyResultClicked {
             when (it) {
                 is Resource.Error -> {
                     showSnackBar(message = it.message!!)
-                    _binding.statusBox.isVisible = true
-                    _binding.myResultsProgressBar.isVisible = false
-                    _binding.myResultRecyclerview.isVisible = false
+                    binding.statusBox.isVisible = true
+                    binding.myResultsProgressBar.isVisible = false
+                    binding.myResultRecyclerview.isVisible = false
+                    binding.emptyResultListView.isVisible = false
                 }
                 is Resource.Loading -> {
-                    _binding.myResultsProgressBar.isVisible = true
-                    _binding.myResultRecyclerview.isVisible = false
-                    _binding.statusBox.isVisible = false
+                    binding.myResultsProgressBar.isVisible = true
+                    binding.myResultRecyclerview.isVisible = false
+                    binding.statusBox.isVisible = false
+                    binding.emptyResultListView.isVisible = false
                 }
                 is Resource.Success -> {
-                    _binding.myResultsProgressBar.isVisible = false
-                    _binding.myResultRecyclerview.isVisible = true
-                    _binding.statusBox.isVisible = false
-                    val options = FirestoreRecyclerOptions.Builder<MyResult>()
-                        .setQuery(it.data?.query!!, MyResult::class.java)
-                        .build()
+                    binding.myResultsProgressBar.isVisible = false
+                    binding.statusBox.isVisible = false
 
-                    observableSnapshotArray = options.snapshots
-                    myResultsAdapter = MyResultsAdapter(options, this) { itemCount ->
-                        onListItemChanged(itemCount)
+                    if (it.data!!.isEmpty) {
+                        binding.emptyResultListView.isVisible = true
+                        binding.myResultRecyclerview.isVisible = false
+                    } else {
+                        binding.myResultRecyclerview.isVisible = true
+                        binding.emptyResultListView.isVisible = false
+
+                        val options = FirestoreRecyclerOptions.Builder<MyResult>()
+                            .setQuery(it.data.query, MyResult::class.java)
+                            .build()
+
+                        observableSnapshotArray = options.snapshots
+                        myResultsAdapter = MyResultsAdapter(options, this)
+                        myResultsAdapter?.startListening()
+                        binding.myResultRecyclerview.adapter = myResultsAdapter
+                        binding.myResultsProgressBar.isVisible = false
                     }
-                    myResultsAdapter.startListening()
-                    _binding.myResultRecyclerview.adapter = myResultsAdapter
-                    _binding.myResultsProgressBar.isVisible = false
                 }
             }
         }
     }
 
-    private fun onListItemChanged(itemCount: Int) {
-        if (itemCount == 0) {
-            _binding.emptyResultListView.isVisible = true
-            _binding.myResultRecyclerview.isVisible = false
-        } else {
-            _binding.emptyResultListView.isVisible = false
-        }
-    }
-
     override fun onStop() {
         super.onStop()
-        myResultsAdapter.stopListening()
+        myResultsAdapter?.stopListening()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onResultDetailClicked(position: Int) {

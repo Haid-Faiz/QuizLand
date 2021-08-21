@@ -15,7 +15,8 @@ class CreatedQuizzesAdapter(
 ) : FirestoreRecyclerAdapter<QuizModel, CreatedQuizzesAdapter.ViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val createdQuizItemBinding = CreatedQuizItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val createdQuizItemBinding =
+            CreatedQuizItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         createdQuizItemBinding.onCreatedQuizItemClicked = onCreatedQuizItemClicked
         return ViewHolder(createdQuizItemBinding)
     }
@@ -26,12 +27,6 @@ class CreatedQuizzesAdapter(
 //        snapshots.get(holder.adapterPosition).quiz_id
     }
 
-    override fun onDataChanged() {
-        super.onDataChanged()
-//        f(itemCount)  // invoking HOF
-        onCreatedQuizItemClicked.onListItemChanged(itemCount)
-    }
-
     class ViewHolder(val createdQuizItemBinding: CreatedQuizItemBinding) :
         RecyclerView.ViewHolder(createdQuizItemBinding.root)
 
@@ -39,6 +34,5 @@ class CreatedQuizzesAdapter(
         fun onGetResultClicked(position: Int)
         fun onDeleteClicked(position: Int)
         fun onShareQuizClicked(position: Int)
-        fun onListItemChanged(itemCount: Int)
     }
 }

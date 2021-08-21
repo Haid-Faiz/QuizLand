@@ -37,6 +37,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_12sdp"
         android:visibility="invisible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
