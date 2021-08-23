@@ -42,6 +42,8 @@ class QuizListAdapter(
         return viewHolder
     }
 
+    fun getListSize(): Int = itemCount
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: QuizModel) {
         holder.singleListItemBinding.quiz = model
         holder.singleListItemBinding.position = position

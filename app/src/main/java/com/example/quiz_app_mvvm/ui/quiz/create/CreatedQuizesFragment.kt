@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreatedQuizesBinding
+import com.example.quiz_app_mvvm.databinding.TransparentDialogBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import com.example.quiz_app_mvvm.util.DialogsUtil
@@ -26,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizItemClicked {
 
     private val quizViewModel: QuizViewModel by activityViewModels()
-    private lateinit var createdListAdapter: CreatedQuizzesAdapter
+    private var createdListAdapter: CreatedQuizzesAdapter? = null
     private var _binding: FragmentCreatedQuizesBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
@@ -48,7 +50,6 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
         binding.createdQuizBackBtn.setOnClickListener { navController.popBackStack() }
 //        fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
 //        fadeOutAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out)
-        binding.createdQuizRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         binding.createdQuizRecyclerview.setHasFixedSize(true)
         binding.retryButton.setOnClickListener {
             quizViewModel.getMyCreatedQuizzes()
@@ -89,7 +90,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
                         arr = options.snapshots
                         createdListAdapter = CreatedQuizzesAdapter(options, this)
-                        createdListAdapter.startListening()
+                        createdListAdapter?.startListening()
                         binding.createdQuizRecyclerview.adapter = createdListAdapter
                     }
                 }
@@ -99,7 +100,7 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
     override fun onStop() {
         super.onStop()
-        createdListAdapter.stopListening()
+        createdListAdapter?.stopListening()
     }
 
     override fun onGetResultClicked(position: Int) {
@@ -110,13 +111,31 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
     override fun onDeleteClicked(position: Int) {
         DialogsUtil.showDeleteDialog(requireContext()) {
+
+            val dialogView = TransparentDialogBinding.inflate(layoutInflater)
+            val dialog = AlertDialog.Builder(requireContext(), R.style.TransparentDialog)
+                .setView(dialogView.root)
+                .setCancelable(false)
+                .create()
+            dialog.show()
+
             // delete the quiz from MyCreated collection and from QuizList collection
             lifecycleScope.launchWhenCreated {
                 quizViewModel.deleteCreatedQuiz(arr[position].quiz_id).let {
+                    dialog.dismiss()
                     when (it) {
                         is Resource.Error -> showSnackBar(message = "Something went wrong")
-                        is Resource.Loading -> TODO()
-                        is Resource.Success -> showSnackBar(message = "Successfully Deleted")
+//                        is Resource.Loading -> TODO()
+                        is Resource.Success -> {
+                            showSnackBar(message = "Successfully Deleted")
+                            if (createdListAdapter?.getListSize() == 0) {
+                                binding.createdQuizRecyclerview.isVisible = false
+                                binding.emptyListView.isVisible = true
+                            } else {
+                                binding.createdQuizRecyclerview.isVisible = true
+                                binding.emptyListView.isVisible = false
+                            }
+                        }
                     }
                 }
             }
@@ -131,4 +150,5 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
         super.onDestroyView()
         _binding = null
     }
+
 }

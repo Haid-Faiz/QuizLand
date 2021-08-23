@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -62,28 +62,28 @@ class AdminResultFragment : Fragment() {
         quizViewModel.resultList.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
-                    binding.publicResultsProgressBar.isVisible = false
-                    binding.rankListRecyclerview.isVisible = false
+                    binding.publicResultsProgressBar.isGone = true
+                    binding.rankListRecyclerview.isGone = true
                     showSnackBar(message = it.message!!)
-                    binding.statusBox.isVisible = true
-                    binding.noOneParticipatedText.isVisible = false
+                    binding.statusBox.isGone = false
+                    binding.noOneParticipatedText.isGone = true
                 }
                 is Resource.Loading -> {
-                    binding.publicResultsProgressBar.isVisible = true
-                    binding.rankListRecyclerview.isVisible = false
-                    binding.statusBox.isVisible = false
-                    binding.noOneParticipatedText.isVisible = false
+                    binding.publicResultsProgressBar.isGone = false
+                    binding.rankListRecyclerview.isGone = true
+                    binding.statusBox.isGone = true
+                    binding.noOneParticipatedText.isGone = true
                 }
                 is Resource.Success -> {
-                    binding.publicResultsProgressBar.isVisible = false
-                    binding.statusBox.isVisible = false
+                    binding.publicResultsProgressBar.isGone = true
+                    binding.statusBox.isGone = true
                     Log.d("listSize", "onStart: ${it.data?.size()}")
                     if (it.data!!.isEmpty) {
-                        binding.rankListRecyclerview.isVisible = false
-                        binding.noOneParticipatedText.isVisible = true
+                        binding.rankListRecyclerview.isGone = true
+                        binding.noOneParticipatedText.isGone = false
                     } else {
-                        binding.rankListRecyclerview.isVisible = true
-                        binding.noOneParticipatedText.isVisible = false
+                        binding.rankListRecyclerview.isGone = false
+                        binding.noOneParticipatedText.isGone = true
                         binding.adminResultTotalParticipants.text = it.data.size().toString()
 
                         val options = FirestoreRecyclerOptions.Builder<MyResult>()

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -78,7 +79,6 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
                         binding.joinedPageRecyclerview.isVisible = true
                         binding.emptyListStatus.isVisible = false
 
-
                         val options = FirestoreRecyclerOptions.Builder<QuizModel>()
                             .setQuery(it.data.query, QuizModel::class.java)
                             .build()
@@ -91,7 +91,6 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
                 }
             }
         }
-
     }
 
     override fun onAttach(context: Context) {
@@ -102,6 +101,10 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     override fun onQuizItemClicked(position: Int) {
         quizViewModel.setQuizData(arr[position])
         clickListeners.oViewQuizClicked(position)
+//        parentFragmentManager.setFragmentResult(
+//            "joined_quiz_data",
+//            bundleOf("quiz_data" to "myData")
+//        )
     }
 
     override fun onUnEnrolClicked(adapterPosition: Int) {
@@ -117,7 +120,16 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
                 when (it) {
                     is Resource.Error -> showSnackBar("Something went wrong")
 //                    is Resource.Loading ->  TODO()
-                    is Resource.Success -> showSnackBar("Successfully Un-Enrolled")
+                    is Resource.Success -> {
+                        showSnackBar("Successfully Un-Enrolled")
+                        if (quizListAdapter?.getListSize() == 0) {
+                            binding.joinedPageRecyclerview.isVisible = false
+                            binding.emptyListStatus.isVisible = true
+                        } else {
+                            binding.joinedPageRecyclerview.isVisible = true
+                            binding.emptyListStatus.isVisible = false
+                        }
+                    }
                 }
             }
         }

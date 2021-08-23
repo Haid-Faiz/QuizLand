@@ -1,6 +1,7 @@
 package com.example.quiz_app_mvvm.ui.quiz.join
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,14 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        parentFragmentManager.setFragmentResultListener(
+//            "joined_quiz_data",
+//            viewLifecycleOwner
+//        ) { key, bundle ->
+//            val result = bundle.getString("quiz_data")
+//            Log.d("QuizResult1", "onViewCreated: $result")
+//        }
 
         navController = Navigation.findNavController(view)
         quizData = quizViewModel.getQuizData()

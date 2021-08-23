@@ -12,8 +12,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -23,367 +22,372 @@
             android:focusableInTouchMode="true"
             tools:context=".ui.result.AdminResultFragment">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/admin_result_discard_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:background="@android:color/transparent"
-                    android:padding="@dimen/_4sdp"
-                    android:src="@drawable/ic_baseline_arrow_back_24"
-                    app:layout_constraintBottom_toBottomOf="@id/all_result_text"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/all_result_text" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/all_result_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginTop="@dimen/_24sdp"
-                    android:fontFamily="@font/work_sans_semibold"
-                    android:text="Results"
-                    android:textColor="@color/primary_text"
-                    android:textSize="@dimen/_16ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/admin_result_discard_btn"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageButton
+                        android:id="@+id/admin_result_discard_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/ic_baseline_arrow_back_24"
+                        app:layout_constraintBottom_toBottomOf="@id/all_result_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/all_result_text" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_24sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans_bold"
-                    android:text="@{quizData.name}"
-                    android:textColor="@color/primary_text"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/all_result_text"
-                    tools:text="Android Quiz" />
+                    <TextView
+                        android:id="@+id/all_result_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_24sdp"
+                        android:fontFamily="@font/work_sans_semibold"
+                        android:text="Results"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/admin_result_discard_btn"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_desc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{quizData.description}"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="@id/admin_result_quiz_name"
-                    app:layout_constraintStart_toStartOf="@id/admin_result_quiz_name"
-                    app:layout_constraintTop_toBottomOf="@id/admin_result_quiz_name"
-                    tools:text="Quiz Description" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_24sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="@{quizData.name}"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/all_result_text"
+                        tools:text="Android Quiz" />
 
-                <TextView
-                    android:id="@+id/admin_result_total_participants_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Total Participants"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_desc" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@{quizData.description}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="@id/admin_result_quiz_name"
+                        app:layout_constraintStart_toStartOf="@id/admin_result_quiz_name"
+                        app:layout_constraintTop_toBottomOf="@id/admin_result_quiz_name"
+                        tools:text="Quiz Description" />
 
-                <TextView
-                    android:id="@+id/admin_result_total_participants"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="NA"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/admin_result_total_participants_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/admin_result_total_participants_text"
-                    tools:text="30" />
+                    <TextView
+                        android:id="@+id/admin_result_total_participants_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Total Participants"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_desc" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_held_on_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Quiz held on"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/admin_result_total_participants_text" />
+                    <TextView
+                        android:id="@+id/admin_result_total_participants"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="NA"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/admin_result_total_participants_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/admin_result_total_participants_text"
+                        tools:text="30" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_held_on"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:dateFormatter="@{quizData.quizStartDate}"
-                    android:fontFamily="@font/noto_sans"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_held_on_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_held_on_text"
-                    tools:text="10:00 am, 21 Jan 2021" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_held_on_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Quiz held on"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/admin_result_total_participants_text" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_duration_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Quiz Duration"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_held_on_text" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_held_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:dateFormatter="@{quizData.quizStartDate}"
+                        android:fontFamily="@font/noto_sans"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_held_on_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_held_on_text"
+                        tools:text="10:00 am, 21 Jan 2021" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quizData.quizDurationHour) + ` hour ` + String.valueOf(quizData.quizDurationMin) + ` min`}"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_duration_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_duration_text"
-                    tools:text="1 hour 30 min" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_duration_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Quiz Duration"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_held_on_text" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_difficulty_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Difficulty"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_duration_text" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@{String.valueOf(quizData.quizDurationHour) + ` hour ` + String.valueOf(quizData.quizDurationMin) + ` min`}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_duration_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_duration_text"
+                        tools:text="1 hour 30 min" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_difficulty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{quizData.level}"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_difficulty_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_difficulty_text"
-                    tools:text="Intermediate" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_difficulty_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Difficulty"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_duration_text" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_questions_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Total questions"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_difficulty_text" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_difficulty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@{quizData.level}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_difficulty_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_difficulty_text"
+                        tools:text="Intermediate" />
 
-                <TextView
-                    android:id="@+id/admin_result_quiz_questions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quizData.questions)}"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_questions_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_questions_text"
-                    tools:text="30" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_questions_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Total questions"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_difficulty_text" />
 
-                <TextView
-                    android:id="@+id/admin_result_correct_ans_marks_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Marks for correct answer"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_questions_text" />
+                    <TextView
+                        android:id="@+id/admin_result_quiz_questions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@{String.valueOf(quizData.questions)}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/admin_result_quiz_questions_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/admin_result_quiz_questions_text"
+                        tools:text="30" />
 
-                <TextView
-                    android:id="@+id/admin_result_correct_ans_marks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quizData.correctAnsMarks)}"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/admin_result_correct_ans_marks_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/admin_result_correct_ans_marks_text"
-                    tools:text="+4" />
+                    <TextView
+                        android:id="@+id/admin_result_correct_ans_marks_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Marks for correct answer"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/admin_result_quiz_questions_text" />
 
-                <TextView
-                    android:id="@+id/admin_result_wrong_ans_marks_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Marks for wrong answer"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/admin_result_correct_ans_marks_text" />
+                    <TextView
+                        android:id="@+id/admin_result_correct_ans_marks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@{String.valueOf(quizData.correctAnsMarks)}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/admin_result_correct_ans_marks_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/admin_result_correct_ans_marks_text"
+                        tools:text="+4" />
 
-                <TextView
-                    android:id="@+id/admin_result_wrong_ans_marks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quizData.wrongAnsMarks)}"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/admin_result_wrong_ans_marks_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/admin_result_wrong_ans_marks_text"
-                    tools:text="-1" />
+                    <TextView
+                        android:id="@+id/admin_result_wrong_ans_marks_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Marks for wrong answer"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/admin_result_correct_ans_marks_text" />
 
-                <TextView
-                    android:id="@+id/participants_rank_list"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_16sdp"
-                    android:fontFamily="@font/noto_sans_bold"
-                    android:text="Participants Rank List"
-                    android:textColor="@color/primary_text"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/admin_result_wrong_ans_marks_text" />
+                    <TextView
+                        android:id="@+id/admin_result_wrong_ans_marks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="@{String.valueOf(quizData.wrongAnsMarks)}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/admin_result_wrong_ans_marks_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/admin_result_wrong_ans_marks_text"
+                        tools:text="-1" />
+
+                    <TextView
+                        android:id="@+id/participants_rank_list"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_16sdp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:text="Participants Rank List"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/admin_result_wrong_ans_marks_text" />
+
+                    <TextView
+                        android:id="@+id/no_one_participated_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_36sdp"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:gravity="center"
+                        android:text="Looks like... Currently \n no one has participated."
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/participants_rank_list"
+                        tools:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/status_box"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_24sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:layout_marginEnd="@dimen/_24sdp"
+                        android:layout_marginBottom="@dimen/_106sdp"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/participants_rank_list"
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/status_msg_img"
+                            android:layout_width="@dimen/_108sdp"
+                            android:layout_height="@dimen/_108sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/_42sdp"
+                            android:layout_marginEnd="@dimen/_42sdp"
+                            android:src="@drawable/ic_connection_error" />
+
+
+                        <TextView
+                            android:id="@+id/status_message_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center_horizontal"
+                            android:text="Oops..! Connection error"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/retry_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:backgroundTint="@color/primary_text"
+                            android:fontFamily="@font/noto_sans"
+                            android:text="Retry"
+                            android:textAllCaps="false"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/public_results_progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_26sdp"
+                        android:indeterminateTint="@color/primary_text"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/participants_rank_list"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rank_list_recyclerview"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_524sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:nestedScrollingEnabled="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/participants_rank_list"
                     tools:listitem="@layout/results_list_item" />
 
-                <TextView
-                    android:id="@+id/no_one_participated_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_36sdp"
-                    android:fontFamily="@font/noto_sans_bold"
-                    android:gravity="center"
-                    android:text="Looks like... Currently \n no one has participated."
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/participants_rank_list"
-                    tools:visibility="visible" />
-
-                <LinearLayout
-                    android:id="@+id/status_box"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_24sdp"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:layout_marginEnd="@dimen/_24sdp"
-                    android:layout_marginBottom="@dimen/_106sdp"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/participants_rank_list"
-                    tools:visibility="visible">
-
-                    <ImageView
-                        android:id="@+id/status_msg_img"
-                        android:layout_width="@dimen/_108sdp"
-                        android:layout_height="@dimen/_108sdp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="@dimen/_42sdp"
-                        android:layout_marginEnd="@dimen/_42sdp"
-                        android:src="@drawable/ic_connection_error" />
-
-
-                    <TextView
-                        android:id="@+id/status_message_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_marginEnd="@dimen/_16sdp"
-                        android:layout_marginBottom="@dimen/_12sdp"
-                        android:fontFamily="@font/noto_sans"
-                        android:gravity="center_horizontal"
-                        android:text="Oops..! Connection error"
-                        android:textColor="@color/primary_text"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/retry_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:backgroundTint="@color/primary_text"
-                        android:fontFamily="@font/noto_sans"
-                        android:text="Retry"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/public_results_progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_26sdp"
-                    android:indeterminateTint="@color/primary_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/participants_rank_list"
-                    tools:visibility="invisible" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
