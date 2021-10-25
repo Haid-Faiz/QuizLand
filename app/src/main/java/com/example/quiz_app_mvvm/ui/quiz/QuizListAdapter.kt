@@ -1,10 +1,10 @@
 package com.example.quiz_app_mvvm.ui.quiz
 
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.SingleListItemBinding
 import com.example.quiz_app_mvvm.model.QuizModel
@@ -16,41 +16,43 @@ class QuizListAdapter(
     private val onQuizListItemClicked: OnQuizListItemClicked,
 ) : FirestoreRecyclerAdapter<QuizModel, QuizListAdapter.ViewHolder>(options) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val singleListItemBinding =
-            SingleListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val viewHolder = ViewHolder(singleListItemBinding)
-        singleListItemBinding.onQuizListItemClicked = onQuizListItemClicked
-        singleListItemBinding.unenrolMenuButton.setOnClickListener {
-            // this popup menu needs to be tied to a view
-            val popupMenu = PopupMenu(it.context, it)
-            popupMenu.inflate(R.menu.single_list_item_menu)
-            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
+        SingleListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
-                override fun onMenuItemClick(item: MenuItem?): Boolean {
-                    return when (item?.itemId) {
+    fun getListSize(): Int = item Count
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: QuizModel) {
+        holder.bind(model, position)
+    }
+
+    inner class ViewHolder(val binding: SingleListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(quiz: QuizModel, position: Int) = binding.apply {
+            listName.text = quiz.name
+            listImage.load(quiz.imageUrl)
+            listDescription.text = quiz.description
+            quizCreatorName.text = quiz.createdBy
+            listButton.setOnClickListener {
+                onQuizListItemClicked.onQuizItemClicked(position = position)
+            }
+            unenrolMenuButton.setOnClickListener {
+                // This popup menu needs to be tied to a view
+                val popupMenu = PopupMenu(it.context, it)
+                popupMenu.inflate(R.menu.single_list_item_menu)
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item?.itemId) {
                         R.id.unenrol_button -> {
-                            onQuizListItemClicked.onUnEnrolClicked(viewHolder.adapterPosition)
+                            onQuizListItemClicked.onUnEnrolClicked(position)
                             true
                         }
                         else -> false
                     }
                 }
-            })
-            popupMenu.show()
+                popupMenu.show()
+            }
         }
-        return viewHolder
     }
-
-    fun getListSize(): Int = itemCount
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: QuizModel) {
-        holder.singleListItemBinding.quiz = model
-        holder.singleListItemBinding.position = position
-    }
-
-    class ViewHolder(val singleListItemBinding: SingleListItemBinding) :
-        RecyclerView.ViewHolder(singleListItemBinding.root)
 
     interface OnQuizListItemClicked {
         fun onQuizItemClicked(position: Int)

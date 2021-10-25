@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.example.quiz_app_mvvm.databinding.FragmentDetailsBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
@@ -28,7 +29,8 @@ class DetailsFragment : Fragment() {
     private lateinit var quizId: String
     private lateinit var quizName: String
     private lateinit var navController: NavController
-    private lateinit var _binding: FragmentDetailsBinding
+    private var _binding: FragmentDetailsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,23 +39,14 @@ class DetailsFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return _binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        parentFragmentManager.setFragmentResultListener(
-//            "joined_quiz_data",
-//            viewLifecycleOwner
-//        ) { key, bundle ->
-//            val result = bundle.getString("quiz_data")
-//            Log.d("QuizResult1", "onViewCreated: $result")
-//        }
-
         navController = Navigation.findNavController(view)
         quizData = quizViewModel.getQuizData()
-        _binding.quiz = quizData
+        binding.quiz = quizData
 
 //        In Java --->
 //        position = DetailsFragmentArgs.fromBundle(getArguments()).position
@@ -66,9 +59,9 @@ class DetailsFragment : Fragment() {
         totalQuestions = quizData.questions
         quizName = quizData.name
 
-        _binding.detailsBackBtn.setOnClickListener { navController.popBackStack() }
+        binding.detailsBackBtn.setOnClickListener { navController.popBackStack() }
 
-        _binding.detailsStartBtn.setOnClickListener {
+        binding.detailsStartBtn.setOnClickListener {
             // checking if user has already participated or not
             if (quizData.participated) showSnackBar("You have already given this quiz") else {
 
@@ -105,5 +98,10 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

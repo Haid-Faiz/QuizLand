@@ -4,7 +4,9 @@
     <item android:drawable="@color/black" />
 
     <item
-        android:drawable="@drawable/app_logo"
+        android:width="@dimen/_212sdp"
+        android:height="@dimen/_212sdp"
+        android:drawable="@drawable/ic_quizland_logo"
         android:gravity="center" />
 
 </layer-list>

@@ -4,12 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="quiz"
             type="com.example.quiz_app_mvvm.model.QuizModel" />
+
         <variable
             name="position"
             type="Integer" />
+
         <variable
             name="onCreatedQuizItemClicked"
             type="com.example.quiz_app_mvvm.ui.quiz.create.CreatedQuizzesAdapter.OnCreatedQuizItemClicked" />
@@ -44,8 +47,8 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_42sdp"
-                android:translationZ="@dimen/_7sdp"
                 android:background="@drawable/image_cover"
+                android:translationZ="@dimen/_7sdp"
                 app:layout_constraintBottom_toBottomOf="@id/created_quiz_image"
                 app:layout_constraintEnd_toEndOf="@id/created_quiz_image"
                 app:layout_constraintStart_toStartOf="@id/created_quiz_image" />
@@ -87,8 +90,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_1sdp"
-                android:onClick="@{() -> onCreatedQuizItemClicked.onShareQuizClicked(position)}"
                 android:backgroundTint="@color/colorDark"
+                android:onClick="@{() -> onCreatedQuizItemClicked.onShareQuizClicked(position)}"
                 android:src="@drawable/ic_baseline_share_24"
                 app:layout_constraintBottom_toBottomOf="@+id/created_quiz_button"
                 app:layout_constraintEnd_toStartOf="@id/delete_quiz_button"
@@ -99,8 +102,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_1sdp"
-                android:onClick="@{() -> onCreatedQuizItemClicked.onDeleteClicked(position)}"
                 android:backgroundTint="@color/colorDark"
+                android:onClick="@{() -> onCreatedQuizItemClicked.onDeleteClicked(position)}"
                 android:src="@drawable/ic_baseline_delete_24"
                 app:layout_constraintBottom_toBottomOf="@id/share_quiz_button"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -108,21 +111,21 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/created_quiz_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/colorLightText"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Get Results"
                 android:onClick="@{() -> onCreatedQuizItemClicked.onGetResultClicked(position)}"
+                android:text="Get Results"
                 android:textAllCaps="false"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/created_quiz_description" />
+                app:layout_constraintTop_toBottomOf="@+id/created_quiz_description"
+                app:strokeColor="@color/colorLightText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

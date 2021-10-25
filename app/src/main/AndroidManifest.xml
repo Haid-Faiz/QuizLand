@@ -8,9 +8,9 @@
     <application
         android:allowBackup="true"
         android:name=".QuizLandApp"
-        android:icon="@mipmap/app_icon"
+        android:icon="@mipmap/ic_quizland"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/app_icon"
+        android:roundIcon="@mipmap/ic_quizland_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Quiz_App_MVVM">
 

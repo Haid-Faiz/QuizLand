@@ -3,10 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-anydpi-v24/ic_quizland_logo.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/drawable/dark_bg.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/drawable/ic_quizland_foreground.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/drawable/ic_quizland_logo.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/drawable/line_separator_bg.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/drawable/splash_bg.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/layout/created_quiz_item.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_add.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_admin_result.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_created_quizes.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_created_quizes.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_joined_quizzes.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/fragment_my_results.xml" value="0.13677536231884058" />
+        <entry key="app/src/main/res/layout/my_result_details.xml" value="0.17074275362318841" />
+        <entry key="app/src/main/res/layout/participant_result_details.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/results_list_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/single_list_item.xml" value="0.33" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21197916666666666" />
       </map>
     </option>
   </component>

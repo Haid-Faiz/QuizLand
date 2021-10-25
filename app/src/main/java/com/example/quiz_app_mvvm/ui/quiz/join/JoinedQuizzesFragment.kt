@@ -2,11 +2,11 @@ package com.example.quiz_app_mvvm.ui.quiz.join
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
 
-    private val quizViewModel: QuizViewModel by activityViewModels()
+    private val viewModel: QuizViewModel by activityViewModels()
     private var quizListAdapter: QuizListAdapter? = null
     private var _binding: FragmentJoinedQuizzesBinding? = null
     private val binding get() = _binding!!
@@ -47,13 +47,13 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.joinedPageRecyclerview.setHasFixedSize(true)
-        binding.retryButton.setOnClickListener { quizViewModel.getParticipatedQuizList() }
+        binding.retryButton.setOnClickListener { viewModel.getParticipatedQuizList() }
     }
 
     override fun onStart() {
         super.onStart()
-        quizViewModel.getParticipatedQuizList()
-        quizViewModel.quizList.observe(viewLifecycleOwner) {
+        viewModel.getParticipatedQuizList()
+        viewModel.quizList.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
                     showSnackBar(message = it.message!!)
@@ -99,12 +99,8 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
     }
 
     override fun onQuizItemClicked(position: Int) {
-        quizViewModel.setQuizData(arr[position])
+        viewModel.setQuizData(arr[position])
         clickListeners.oViewQuizClicked(position)
-//        parentFragmentManager.setFragmentResult(
-//            "joined_quiz_data",
-//            bundleOf("quiz_data" to "myData")
-//        )
     }
 
     override fun onUnEnrolClicked(adapterPosition: Int) {
@@ -115,7 +111,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
             .create()
         dialog.show()
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            quizViewModel.unEnrolQuiz(arr[adapterPosition].quiz_id).let {
+            viewModel.unEnrolQuiz(arr[adapterPosition].quiz_id).let {
                 dialog.dismiss()
                 when (it) {
                     is Resource.Error -> showSnackBar("Something went wrong")

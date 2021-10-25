@@ -1,146 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_6sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_6sdp"
+    app:cardCornerRadius="@dimen/_6sdp">
 
-    <data>
-        <variable
-            name="quiz"
-            type="com.example.quiz_app_mvvm.model.QuizModel" />
-        <variable
-            name="onQuizListItemClicked"
-            type="com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter.OnQuizListItemClicked" />
-        <variable
-            name="position"
-            type="Integer" />
-    </data>
-
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_6sdp"
-        app:cardCornerRadius="@dimen/_6sdp">
+        android:layout_height="match_parent"
+        android:background="@drawable/dark_bg">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/dark_bg">
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_132sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/list_image"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_132sdp"
-                android:quizImageUrl="@{quiz.imageUrl}"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/placeholder_image" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_42sdp"
+            android:background="@drawable/image_cover"
+            android:translationZ="@dimen/_7sdp"
+            app:layout_constraintBottom_toBottomOf="@id/list_image"
+            app:layout_constraintEnd_toEndOf="@id/list_image"
+            app:layout_constraintStart_toStartOf="@id/list_image" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_42sdp"
-                android:translationZ="@dimen/_7sdp"
-                android:background="@drawable/image_cover"
-                app:layout_constraintBottom_toBottomOf="@id/list_image"
-                app:layout_constraintEnd_toEndOf="@id/list_image"
-                app:layout_constraintStart_toStartOf="@id/list_image" />
+        <TextView
+            android:id="@+id/list_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toStartOf="@+id/unenrol_menu_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_image"
+            tools:text="Android Quiz Android Quiz Android Quiz Android Quiz" />
 
-            <TextView
-                android:id="@+id/list_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:fontFamily="@font/noto_sans_bold"
-                android:text="@{quiz.name}"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toStartOf="@+id/unenrol_menu_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/list_image"
-                tools:text="Android Quiz" />
+        <ImageButton
+            android:id="@+id/unenrol_menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            app:layout_constraintBottom_toBottomOf="@+id/list_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/list_name" />
 
-            <ImageButton
-                android:id="@+id/unenrol_menu_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/transparent"
-                android:src="@drawable/ic_baseline_more_vert_24"
-                app:layout_constraintBottom_toBottomOf="@+id/list_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/list_name" />
+        <TextView
+            android:id="@+id/list_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/noto_sans"
+            android:maxLines="3"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_name"
+            tools:text="This quiz is specially designed for beginners who are passionate about software development." />
 
-            <TextView
-                android:id="@+id/list_description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:ellipsize="end"
-                android:fontFamily="@font/noto_sans"
-                android:maxLines="3"
-                android:text="@{quiz.description}"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/_11ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/list_name"
-                tools:text="This quiz is specially designed for beginners who are passionate about software development." />
+        <TextView
+            android:id="@+id/created_by_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Created by"
+            android:textColor="@color/colorLightText"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintBottom_toTopOf="@id/quiz_creator_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/list_button" />
 
-            <TextView
-                android:id="@+id/created_by_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:fontFamily="@font/noto_sans"
-                android:text="Created by"
-                android:textColor="@color/colorLightText"
-                android:textSize="@dimen/_8ssp"
-                app:layout_constraintBottom_toTopOf="@id/quiz_creator_name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/list_button" />
+        <TextView
+            android:id="@+id/quiz_creator_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/colorLightText"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/list_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/created_by_hint"
+            tools:text="Faizan Haider" />
 
-            <TextView
-                android:id="@+id/quiz_creator_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:fontFamily="@font/noto_sans"
-                android:text="@{quiz.createdBy}"
-                android:textColor="@color/colorLightText"
-                android:textSize="@dimen/_10ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/list_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/created_by_hint"
-                tools:text="Faizan Haider" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/list_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/noto_sans"
+            android:text="View Quiz"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/list_description"
+            app:strokeColor="@color/colorLightText" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/list_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:fontFamily="@font/noto_sans"
-                android:onClick="@{() -> onQuizListItemClicked.onQuizItemClicked(position)}"
-                android:text="View Quiz"
-                android:textAllCaps="false"
-                android:textSize="@dimen/_10ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/list_description"
-                app:strokeColor="@color/colorLightText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</layout>
+</androidx.cardview.widget.CardView>

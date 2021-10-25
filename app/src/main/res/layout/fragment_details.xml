@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="quiz"
             type="com.example.quiz_app_mvvm.model.QuizModel" />
@@ -64,13 +65,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/details_image"
                     tools:text="Android quiz" />
 
-
                 <TextView
                     android:id="@+id/details_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:fontFamily="@font/noto_sans"
                     android:text="@{quiz.description}"
@@ -81,189 +81,234 @@
                     app:layout_constraintTop_toBottomOf="@+id/details_title"
                     tools:text="You should test your knowledge of android by this quiz." />
 
-                <TextView
-                    android:id="@+id/details_quiz_created_by_text"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/details_quiz_created_by_text_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Quiz created by"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_description" />
+                    app:layout_constraintTop_toBottomOf="@+id/details_description">
 
-                <TextView
-                    android:id="@+id/details_quiz_created_by"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Quiz created by"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:id="@+id/details_quiz_created_by"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:text="@{quiz.createdBy}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="Faizan Haider" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/details_quiz_start_time_text_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{quiz.createdBy}"
-                    android:textColor="@color/colorLightText"
-                    app:layout_constraintBottom_toBottomOf="@+id/details_quiz_created_by_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/details_quiz_created_by_text"
-                    tools:text="Faizan Haider" />
-
-                <TextView
-                    android:id="@+id/details_quiz_start_time_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Quiz Start Time"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_quiz_created_by_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/details_quiz_created_by_text_ll">
 
-                <TextView
-                    android:id="@+id/details_quiz_start_time"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Quiz Start Time"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/details_quiz_created_by_text" />
+
+                    <TextView
+                        android:id="@+id/details_quiz_start_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:dateFormatter="@{quiz.quizStartDate}"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="10:30, Fri 12 Jan 2020" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/details_quiz_duration_text_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:fontFamily="@font/noto_sans"
-                    android:dateFormatter="@{quiz.quizStartDate}"
-                    android:textColor="@color/colorLightText"
-                    app:layout_constraintBottom_toBottomOf="@+id/details_quiz_start_time_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/details_quiz_start_time_text"
-                    tools:text="10:30, Fri 12 Jan 2020" />
-
-                <TextView
-                    android:id="@+id/details_quiz_duration_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Quiz Duration"
-                    android:textColor="@color/colorLightText"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_quiz_start_time_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/details_quiz_start_time_text_ll">
 
-                <TextView
-                    android:id="@+id/details_quiz_duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quiz.quizDurationHour) + ` hour ` + String.valueOf(quiz.quizDurationMin) + ` min`}"
-                    android:textColor="@color/colorLightText"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/details_quiz_duration_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/details_quiz_duration_text"
-                    tools:text="1 hour 30 min" />
 
-                <TextView
-                    android:id="@+id/details_difficulty"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Quiz Duration"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/details_quiz_start_time_text" />
+
+                    <TextView
+                        android:id="@+id/details_quiz_duration"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:text="@{String.valueOf(quiz.quizDurationHour) + ` hour ` + String.valueOf(quiz.quizDurationMin) + ` min`}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="1 hour 30 min" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/details_difficulty_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Difficulty"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_quiz_duration_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/details_quiz_duration_text_ll">
 
-                <TextView
-                    android:id="@+id/details_difficulty_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{quiz.level}"
-                    android:textColor="@color/colorLightText"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/details_difficulty"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/details_difficulty"
-                    tools:text="Intermediate" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Difficulty"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/details_quiz_duration_text" />
 
-                <TextView
-                    android:id="@+id/details_questions"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/details_difficulty_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:text="@{quiz.level}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="Intermediate" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/details_questions_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Total questions"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_difficulty" />
+                    app:layout_constraintTop_toBottomOf="@+id/details_difficulty_ll">
 
-                <TextView
-                    android:id="@+id/details_correct_ans_marks_text"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Total questions"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:id="@+id/details_question_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:text="@{String.valueOf(quiz.questions)}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="30" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/correct_marks_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Marks for correct answer"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_questions" />
+                    app:layout_constraintTop_toBottomOf="@+id/details_questions_ll">
 
-                <TextView
-                    android:id="@+id/details_correct_ans_marks"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/details_correct_ans_marks_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Marks for correct answer"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <TextView
+                        android:id="@+id/details_correct_ans_marks"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:text="@{String.valueOf(quiz.correctAnsMarks)}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="+4" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/wrong_marks_ll"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quiz.correctAnsMarks)}"
-                    android:textColor="@color/colorLightText"
                     android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/details_correct_ans_marks_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/details_correct_ans_marks_text"
-                    tools:text="+4" />
-
-
-                <TextView
-                    android:id="@+id/details_wrong_ans_marks_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Marks for wrong answer"
-                    android:textColor="@color/colorLightText"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_correct_ans_marks_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/correct_marks_ll">
 
-                <TextView
-                    android:id="@+id/details_wrong_ans_marks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quiz.wrongAnsMarks)}"
-                    android:textColor="@color/colorLightText"
-                    app:layout_constraintBottom_toBottomOf="@+id/details_wrong_ans_marks_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/details_wrong_ans_marks_text"
-                    tools:text="-1" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Marks for wrong answer"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/correct_marks_ll" />
 
-                <TextView
-                    android:id="@+id/details_question_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="@{String.valueOf(quiz.questions)}"
-                    android:textColor="@color/colorLightText"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/details_questions"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/details_questions"
-                    tools:text="30" />
+                    <TextView
+                        android:id="@+id/details_wrong_ans_marks"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:text="@{String.valueOf(quiz.wrongAnsMarks)}"
+                        android:textColor="@color/colorLightText"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="-1" />
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -284,13 +329,13 @@
             android:id="@+id/details_start_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/_3sdp"
+            android:layout_margin="@dimen/_12sdp"
             android:fontFamily="@font/noto_sans"
             android:text="Start Quiz"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:layout_margin="@dimen/_12sdp"
             android:textSize="@dimen/_12ssp"
+            app:cornerRadius="@dimen/_3sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
