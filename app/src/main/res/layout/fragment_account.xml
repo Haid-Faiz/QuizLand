@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_12ssp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Version 1.0"
+                android:text="Version v1.0.0"
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/colorLightText"
                 app:layout_constraintEnd_toEndOf="parent"

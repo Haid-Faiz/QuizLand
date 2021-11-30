@@ -2,15 +2,17 @@ package com.example.quiz_app_mvvm.model
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.Keep
+import androidx.core.view.isGone
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import coil.load
 import com.example.quiz_app_mvvm.R
 import com.google.firebase.firestore.DocumentId
-import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+@Keep
 data class QuizModel(
     @DocumentId
     var quiz_id: String = "",
@@ -33,14 +35,25 @@ data class QuizModel(
     companion object {
         // Binding adapter needs to be static but companion object
         // is not fully static so we have added @JvmStatic annotation
-        @BindingAdapter("android:quizImageUrl")
+        @BindingAdapter("android:handleImage")
+        @JvmStatic
+        fun handleImage(imageView: ImageView, imageUrl: String?) {
+            if (imageUrl.isNullOrEmpty()) {
+                imageView.isGone = true
+            } else {
+                imageView.isGone = false
+                imageView.load(imageUrl)
+            }
+        }
+
+        @BindingAdapter("android:loadImage")
         @JvmStatic
         fun loadImage(imageView: ImageView, imageUrl: String?) {
-            Glide.with(imageView.context)
-                .load(imageUrl)
-                .placeholder(R.drawable.placeholder_image)
-                .centerCrop()
-                .into(imageView)
+            if (!imageUrl.isNullOrEmpty()) {
+                imageView.load(imageUrl) {
+                    placeholder(R.drawable.placeholder_image)
+                }
+            }
         }
 
         @BindingAdapter("android:dateFormatter")
@@ -62,12 +75,13 @@ data class QuizModel(
             textView.text = formattedDate
         }
     }
-
-    class MyDate(
-        var year: Int = 0,
-        var month: Int = 0,
-        var date: Int = 0,
-        var quizStartTimeHour: Int = 0,
-        var quizStartTimeMin: Int = 0
-    )
 }
+
+@Keep
+class MyDate(
+    var year: Int = 0,
+    var month: Int = 0,
+    var date: Int = 0,
+    var quizStartTimeHour: Int = 0,
+    var quizStartTimeMin: Int = 0
+)

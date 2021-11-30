@@ -4,7 +4,6 @@
     <string name="note_msg">Note: You can create your quiz here &amp; then you can share it with others so that others can participate in it.</string>
     <string name="developer_note">Developed with ♥ for TechKnights</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="intro_page_one_text">All quiz stuff under one roof</string>
     <string name="intro_page_two">Share your created quiz with unique quiz id</string>
     <string name="intro_page_three">Quiz creater can get instant result of participants</string>

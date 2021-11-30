@@ -19,6 +19,7 @@ import com.example.quiz_app_mvvm.ui.ClickListeners
 import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter
 import com.example.quiz_app_mvvm.ui.quiz.QuizListAdapter.OnQuizListItemClicked
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.Constants.IS_IT_FIRST_QUIZ
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -48,11 +49,7 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
         super.onViewCreated(view, savedInstanceState)
         binding.joinedPageRecyclerview.setHasFixedSize(true)
         binding.retryButton.setOnClickListener { viewModel.getParticipatedQuizList() }
-    }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.getParticipatedQuizList()
         viewModel.quizList.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
@@ -72,18 +69,19 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
                     binding.joinedPageProgressBar.isVisible = false
                     binding.statusBox.isVisible = false
 
-                    if (it.data!!.isEmpty) {
+                    val options = FirestoreRecyclerOptions.Builder<QuizModel>()
+                        .setQuery(it.data!!.query, QuizModel::class.java)
+                        .build()
+
+                    arr = options.snapshots
+
+                    if (it.data.isEmpty) {
                         binding.joinedPageRecyclerview.isVisible = false
                         binding.emptyListStatus.isVisible = true
                     } else {
                         binding.joinedPageRecyclerview.isVisible = true
                         binding.emptyListStatus.isVisible = false
 
-                        val options = FirestoreRecyclerOptions.Builder<QuizModel>()
-                            .setQuery(it.data.query, QuizModel::class.java)
-                            .build()
-
-                        arr = options.snapshots
                         quizListAdapter = QuizListAdapter(options, this)
                         binding.joinedPageRecyclerview.adapter = quizListAdapter
                         quizListAdapter?.startListening()
@@ -91,6 +89,21 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
                 }
             }
         }
+
+        parentFragmentManager.setFragmentResultListener(
+            IS_IT_FIRST_QUIZ,
+            viewLifecycleOwner
+        ) { key, bundle ->
+            // Bug Fix: need to reload data when joining first quiz
+            if (bundle.getBoolean("isJoined", false) && arr.isEmpty()) {
+                viewModel.getParticipatedQuizList()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getParticipatedQuizList()
     }
 
     override fun onAttach(context: Context) {
@@ -115,9 +128,10 @@ class JoinedQuizzesFragment : Fragment(), OnQuizListItemClicked {
                 dialog.dismiss()
                 when (it) {
                     is Resource.Error -> showSnackBar("Something went wrong")
-//                    is Resource.Loading ->  TODO()
+                    // is Resource.Loading ->  TODO()
                     is Resource.Success -> {
-                        showSnackBar("Successfully Un-Enrolled")
+                        viewModel.getParticipatedQuizList()
+                        showSnackBar("Successfully unenrolled")
                         if (quizListAdapter?.getListSize() == 0) {
                             binding.joinedPageRecyclerview.isVisible = false
                             binding.emptyListStatus.isVisible = true

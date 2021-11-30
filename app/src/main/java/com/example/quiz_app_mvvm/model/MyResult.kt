@@ -1,12 +1,14 @@
 package com.example.quiz_app_mvvm.model
 
 import android.widget.TextView
+import androidx.annotation.Keep
 import androidx.databinding.BindingAdapter
 
+@Keep
 data class MyResult(
     var quizName: String = "",
     var user: User? = null,
-    var heldOn: QuizModel.MyDate? = null,
+    var heldOn: MyDate? = null,
     var correctAns: Int = 0,
     var wrongAns: Int = 0,
     var missedAns: Int = 0,

@@ -1,7 +1,6 @@
 package com.example.quiz_app_mvvm.ui.quiz.join
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.example.quiz_app_mvvm.databinding.FragmentDetailsBinding
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
@@ -22,7 +20,7 @@ import java.util.Date
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
-    private val quizViewModel: QuizViewModel by activityViewModels()
+    private val viewModel: QuizViewModel by activityViewModels()
     private var position = 0
     private var totalQuestions = 0
     private lateinit var quizData: QuizModel
@@ -45,7 +43,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        quizData = quizViewModel.getQuizData()
+        quizData = viewModel.getQuizData()
         binding.quiz = quizData
 
 //        In Java --->
@@ -80,9 +78,6 @@ class DetailsFragment : Fragment() {
 
                 val quizEndDate = Date(pickedCalendar.timeInMillis)
                 val currentDate = Date(System.currentTimeMillis())
-                // quiz has not yet been started
-                // quiz is over
-                // running
 
                 if (currentDate.before(quizStartDate)) showSnackBar("This quiz isn't yet started !")
                 else if (currentDate.after(quizEndDate)) showSnackBar("This quiz is over now !")

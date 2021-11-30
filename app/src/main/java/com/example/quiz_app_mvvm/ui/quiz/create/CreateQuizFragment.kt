@@ -22,9 +22,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.bumptech.glide.Glide
+import coil.load
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreateQuizBinding
+import com.example.quiz_app_mvvm.model.MyDate
 import com.example.quiz_app_mvvm.model.QuizModel
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
 import com.example.quiz_app_mvvm.util.showSnackBar
@@ -38,11 +39,12 @@ class CreateQuizFragment : Fragment() {
     private val quizViewModel: QuizViewModel by activityViewModels()
     private lateinit var navController: NavController
     private lateinit var _binding: FragmentCreateQuizBinding
+    private val binding get() = _binding!!
     private var hourDuration: Int = 0
     private var minDuration: Int = 0
     private var difficultyLevel: String = ""
     private var imageUri: String = ""
-    private lateinit var pickedDate: QuizModel.MyDate
+    private lateinit var pickedDate: MyDate
     private var isClicked: Boolean = false
     private lateinit var startActivityForResult: ActivityResultLauncher<Intent>
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -54,7 +56,7 @@ class CreateQuizFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCreateQuizBinding.inflate(inflater, container, false)
-        return _binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,127 +77,133 @@ class CreateQuizFragment : Fragment() {
 
         isClicked = false
         navController = Navigation.findNavController(view)
-        pickedDate = QuizModel.MyDate()
+        pickedDate = MyDate()
 
-        _binding.quizDurationMinPicker.minValue = 0
-        _binding.quizDurationMinPicker.maxValue = 59
-        _binding.quizDurationHourPicker.minValue = 0
-        _binding.quizDurationHourPicker.maxValue = 23
+        binding.apply {
 
-        _binding.discardQuizBtn.setOnClickListener { navController.navigateUp() }
+            quizDurationMinPicker.minValue = 0
+            quizDurationMinPicker.maxValue = 59
+            quizDurationHourPicker.minValue = 0
+            quizDurationHourPicker.maxValue = 23
 
-        _binding.quizDurationHourPicker.setOnValueChangedListener { numberPicker, oldValue, newValue ->
-            hourDuration = newValue
-        }
+            discardQuizBtn.setOnClickListener { navController.navigateUp() }
 
-        _binding.quizDurationMinPicker.setOnValueChangedListener { numberPicker, oldValue, newValue ->
-            minDuration = newValue
-        }
+            quizDurationHourPicker.setOnValueChangedListener { numberPicker, oldValue, newValue ->
+                hourDuration = newValue
+            }
 
-        _binding.radioGrp.setOnCheckedChangeListener { radioGroup, selectedButtonid ->
-            when (selectedButtonid) {
-                R.id.radio_btn_beginner_level -> difficultyLevel = "Beginner"
-                R.id.intermediate_level_radio_btn -> difficultyLevel = "Intermediate"
-                R.id.advanced_level_radio_btn -> difficultyLevel = "Advance"
+            quizDurationMinPicker.setOnValueChangedListener { numberPicker, oldValue, newValue ->
+                minDuration = newValue
+            }
+
+            radioGrp.setOnCheckedChangeListener { radioGroup, selectedButtonid ->
+                when (selectedButtonid) {
+                    R.id.radio_btn_beginner_level -> difficultyLevel = "Beginner"
+                    R.id.intermediate_level_radio_btn -> difficultyLevel = "Intermediate"
+                    R.id.advanced_level_radio_btn -> difficultyLevel = "Advance"
+                }
+            }
+
+            addQuestionBtn.setOnClickListener {
+                // taking inputs from user
+                val quizName = enterQuizName.text.toString().trim()
+                val quizDesc = enterQuizDescription.text.toString().trim()
+                val totalQuestNumString = enterQuestNum.text.toString().trim()
+                val correctAnsMarks = enterCorrectAnsMarks.text.toString().trim()
+                val wrongAnsMarks = enterWrongAnsMarks.text.toString().trim()
+                val quizCreatedBy = enterQuizCreatedBy.text.toString().trim()
+
+                val isQuizDurationSet =
+                    quizDurationMinPicker.value != 0 || quizDurationHourPicker.value != 0
+
+                if (quizName.isNotEmpty() && quizDesc.isNotEmpty() && difficultyLevel.isNotEmpty() &&
+                    totalQuestNumString.isNotEmpty() && quizCreatedBy.isNotEmpty() &&
+                    correctAnsMarks.isNotEmpty() && wrongAnsMarks.isNotEmpty() &&
+                    isClicked && isQuizDurationSet && wrongAnsMarks.toFloat() <= 0
+                ) {
+                    // creating quiz object
+                    val quizModel = QuizModel(
+                        name = quizName,
+                        description = quizDesc,
+                        level = difficultyLevel,
+                        questions = totalQuestNumString.toInt(),
+                        createdBy = quizCreatedBy,
+                        createdAt = System.currentTimeMillis(),
+                        quizStartDate = pickedDate,
+                        imageUrl = imageUri,
+                        visibility = "public",
+                        quizDurationHour = hourDuration,
+                        quizDurationMin = minDuration,
+                        correctAnsMarks = correctAnsMarks.toFloat(),
+                        wrongAnsMarks = wrongAnsMarks.toFloat()
+                    )
+
+                    closeKeyBoard()
+                    quizViewModel.setQuizData(quizModel) // sending data to next fragment with help of viewmodel
+                    navController.navigate(R.id.action_createQuizFragment_to_addQuestFragment)
+                } else {
+                    if (isClicked)
+                        quizStartTime.error = null
+                    else
+                        quizStartTime.error = "Required"
+
+                    if (isQuizDurationSet)
+                        selectDurationHint.error = null
+                    else
+                        selectDurationHint.error = "Required"
+
+                    if (quizName.isNotEmpty())
+                        enterQuizName.error = null
+                    else
+                        enterQuizName.error = "Required"
+
+                    if (quizDesc.isNotEmpty())
+                        enterQuizDescription.error = null
+                    else
+                        enterQuizDescription.error = "Required"
+
+                    if (difficultyLevel.isNotEmpty())
+                        selectDifficulty.error = null
+                    else
+                        selectDifficulty.error = "Required"
+
+                    if (totalQuestNumString.isNotEmpty())
+                        enterQuestNum.error = null
+                    else
+                        enterQuestNum.error = "Required"
+
+                    if (quizCreatedBy.isNotEmpty())
+                        enterQuizCreatedBy.error = null
+                    else
+                        enterQuizCreatedBy.error = "Required"
+
+                    if (correctAnsMarks.isNotEmpty())
+                        enterCorrectAnsMarks.error = null
+                    else
+                        enterCorrectAnsMarks.error = "Required"
+
+                    if (wrongAnsMarks.isNotEmpty()) {
+                        enterWrongAnsMarks.error = null
+
+                        if (wrongAnsMarks.toFloat() > 0) {
+                            enterWrongAnsMarks.error = "It should be zero or negative"
+                            Snackbar.make(
+                                root,
+                                "Wrong answer marks cannot be greater than zero!",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else enterWrongAnsMarks.error = "Required"
+                }
+            }
+
+            quizStartTime.setOnClickListener { pickDate() }
+
+            addQuizImage.setOnClickListener {
+                // first check permission is accepted or not
+                requestPermissions()
             }
         }
-
-        _binding.addQuestionBtn.setOnClickListener {
-            // taking inputs from user
-            val quizName = _binding.enterQuizName.text.toString().trim()
-            val quizDesc = _binding.enterQuizDescription.text.toString().trim()
-            val totalQuestNumString = _binding.enterQuestNum.text.toString().trim()
-            val correctAnsMarks = _binding.enterCorrectAnsMarks.text.toString().trim()
-            val wrongAnsMarks = _binding.enterWrongAnsMarks.text.toString().trim()
-            val quizCreatedBy = _binding.enterQuizCreatedBy.text.toString().trim()
-
-            val isQuizDurationSet = _binding.quizDurationMinPicker.value != 0 ||
-                _binding.quizDurationHourPicker.value != 0
-
-            if (quizName.isNotEmpty() && quizDesc.isNotEmpty() && difficultyLevel.isNotEmpty() &&
-                totalQuestNumString.isNotEmpty() && quizCreatedBy.isNotEmpty() &&
-                correctAnsMarks.isNotEmpty() && wrongAnsMarks.isNotEmpty() &&
-                isClicked && isQuizDurationSet && wrongAnsMarks.toFloat() <= 0
-            ) {
-
-                // creating quiz object
-                val quizModel = QuizModel(
-                    name = quizName,
-                    description = quizDesc,
-                    level = difficultyLevel,
-                    questions = totalQuestNumString.toInt(),
-                    createdBy = quizCreatedBy,
-                    createdAt = System.currentTimeMillis(),
-                    quizStartDate = pickedDate,
-                    imageUrl = imageUri,
-                    visibility = "public",
-                    quizDurationHour = hourDuration,
-                    quizDurationMin = minDuration,
-                    correctAnsMarks = correctAnsMarks.toFloat(),
-                    wrongAnsMarks = wrongAnsMarks.toFloat()
-                )
-
-                closeKeyBoard()
-                quizViewModel.setQuizData(quizModel) // sending data to next fragment with help of viewmodel
-                navController.navigate(R.id.action_createQuizFragment_to_addQuestFragment)
-            } else {
-                if (isClicked)
-                    _binding.quizStartTime.error = null
-                else
-                    _binding.quizStartTime.error = "Required"
-
-                if (isQuizDurationSet)
-                    _binding.selectDurationHint.error = null
-                else
-                    _binding.selectDurationHint.error = "Required"
-
-                if (quizName.isNotEmpty())
-                    _binding.enterQuizName.error = null
-                else
-                    _binding.enterQuizName.error = "Required"
-
-                if (quizDesc.isNotEmpty())
-                    _binding.enterQuizDescription.error = null
-                else
-                    _binding.enterQuizDescription.error = "Required"
-
-                if (difficultyLevel.isNotEmpty())
-                    _binding.selectDifficulty.error = null
-                else
-                    _binding.selectDifficulty.error = "Required"
-
-                if (totalQuestNumString.isNotEmpty())
-                    _binding.enterQuestNum.error = null
-                else
-                    _binding.enterQuestNum.error = "Required"
-
-                if (quizCreatedBy.isNotEmpty())
-                    _binding.enterQuizCreatedBy.error = null
-                else
-                    _binding.enterQuizCreatedBy.error = "Required"
-
-                if (correctAnsMarks.isNotEmpty())
-                    _binding.enterCorrectAnsMarks.error = null
-                else
-                    _binding.enterCorrectAnsMarks.error = "Required"
-
-                if (wrongAnsMarks.isNotEmpty()) {
-                    _binding.enterWrongAnsMarks.error = null
-
-                    if (wrongAnsMarks.toFloat() > 0) {
-                        _binding.enterWrongAnsMarks.error = "It should be zero or negative"
-                        Snackbar.make(
-                            _binding.root,
-                            "Wrong answer marks cannot be greater than zero!",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                } else
-                    _binding.enterWrongAnsMarks.error = "Required"
-            }
-        }
-
-        _binding.quizStartTime.setOnClickListener { pickDate() }
 
         startActivityForResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -203,23 +211,12 @@ class CreateQuizFragment : Fragment() {
             if (result.resultCode == RESULT_OK) {
                 // it.data  -> returns an intent
                 imageUri = result.data?.data.toString()
-                Glide.with(_binding.addQuizImage.context)
-                    .load(imageUri)
-                    .centerCrop()
-                    .into(_binding.addQuizImage)
-//                        _binding.addQuizImage.load(imageUri) {
-//
-//                        }
+                binding.addQuizImage.load(imageUri)
                 if (result.data != null)
-                    _binding.lottieAnimImagePlaceholder.visibility = View.GONE
+                    binding.lottieAnimImagePlaceholder.visibility = View.GONE
                 else
-                    _binding.lottieAnimImagePlaceholder.visibility = View.VISIBLE
+                    binding.lottieAnimImagePlaceholder.visibility = View.VISIBLE
             }
-        }
-
-        _binding.addQuizImage.setOnClickListener {
-            // first check permission is accepted or not
-            requestPermissions()
         }
     }
 

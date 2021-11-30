@@ -21,12 +21,12 @@ class CreatedQuizzesAdapter(
         return ViewHolder(createdQuizItemBinding)
     }
 
-    fun getListSize() : Int = itemCount
+    fun getListSize(): Int = itemCount
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: QuizModel) {
         holder.createdQuizItemBinding.quiz = model
         holder.createdQuizItemBinding.position = position
-//        snapshots.get(holder.adapterPosition).quiz_id
+        // Snapshots.get(holder.adapterPosition).quiz_id
     }
 
     class ViewHolder(val createdQuizItemBinding: CreatedQuizItemBinding) :

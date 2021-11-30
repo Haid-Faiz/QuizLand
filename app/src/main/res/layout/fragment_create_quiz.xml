@@ -96,6 +96,7 @@
             android:layout_height="@dimen/_142sdp"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:scaleType="centerCrop"
             android:layout_marginEnd="@dimen/_12sdp"
             android:background="@drawable/outline_light_btn_bg"
             app:layout_constraintEnd_toEndOf="parent"

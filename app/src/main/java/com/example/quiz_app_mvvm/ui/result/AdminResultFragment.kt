@@ -1,7 +1,6 @@
 package com.example.quiz_app_mvvm.ui.result
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,7 +76,6 @@ class AdminResultFragment : Fragment() {
                 is Resource.Success -> {
                     binding.publicResultsProgressBar.isGone = true
                     binding.statusBox.isGone = true
-                    Log.d("listSize", "onStart: ${it.data?.size()}")
                     if (it.data!!.isEmpty) {
                         binding.rankListRecyclerview.isGone = true
                         binding.noOneParticipatedText.isGone = false

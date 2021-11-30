@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.quiz_app_mvvm.databinding.JoinQuizBsdBinding
 import com.example.quiz_app_mvvm.ui.quiz.QuizViewModel
+import com.example.quiz_app_mvvm.util.Constants.IS_IT_FIRST_QUIZ
 import com.example.quiz_app_mvvm.util.Resource
 import com.example.quiz_app_mvvm.util.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -18,7 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class JoinQuizBSDFragment : BottomSheetDialogFragment() {
 
-    private lateinit var _binding: JoinQuizBsdBinding
+    private var _binding: JoinQuizBsdBinding? = null
+    private val binding get() = _binding!!
     private val quizViewModel: QuizViewModel by viewModels()
     private var uniqueQuizID = ""
 
@@ -28,19 +31,19 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = JoinQuizBsdBinding.inflate(inflater, container, false)
-        return _binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding.cancelButton.setOnClickListener { this.dismiss() }
+        binding.cancelButton.setOnClickListener { this.dismiss() }
 
-        _binding.joinQuizButton.setOnClickListener {
-            uniqueQuizID = _binding.enterUniqueQuizId.editText?.text.toString().trim()
+        binding.joinQuizButton.setOnClickListener {
+            uniqueQuizID = binding.enterUniqueQuizId.editText?.text.toString().trim()
 
             if (uniqueQuizID.isNotEmpty() && uniqueQuizID.isNotBlank()) {
                 // show progress
-                _binding.apply {
+                binding.apply {
                     this@JoinQuizBSDFragment.isCancelable = false
                     enterUniqueQuizId.error = null
                     progressJoining.isVisible = true
@@ -50,7 +53,7 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
                 }
                 // Check first that if this quiz exists or not
                 checkQuizExistence(uniqueQuizID)
-            } else _binding.enterUniqueQuizId.error = "Required"
+            } else binding.enterUniqueQuizId.error = "Required"
         }
     }
 
@@ -59,7 +62,7 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
             quizViewModel.isQuizExist(quizID = uniqueQuizID).let {
                 when (it) {
                     is Resource.Error -> {
-                        _binding.apply {
+                        binding.apply {
                             progressJoining.isVisible = false
                             joinQuizButton.isEnabled = true
                             joinQuizButton.text = "Join quiz"
@@ -73,7 +76,7 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
                             // Quiz exists... join it
                             joinQuiz(uniqueQuizID)
                         } else {
-                            _binding.apply {
+                            binding.apply {
                                 progressJoining.isVisible = false
                                 joinQuizButton.isEnabled = true
                                 joinQuizButton.text = "Join quiz"
@@ -90,7 +93,7 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
 
     private suspend fun joinQuiz(uniqueQuizID: String) {
         quizViewModel.joinQuiz(uniqueQuizID).let { isJoined: Resource<Void> ->
-            _binding.apply {
+            binding.apply {
                 progressJoining.isVisible = false
                 joinQuizButton.isEnabled = true
                 enterUniqueQuizId.isEnabled = true
@@ -100,11 +103,21 @@ class JoinQuizBSDFragment : BottomSheetDialogFragment() {
                 is Resource.Error -> showSnackBar(message = isJoined.message!!)
                 // is Resource.Loading -> TODO()
                 is Resource.Success -> {
-                    Toast.makeText(requireContext(), "Joined successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Joined successfully", Toast.LENGTH_SHORT)
+                        .show()
                     showSnackBar("Joined successfully")
+                    parentFragmentManager.setFragmentResult(
+                        IS_IT_FIRST_QUIZ,
+                        bundleOf("isJoined" to true)
+                    )
                     dismiss()
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

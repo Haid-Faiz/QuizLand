@@ -1,5 +1,8 @@
 package com.example.quiz_app_mvvm.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class QuestionsModel(
 //        @DocumentId
 //        val question_id: String = "",

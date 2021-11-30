@@ -14,4 +14,5 @@ object Constants {
     const val LINKED_ANDROID_APP_PACKAGE = "com.linkedin.android"
     const val QUIZ_LAND_SHARE_MSG = "Hey, Do you want to get rid of all quiz headaches ?" +
         "\nIf yes.. then QuizLand is the solution. \n Download now: AppUrl"
+    const val IS_IT_FIRST_QUIZ = "is_it_first_quiz"
 }

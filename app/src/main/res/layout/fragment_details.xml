@@ -2,7 +2,6 @@
 <layout>
 
     <data>
-
         <variable
             name="quiz"
             type="com.example.quiz_app_mvvm.model.QuizModel" />
@@ -35,7 +34,7 @@
                     android:id="@+id/details_image"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_168sdp"
-                    android:quizImageUrl="@{quiz.imageUrl}"
+                    android:loadImage="@{quiz.imageUrl}"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

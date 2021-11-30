@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quiz_app_mvvm.R
 import com.example.quiz_app_mvvm.databinding.FragmentCreatedQuizesBinding
 import com.example.quiz_app_mvvm.databinding.TransparentDialogBinding
@@ -45,7 +44,6 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         navController = Navigation.findNavController(view)
         binding.createdQuizBackBtn.setOnClickListener { navController.popBackStack() }
 //        fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
@@ -125,8 +123,9 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
                     dialog.dismiss()
                     when (it) {
                         is Resource.Error -> showSnackBar(message = "Something went wrong")
-//                        is Resource.Loading -> TODO()
+                        // is Resource.Loading -> TODO()
                         is Resource.Success -> {
+                            createdListAdapter?.notifyDataSetChanged()
                             showSnackBar(message = "Successfully Deleted")
                             if (createdListAdapter?.getListSize() == 0) {
                                 binding.createdQuizRecyclerview.isVisible = false
@@ -150,5 +149,4 @@ class CreatedQuizesFragment : Fragment(), CreatedQuizzesAdapter.OnCreatedQuizIte
         super.onDestroyView()
         _binding = null
     }
-
 }

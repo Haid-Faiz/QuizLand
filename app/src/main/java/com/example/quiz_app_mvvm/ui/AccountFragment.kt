@@ -26,7 +26,8 @@ class AccountFragment : Fragment() {
 
     @Inject
     lateinit var user: User
-    private lateinit var _binding: FragmentAccountBinding
+    private var _binding: FragmentAccountBinding? = null
+    private val binding get() = _binding!!
     private lateinit var navController: NavController
     private lateinit var clickListener: ClickListeners
 
@@ -37,7 +38,7 @@ class AccountFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
-        return _binding.root
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
@@ -49,15 +50,15 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(requireActivity(), R.id.ls_frag_host)
-        _binding.user = user
+        binding.user = user
 
-        _binding.logoutButton.setOnClickListener {
+        binding.logoutButton.setOnClickListener {
             Firebase.auth.signOut()
             navController.popBackStack()
             clickListener.gotoAuthFragment()
         }
 
-        _binding.shareAppButton.setOnClickListener {
+        binding.shareAppButton.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).setType("text/plain")
             shareIntent.putExtra(
                 Intent.EXTRA_TEXT,
@@ -67,15 +68,15 @@ class AccountFragment : Fragment() {
             startActivity(chooser)
         }
 
-        _binding.myCreatedQuizButton.setOnClickListener {
+        binding.myCreatedQuizButton.setOnClickListener {
             navController.navigate(R.id.action_accountFragment_to_createdQuizesFragment)
         }
 
-        _binding.myResultsButton.setOnClickListener {
+        binding.myResultsButton.setOnClickListener {
             navController.navigate(R.id.action_accountFragment_to_myResultsFragment)
         }
 
-        _binding.developerContactButton.setOnClickListener {
+        binding.developerContactButton.setOnClickListener {
             // This code opens Linked In but doesn't open particular profile
             // val launchLinkedIntent = requireActivity().packageManager.getLaunchIntentForPackage("com.linkedin.android")
             // startActivity(launchLinkedIntent)

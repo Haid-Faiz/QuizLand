@@ -1,11 +1,14 @@
 package com.example.quiz_app_mvvm.model
 
 import android.widget.ImageView
+import androidx.annotation.Keep
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.quiz_app_mvvm.R
 import com.google.firebase.firestore.Exclude
 
+@Keep
 data class User(
     val userID: String = "",
     val displayName: String? = "",
@@ -17,12 +20,9 @@ data class User(
 
         @BindingAdapter("android:quizCircularImageUrl")
         @JvmStatic
-        public fun loadCircularImage(imageView: ImageView, imageUrl: String?) {
-            Glide.with(imageView.context)
-                .load(imageUrl)
-                .placeholder(R.drawable.placeholder_image)
-                .circleCrop()
-                .into(imageView)
+        fun loadCircularImage(imageView: ImageView, imageUrl: String?) = imageView.load(imageUrl) {
+            placeholder(R.drawable.placeholder_image)
+            transformations(CircleCropTransformation())
         }
     }
 }
