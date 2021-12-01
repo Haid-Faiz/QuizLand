@@ -45,7 +45,6 @@ class DetailsFragment : Fragment() {
         navController = Navigation.findNavController(view)
         quizData = viewModel.getQuizData()
         binding.quiz = quizData
-
 //        In Java --->
 //        position = DetailsFragmentArgs.fromBundle(getArguments()).position
 //        In Kotlin --->
